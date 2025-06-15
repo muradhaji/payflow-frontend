@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import Header from './Header';
+import { useTranslation } from 'react-i18next';
 
 export default function Home() {
+  const { t } = useTranslation();
+
   return (
     <section className='home_page min-h-[100dvh] bg-gray-200 flex flex-col'>
       <Header
@@ -10,7 +13,7 @@ export default function Home() {
             to='/login'
             className='rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
           >
-            Log in
+            {t('btn_log_in')}
           </Link>
         }
       />
@@ -18,27 +21,27 @@ export default function Home() {
         <div id='child' className='container mx-auto max-w-2xl'>
           <div className='flex flex-col gap-6 justify-center h-full'>
             <h1 className='text-center text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl'>
-              Track Your Payments, <br />
-              Stay on Top of Your Budget
+              {t('home_label_1a')}
+              <br />
+              {t('home_label_1b')}
             </h1>
             <p className=' text-center text-md font-medium text-pretty text-gray-500 sm:text-lg/6'>
-              PayFlow is a simple and efficient platform for tracking your
-              personal payments. <br /> Easily record your monthly obligations,
-              monitor how much you've paid so far, and keep an eye on your
-              remaining balances.
+              {t('home_label_2a')}
+              <br />
+              {t('home_label_2b')}
             </p>
             <div className='flex gap-2 items-center justify-center'>
               <Link
                 to='/register'
                 className='rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
               >
-                Get started
+                {t('btn_get_started')}
               </Link>
               <Link
                 to='https://muradhajiyev.vercel.app/projects'
                 className='text-sm/6 font-semibold text-gray-900'
               >
-                View other projects <span aria-hidden='true'>→</span>
+                {t('btn_view_other_projects')} <span aria-hidden='true'>→</span>
               </Link>
             </div>
           </div>

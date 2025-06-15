@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import LanguageSwitcher from './LanguageSwitcher';
 
 interface HeaderProps {
   rightElement?: ReactNode;
@@ -13,7 +14,10 @@ function Header({ rightElement }: HeaderProps) {
           <span className='text-blue-600'>Pay</span>
           <span>Flow</span>
         </Link>
-        {rightElement}
+        <div className='flex gap-2'>
+          <LanguageSwitcher />
+          {rightElement}
+        </div>
       </div>
     </header>
   );
