@@ -1,10 +1,75 @@
 {
-  "dashboard": "Dashboard",
-  "btn_log_in": "Log in",
-  "btn_get_started": "Get started",
-  "btn_view_other_projects": "View other projects",
-  "home_label_1a": "Track Your Payments,",
-  "home_label_1b": "Stay on Top of Your Budget",
-  "home_label_2a": "PayFlow is a simple and efficient platform for tracking your personal payments.",
-  "home_label_2b": "Easily record your monthly obligations, monitor how much you've paid so far, and keep an eye on your remaining balances."
+  "home": {
+    "loginButton": "Log in",
+    "getStartedButton": "Get started",
+    "viewOtherProjectsButton": "View other projects",
+    "headingText": "Track Your Payments, <1 /> Stay on Top of Your Budget",
+    "paragraphText": "PayFlow is a simple and efficient platform for tracking your personal payments. <1 /> Easily record your monthly obligations, monitor how much you've paid so far, and keep an eye on your remaining balances."
+  },
+  "loginForm": {
+    "header": {
+      "signupButton": "Sign up"
+    },
+    "form": {
+      "title": "Log in to <1>Pay</1><2>Flow</2>",
+      "fields": {
+        "username": {
+          "label": "Username",
+          "placeholder": "Enter your username",
+          "usernameMin": "Must be at least 6 characters",
+          "usernameRequired": "Username is required"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "••••••••",
+          "passwordMin": "Must be at least 8 characters",
+          "passwordRequired": "Password is required"
+        }
+      },
+      "submit": "Login",
+      "submitting": "Logging in..."
+    },
+    "loginAPIError": {
+      "usernameNotFound": "Username not found",
+      "incorrectPassword": "Incorrect password",
+      "default": "An unknown error occurred. Please try again later."
+    }
+  },
+  "registerForm": {
+    "header": {
+      "loginButton": "Log in"
+    },
+    "form": {
+      "title": "Sign up to <1>Pay</1><2>Flow</2>",
+      "fields": {
+        "username": {
+          "label": "Username",
+          "placeholder": "Enter your username",
+          "usernameMin": "Must be at least 6 characters",
+          "usernameRequired": "Username is required"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter your password",
+          "passwordMin": "Must be at least 8 characters",
+          "passwordRequired": "Password is required"
+        },
+        "confirmPassword": {
+          "label": "Confirm Password",
+          "placeholder": "Confirm your password",
+          "confirmPasswordMatch": "Passwords must match",
+          "confirmPasswordRequired": "Password is required"
+        }
+      },
+      "submit": "Sign up",
+      "submitting": "Signing up..."
+    },
+    "registerAPIError": {
+      "usernameAlreadyExists": "Username already exists",
+      "default": "An unknown error occurred. Please try again later."
+    }
+  },
+  "buttons": {
+    "logout": "Log out"
+  }
 }

@@ -22,9 +22,15 @@ export const login = createAsyncThunk(
       const response = await api.post('/api/auth/login', credentials);
       return response.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || 'Login failed'
-      );
+      if (error.response?.data?.message === 'Username not found') {
+        return thunkAPI.rejectWithValue('usernameNotFound');
+      }
+
+      if (error.response?.data?.message === 'Incorrect password') {
+        return thunkAPI.rejectWithValue('incorrectPassword');
+      }
+
+      return thunkAPI.rejectWithValue('Login failed');
     }
   }
 );
@@ -36,9 +42,11 @@ export const register = createAsyncThunk(
       const response = await api.post('/api/auth/register', credentials);
       return response.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || 'Registration failed'
-      );
+      if (error.response?.data?.message === 'Username already exists') {
+        return thunkAPI.rejectWithValue('usernameAlreadyExists');
+      }
+
+      return thunkAPI.rejectWithValue('Registration failed');
     }
   }
 );

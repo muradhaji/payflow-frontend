@@ -1,10 +1,75 @@
 {
-  "dashboard": "İdarə Paneli",
-  "btn_log_in": "Daxil ol",
-  "btn_get_started": "İndi başla",
-  "btn_view_other_projects": "Digər layihələrə bax",
-  "home_label_1a": "Ödənişlərinizi İzləyin,",
-  "home_label_1b": "Büdcənizi Tam Nəzarətdə Saxlayın",
-  "home_label_2a": "PayFlow şəxsi ödənişlərinizi izləmək üçün sadə və effektiv bir platformadır.",
-  "home_label_2b": "Aylıq borclarınızı asanlıqla qeyd edin, İndiyə qədər etdiyiniz ödənişləri izləyin və qalan məbləğləri daim nəzarətdə saxlayın."
+  "home": {
+    "loginButton": "Daxil ol",
+    "getStartedButton": "İndi başla",
+    "viewOtherProjectsButton": "Digər layihələrə bax",
+    "headingText": "Ödənişlərinizi İzləyin, <1 /> Büdcənizi Tam Nəzarətdə Saxlayın",
+    "paragraphText": "PayFlow şəxsi ödənişlərinizi izləmək üçün sadə və effektiv bir platformadır. <1 /> Aylıq borclarınızı asanlıqla qeyd edin, İndiyə qədər etdiyiniz ödənişləri izləyin və qalan məbləğləri daim nəzarətdə saxlayın."
+  },
+  "loginForm": {
+    "header": {
+      "signupButton": "Qeydiyyat"
+    },
+    "form": {
+      "title": "<1>Pay</1><2>Flow</2>-a daxil olun",
+      "fields": {
+        "username": {
+          "label": "İstifadəçi adı",
+          "placeholder": "İstifadəçi adınızı daxil edin",
+          "usernameMin": "Ən azı 6 simvol olmalıdır",
+          "usernameRequired": "İstifadəçi adı tələb olunur"
+        },
+        "password": {
+          "label": "Şifrə",
+          "placeholder": "••••••••",
+          "passwordMin": "Ən azı 8 simvol olmalıdır",
+          "passwordRequired": "Şifrə tələb olunur"
+        }
+      },
+      "submit": "Daxil ol",
+      "submitting": "Daxil olunur..."
+    },
+    "loginAPIError": {
+      "usernameNotFound": "İstifadəçi adı mövcud deyil",
+      "incorrectPassword": "Şifrə düzgün deyil",
+      "default": "Naməlum bir xəta baş verdi. Zəhmət olmasa bir az sonra yenidən cəhd edin."
+    }
+  },
+  "registerForm": {
+    "header": {
+      "loginButton": "Daxil ol"
+    },
+    "form": {
+      "title": "<1>Pay</1><2>Flow</2> üçün qeydiyyat",
+      "fields": {
+        "username": {
+          "label": "İstifadəçi adı",
+          "placeholder": "İstifadəçi adınızı daxil edin",
+          "usernameMin": "Ən azı 6 simvol olmalıdır",
+          "usernameRequired": "İstifadəçi adı tələb olunur"
+        },
+        "password": {
+          "label": "Şifrə",
+          "placeholder": "Şifrənizi daxil edin",
+          "passwordMin": "Ən azı 8 simvol olmalıdır",
+          "passwordRequired": "Şifrə tələb olunur"
+        },
+        "confirmPassword": {
+          "label": "Şifrəni təsdiqlə",
+          "placeholder": "Şifrənizi təsdiqləyin",
+          "confirmPasswordMatch": "Şifrələr uyğun gəlmir",
+          "confirmPasswordRequired": "Şifrə tələb olunur"
+        }
+      },
+      "submit": "Qeydiyyatdan keç",
+      "submitting": "Qeydiyyat aparılır..."
+    },
+    "registerAPIError": {
+      "usernameAlreadyExists": "Bu istifadəçi adı artıq mövcuddur",
+      "default": "Naməlum bir xəta baş verdi. Zəhmət olmasa bir az sonra yenidən cəhd edin."
+    }
+  },
+  "buttons": {
+    "logout": "Çıxış et"
+  }
 }
