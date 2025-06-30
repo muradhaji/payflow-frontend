@@ -69,7 +69,16 @@
       "default": "Naməlum bir xəta baş verdi. Zəhmət olmasa bir az sonra yenidən cəhd edin."
     }
   },
+  "dashboard": {
+    "cards": {
+      "current": "Bu Ayın Ödənişləri",
+      "remaining": "Qalan Ödənişlər",
+      "paid": "Ödənilmiş Məbləğ",
+      "all": "Bütün Ödənişlər"
+    }
+  },
   "buttons": {
-    "logout": "Çıxış et"
+    "logout": "Çıxış et",
+    "addpayment": "Yeni Ödəniş"
   }
 }

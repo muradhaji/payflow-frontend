@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import { Trans, useTranslation } from 'react-i18next';
+import Footer from './Footer';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -35,7 +36,7 @@ export default function Home() {
               </Link>
               <Link
                 to='https://muradhajiyev.vercel.app/projects'
-                className='text-sm/6 font-semibold text-gray-900'
+                className='text-sm/6 font-semibold text-gray-900 flex gap-2'
               >
                 {t('home.viewOtherProjectsButton')}
                 <span aria-hidden='true'>→</span>
@@ -44,13 +45,7 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <footer className='px-3 py-4 sm:px-0 bg-gray-100'>
-        <div className='container mx-auto'>
-          <p className='text-sm text-gray-700 text-center sm:text-md sm:text-left'>
-            © 2025 | Murad Hajiyev
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </section>
   );
 }

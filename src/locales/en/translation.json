@@ -69,7 +69,16 @@
       "default": "An unknown error occurred. Please try again later."
     }
   },
+  "dashboard": {
+    "cards": {
+      "current": "This Month's debts",
+      "remaining": "Remaining debts",
+      "paid": "Total paid",
+      "all": "All Payments"
+    }
+  },
   "buttons": {
-    "logout": "Log out"
+    "logout": "Log out",
+    "addpayment": "Add Payment"
   }
 }
