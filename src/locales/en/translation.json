@@ -77,6 +77,45 @@
       "all": "All Payments"
     }
   },
+  "payments": {
+    "current": {
+      "totalForMonth": "Total for {{month}}:",
+      "empty": {
+        "textLg": "Nothing to pay",
+        "textSm": "No unpaid payments found for the selected month."
+      },
+      "buttons": {
+        "pay": {
+          "selected": "Pay",
+          "notselected": "Select to Pay"
+        }
+      }
+    },
+    "remaining": {
+      "total": "Total Remaining:",
+      "empty": {
+        "textLg": "No remaining payments",
+        "textSm": "All future payments have already been completed."
+      },
+      "buttons": {
+        "pay": {
+          "selected": "Pay",
+          "notselected": "Select to Pay"
+        }
+      }
+    },
+    "paid": {
+      "total": "Total Paid:",
+      "empty": {
+        "textLg": "No payments completed",
+        "textSm": "You haven't completed any payments yet."
+      }
+    },
+    "card": {
+      "totalAmountLabel": "Total Amount",
+      "paidOn": "Paid: {{date}}"
+    }
+  },
   "buttons": {
     "logout": "Log out",
     "addpayment": "Add Payment"

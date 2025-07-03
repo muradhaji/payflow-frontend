@@ -1,14 +1,14 @@
 import { Navigate } from 'react-router-dom';
-import { useAppSelector } from '../app/hooks';
+import { useAuth } from '../hooks/useAuth';
 
 interface PrivateRouteProps {
   children: React.ReactNode;
 }
 
 const PrivateRoute = ({ children }: PrivateRouteProps) => {
-  const { token } = useAppSelector((state) => state.auth);
+  const { isAuthenticated } = useAuth();
 
-  return token ? children : <Navigate to='/login' replace />;
+  return isAuthenticated ? children : <Navigate to='/login' replace />;
 };
 
 export default PrivateRoute;

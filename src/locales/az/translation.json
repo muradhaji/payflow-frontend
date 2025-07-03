@@ -77,6 +77,45 @@
       "all": "Bütün Ödənişlər"
     }
   },
+  "payments": {
+    "current": {
+      "totalForMonth": "{{month}} üçün ümumi:",
+      "empty": {
+        "textLg": "Ödəməyə heç nə yoxdur",
+        "textSm": "Seçilmiş ay üçün ödənilməmiş ödəniş tapılmadı."
+      },
+      "buttons": {
+        "pay": {
+          "selected": "Ödə",
+          "notselected": "Ödəmək üçün seçin"
+        }
+      }
+    },
+    "remaining": {
+      "total": "Qalan ümumi:",
+      "empty": {
+        "textLg": "Qalan ödəmə yoxdur",
+        "textSm": "Gələcək bütün ödənişlər artıq tamamlanıb."
+      },
+      "buttons": {
+        "pay": {
+          "selected": "Ödə",
+          "notselected": "Ödəmək üçün seçin"
+        }
+      }
+    },
+    "paid": {
+      "total": "Ümumi ödənilib:",
+      "empty": {
+        "textLg": "Hələ ödəmə edilməyib",
+        "textSm": "Heç bir ödəniş tamamlanmayıb."
+      }
+    },
+    "card": {
+      "totalAmountLabel": "Ümumi məbləğ",
+      "paidOn": "Ödənilib: {{date}}"
+    }
+  },
   "buttons": {
     "logout": "Çıxış et",
     "addpayment": "Yeni Ödəniş"

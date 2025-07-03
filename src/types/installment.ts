@@ -17,3 +17,9 @@ export interface IInstallment {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ISelectedPayment {
+  installmentId: string;
+  paymentId: string;
+  paymentAmount: number;
+}
