@@ -9,6 +9,7 @@ import {
   Plus,
   Wallet,
 } from 'lucide-react';
+import { sumDecimal } from '../utils/math';
 import dayjs from 'dayjs';
 
 const DashboardCards = () => {
@@ -40,9 +41,6 @@ const DashboardCards = () => {
     });
   });
 
-  const sum = (arr: number[]) =>
-    arr.reduce((total, amount) => total + amount, 0);
-
   return (
     <>
       <div className='flex justify-end items-center pb-6'>
@@ -58,28 +56,28 @@ const DashboardCards = () => {
       <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-2'>
         <Card
           title={t('dashboard.cards.current')}
-          amount={sum(currentMonthPayments)}
+          amount={sumDecimal(currentMonthPayments)}
           routeUrl='/dashboard/current'
           icon={<CalendarCheck2 className='text-red-600' />}
           color='border-red-500'
         />
         <Card
           title={t('dashboard.cards.remaining')}
-          amount={sum(totalRemaining)}
+          amount={sumDecimal(totalRemaining)}
           routeUrl='/dashboard/remaining'
           icon={<Wallet className='text-yellow-600' />}
           color='border-yellow-500'
         />
         <Card
           title={t('dashboard.cards.paid')}
-          amount={sum(totalPaid)}
+          amount={sumDecimal(totalPaid)}
           routeUrl='/dashboard/paid'
           icon={<CircleDollarSign className='text-green-600' />}
           color='border-green-500'
         />
         <Card
           title={t('dashboard.cards.all')}
-          amount={sum([...totalPaid, ...totalRemaining])}
+          amount={sumDecimal([...totalPaid, ...totalRemaining])}
           routeUrl='/dashboard/all'
           icon={<Layers className='text-gray-600' />}
           color='border-gray-500'

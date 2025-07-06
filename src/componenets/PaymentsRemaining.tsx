@@ -5,10 +5,11 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Wallet } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { sumByKeyDecimal } from '../utils/math';
 
 const PaymentsRemaining = () => {
   const { installments } = useAppSelector((state) => state.installments);
-  const [remainingInstallments, setRemainingInstallment] = useState<
+  const [remainingInstallments, setRemainingInstallments] = useState<
     IInstallment[]
   >([]);
   const [selectedPayments, setSelectedPayments] = useState<ISelectedPayment[]>(
@@ -16,13 +17,11 @@ const PaymentsRemaining = () => {
   );
   const [selectedPaymentsAmount, setSelectedPaymentsAmount] =
     useState<number>(0);
-  const [totalAmount, setTotalAmount] = useState<number>(0);
 
   const { t } = useTranslation();
 
   useEffect(() => {
     const filteredInstallments: IInstallment[] = [];
-    let newTotalAmount: number = 0;
 
     for (const installment of installments) {
       const { monthlyPayments, ...otherInstallmentData } = installment;
@@ -30,10 +29,6 @@ const PaymentsRemaining = () => {
       const filteredMonthlyPayments = monthlyPayments.filter(
         (payment) => !payment.paid
       );
-
-      filteredMonthlyPayments.forEach((payment) => {
-        newTotalAmount += payment.amount;
-      });
 
       if (filteredMonthlyPayments.length) {
         filteredInstallments.push({
@@ -43,16 +38,13 @@ const PaymentsRemaining = () => {
       }
     }
 
-    setRemainingInstallment(filteredInstallments);
-    setTotalAmount(newTotalAmount);
+    setRemainingInstallments(filteredInstallments);
   }, [installments]);
 
   useEffect(() => {
-    let amount = 0;
-    for (const selectedPayment of selectedPayments) {
-      amount += selectedPayment.paymentAmount;
-    }
-    setSelectedPaymentsAmount(amount);
+    setSelectedPaymentsAmount(
+      sumByKeyDecimal(selectedPayments, 'paymentAmount')
+    );
   }, [selectedPayments]);
 
   const handlePaymentSelect = (payment: ISelectedPayment) => {
@@ -105,7 +97,11 @@ const PaymentsRemaining = () => {
               {t('payments.remaining.total')}
             </span>
             <span className='text-lg text-yellow-600 font-bold'>
-              ₼ {totalAmount}
+              ₼{' '}
+              {sumByKeyDecimal(
+                remainingInstallments.flatMap((i) => i.monthlyPayments),
+                'amount'
+              )}
             </span>
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3'>

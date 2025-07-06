@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, LineChart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { sumByKeyDecimal } from '../utils/math';
 import dayjs from 'dayjs';
 
 const PaymentsCurrent = () => {
@@ -18,7 +19,6 @@ const PaymentsCurrent = () => {
   );
   const [selectedPaymentsAmount, setSelectedPaymentsAmount] =
     useState<number>(0);
-  const [totalAmount, setTotalAmount] = useState<number>(0);
   const [currentMonth, setCurrentMonth] = useState<number>(0);
 
   const { t } = useTranslation();
@@ -29,17 +29,12 @@ const PaymentsCurrent = () => {
 
   useEffect(() => {
     const filteredInstallments: IInstallment[] = [];
-    let newTotalAmount: number = 0;
 
     for (const installment of installments) {
       const { monthlyPayments, ...otherInstallmentData } = installment;
 
       const filteredMonthlyPayments = monthlyPayments.filter((payment) => {
         return !payment.paid && dayjs(payment.date).month() === currentMonth;
-      });
-
-      filteredMonthlyPayments.forEach((payment) => {
-        newTotalAmount += payment.amount;
       });
 
       if (filteredMonthlyPayments.length) {
@@ -50,15 +45,12 @@ const PaymentsCurrent = () => {
       }
     }
     setCurrentInstallment(filteredInstallments);
-    setTotalAmount(newTotalAmount);
   }, [installments, currentMonth]);
 
   useEffect(() => {
-    let amount = 0;
-    for (const selectedPayment of selectedPayments) {
-      amount += selectedPayment.paymentAmount;
-    }
-    setSelectedPaymentsAmount(amount);
+    setSelectedPaymentsAmount(
+      sumByKeyDecimal(selectedPayments, 'paymentAmount')
+    );
   }, [selectedPayments]);
 
   const handlePaymentSelect = (payment: ISelectedPayment) => {
@@ -125,7 +117,11 @@ const PaymentsCurrent = () => {
               })}
             </span>
             <span className='text-lg text-red-600 font-bold'>
-              ₼ {totalAmount}
+              ₼{' '}
+              {sumByKeyDecimal(
+                currentInstallments.flatMap((i) => i.monthlyPayments),
+                'amount'
+              )}
             </span>
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3'>

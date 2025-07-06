@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import type { IInstallment } from '../../types/installment';
+import type { IInstallment, InstallmentCreate } from '../../types/installment';
 import api from '../../api';
+import type { AxiosError } from 'axios';
 
 interface InstallmentsState {
   installments: IInstallment[];
@@ -8,13 +9,8 @@ interface InstallmentsState {
     loading: boolean;
     error: string | null;
   };
-  deleteInstallment: {
+  addInstallment: {
     loading: boolean;
-    error: string | null;
-  };
-  togglePayment: {
-    loading: boolean;
-    id: string | null;
     error: string | null;
   };
 }
@@ -25,13 +21,8 @@ const initialState: InstallmentsState = {
     loading: false,
     error: null,
   },
-  deleteInstallment: {
+  addInstallment: {
     loading: false,
-    error: null,
-  },
-  togglePayment: {
-    loading: false,
-    id: null,
     error: null,
   },
 };
@@ -44,57 +35,27 @@ export const fetchInstallments = createAsyncThunk<
   try {
     const res = await api.get('/api/installments');
     return res.data;
-  } catch (error: any) {
+  } catch (err: unknown) {
+    const axiosErr = err as AxiosError<{ message: string }>;
     return rejectWithValue(
-      error.response?.data?.message || 'Failed to fetch installments'
+      axiosErr.response?.data?.message || 'Failed to fetch installments'
     );
   }
 });
 
 export const addInstallment = createAsyncThunk<
   IInstallment,
-  Omit<IInstallment, '_id' | 'user' | 'createdAt' | 'updatedAt'>,
+  InstallmentCreate,
   { rejectValue: string }
 >('installments/add', async (newInstallment, { rejectWithValue }) => {
   try {
     const res = await api.post('api/installments', newInstallment);
     return res.data;
-  } catch (err: any) {
-    return rejectWithValue(err.response?.data?.message || 'Server error');
+  } catch (err: unknown) {
+    const axiosErr = err as AxiosError<{ message: string }>;
+    return rejectWithValue(axiosErr.response?.data?.message || 'Server error');
   }
 });
-
-export const deleteInstallment = createAsyncThunk<
-  string,
-  string,
-  { rejectValue: string }
->('installments/delete', async (id, { rejectWithValue }) => {
-  try {
-    await api.delete(`/installments/${id}`);
-    return id;
-  } catch (err: any) {
-    return rejectWithValue(err.response?.data?.message || 'Server error');
-  }
-});
-
-export const togglePayment = createAsyncThunk(
-  'installments/togglePayment',
-  async (
-    { installmentId, paymentId }: { installmentId: string; paymentId: string },
-    thunkAPI
-  ) => {
-    try {
-      const res = await api.put(
-        `/api/installments/${installmentId}/pay/${paymentId}`
-      );
-      return res.data;
-    } catch (err: any) {
-      return thunkAPI.rejectWithValue(
-        err.response.data.message || 'Toggle failed'
-      );
-    }
-  }
-);
 
 const installmentsSlice = createSlice({
   name: 'installments',
@@ -106,6 +67,7 @@ const installmentsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // fetchInstallment
       .addCase(fetchInstallments.pending, (state) => {
         state.fetchInstallments.loading = true;
         state.fetchInstallments.error = null;
@@ -118,42 +80,17 @@ const installmentsSlice = createSlice({
         state.fetchInstallments.loading = false;
         state.fetchInstallments.error = action.payload as string;
       })
-      .addCase(deleteInstallment.pending, (state) => {
-        state.deleteInstallment.loading = true;
-        state.deleteInstallment.error = null;
+      // addInstallment
+      .addCase(addInstallment.pending, (state) => {
+        state.addInstallment.loading = true;
+        state.addInstallment.error = null;
       })
-      .addCase(deleteInstallment.fulfilled, (state, action) => {
-        state.deleteInstallment.loading = false;
-        state.installments = state.installments.filter(
-          (inst) => inst._id !== action.payload
-        );
+      .addCase(addInstallment.fulfilled, (state) => {
+        state.addInstallment.loading = false;
       })
-      .addCase(deleteInstallment.rejected, (state, action) => {
-        state.deleteInstallment.loading = false;
-        state.deleteInstallment.error = action.payload as string;
-      })
-      .addCase(togglePayment.pending, (state, action) => {
-        state.togglePayment.loading = true;
-        state.togglePayment.id = action.meta.arg.paymentId;
-      })
-      .addCase(togglePayment.fulfilled, (state, action) => {
-        state.togglePayment.loading = false;
-        state.togglePayment.id = null;
-
-        const iIndex = state.installments.findIndex(
-          (i) => i._id === action.meta.arg.installmentId
-        );
-        const pIndex = state.installments[iIndex].monthlyPayments.findIndex(
-          (p) => p._id === action.meta.arg.paymentId
-        );
-
-        state.installments[iIndex].monthlyPayments[pIndex] =
-          action.payload.payment;
-      })
-      .addCase(togglePayment.rejected, (state, action) => {
-        state.togglePayment.loading = false;
-        state.togglePayment.id = null;
-        state.togglePayment.error = action.payload as string;
+      .addCase(addInstallment.rejected, (state, action) => {
+        state.addInstallment.loading = false;
+        state.addInstallment.error = action.payload as string;
       });
   },
 });

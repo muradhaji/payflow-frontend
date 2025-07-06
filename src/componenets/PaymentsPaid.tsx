@@ -5,17 +5,16 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Banknote } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { sumByKeyDecimal } from '../utils/math';
 
 const PaymentsPaid = () => {
   const { installments } = useAppSelector((state) => state.installments);
   const [paidInstallments, setPaidInstallment] = useState<IInstallment[]>([]);
-  const [totalAmount, setTotalAmount] = useState<number>(0);
 
   const { t } = useTranslation();
 
   useEffect(() => {
     const filteredInstallments: IInstallment[] = [];
-    let newTotalAmount: number = 0;
 
     for (const installment of installments) {
       const { monthlyPayments, ...otherInstallmentData } = installment;
@@ -23,10 +22,6 @@ const PaymentsPaid = () => {
       const filteredMonthlyPayments = monthlyPayments.filter(
         (payment) => payment.paid
       );
-
-      filteredMonthlyPayments.forEach((payment) => {
-        newTotalAmount += payment.amount;
-      });
 
       if (filteredMonthlyPayments.length) {
         filteredInstallments.push({
@@ -37,7 +32,6 @@ const PaymentsPaid = () => {
     }
 
     setPaidInstallment(filteredInstallments);
-    setTotalAmount(newTotalAmount);
   }, [installments]);
 
   return (
@@ -58,7 +52,11 @@ const PaymentsPaid = () => {
               {t('payments.paid.total')}
             </span>
             <span className='text-lg text-green-600 font-bold'>
-              ₼ {totalAmount}
+              ₼{' '}
+              {sumByKeyDecimal(
+                paidInstallments.flatMap((i) => i.monthlyPayments),
+                'amount'
+              )}
             </span>
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3'>

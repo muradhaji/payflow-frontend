@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
 import type { IInstallment, ISelectedPayment } from '../types/installment';
 import { Ellipsis } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { sumByKeyDecimal } from '../utils/math';
 
 const colorMap: Record<string, string> = {
   current: 'text-red-700',
@@ -26,19 +26,7 @@ const PaymentCard = ({
   selectedPayments,
   type,
 }: PaymentCardProps) => {
-  const [totalAmount, setTotalAmount] = useState<number>(0);
-
   const { t } = useTranslation();
-
-  useEffect(() => {
-    let amount = 0;
-
-    for (const payment of monthlyPayments) {
-      amount += payment.amount;
-    }
-
-    setTotalAmount(amount);
-  }, [monthlyPayments]);
 
   const paymentAmountColor = colorMap[type] || colorMap.default;
 
@@ -62,7 +50,7 @@ const PaymentCard = ({
             {t('payments.card.totalAmountLabel')}
           </span>
           <span className={`text-lg ${paymentAmountColor} font-bold`}>
-            ₼ {totalAmount}
+            ₼ {sumByKeyDecimal(monthlyPayments, 'amount')}
           </span>
         </div>
       )}

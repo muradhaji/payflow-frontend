@@ -116,6 +116,40 @@
       "paidOn": "Paid: {{date}}"
     }
   },
+  "addPayment": {
+    "addButton": "Add Payment",
+    "nameLabel": "Name",
+    "namePlaceholder": "Enter Payment Name",
+    "amountLabel": "Amount",
+    "amountPlaceholder": "Enter Payment Amount",
+    "startDateLabel": "Start Month",
+    "startDatePlaceholder": "Select Start Month",
+    "monthCountLabel": "Number of Months",
+    "monthCountPlaceholder": "Enter Number of Months",
+    "monthlyBreakdownTitle": "Monthly Breakdown",
+    "monthlyPaymentsEmpty": "Monthly payments will appear once the form is filled",
+    "monthlyPaymentsDatePlaceholder": "Pick a date",
+    "monthlyPaymentsAmountPlaceholder": "Enter amount",
+    "error": {
+      "nameRequired": "Name is required",
+      "amountPositive": "Amount must be positive",
+      "amountRequired": "Amount is required",
+      "startMonthRequired": "Start month is required",
+      "startMonthFormat": "Invalid month format",
+      "monthCountMin": "At least 1 month",
+      "monthCountRequired": "Month count required",
+      "monthlyPaymentDateRequired": "Date is required",
+      "monthlyPaymentAmountPositive": "Amount must be positive",
+      "monthlyPaymentAmountRequired": "Amount is required",
+      "sumMismatch": "Sum of monthly payments must equal total amount."
+    },
+    "notifications": {
+      "successTitle": "Payment added",
+      "successMessage": "Your payment has been successfully created.",
+      "errorTitle": "Error",
+      "errorMessage": "Something went wrong while adding the payment."
+    }
+  },
   "buttons": {
     "logout": "Log out",
     "addpayment": "Add Payment"
