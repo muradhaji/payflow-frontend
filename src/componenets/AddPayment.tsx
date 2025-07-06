@@ -2,7 +2,7 @@ import type { MonthlyPaymentCreate } from '../types/installment';
 import { useEffect, useMemo } from 'react';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { DatePickerInput, MonthPickerInput } from '@mantine/dates';
+import { DatePickerInput } from '@mantine/dates';
 import { Loader, LoadingOverlay, NumberInput, TextInput } from '@mantine/core';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Check, X } from 'lucide-react';
@@ -42,8 +42,11 @@ const AddPayment = () => {
           }),
         startDate: yup
           .string()
-          .required(t('addPayment.error.startMonthRequired'))
-          .matches(/^\d{4}-\d{2}$/, t('addPayment.error.startMonthFormat')),
+          .required(t('addPayment.error.startDateRequired'))
+          .matches(
+            /^\d{4}-\d{2}-\d{2}$/,
+            t('addPayment.error.startDateFormat')
+          ),
         monthCount: yup
           .number()
           .min(1, t('addPayment.error.monthCountMin'))
@@ -90,7 +93,7 @@ const AddPayment = () => {
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
-      startDate: dayjs().add(1, 'month').format('YYYY-MM'),
+      startDate: dayjs().add(1, 'month').startOf('month').format('YYYY-MM-DD'),
       monthCount: 1,
       monthlyPayments: [],
     },
@@ -108,13 +111,13 @@ const AddPayment = () => {
 
   useEffect(() => {
     if (amount > 0 && monthCount > 0 && startDate) {
-      const base = dayjs(startDate, 'YYYY-MM');
+      const base = dayjs(startDate, 'YYYY-MM-DD');
       const payments: MonthlyPaymentCreate[] = [];
       const baseAmount = Math.floor((amount * 100) / monthCount) / 100;
       const remaining = +(amount - baseAmount * monthCount).toFixed(2);
 
       for (let i = 0; i < monthCount; i++) {
-        const date = base.add(i, 'month').startOf('month').format('YYYY-MM-DD');
+        const date = base.add(i, 'month').format('YYYY-MM-DD');
         let amount = baseAmount;
 
         if (i === monthCount - 1) {
@@ -251,16 +254,18 @@ const AddPayment = () => {
                 control={control}
                 name='startDate'
                 render={({ field }) => (
-                  <MonthPickerInput
+                  <DatePickerInput
                     value={
                       field.value
-                        ? dayjs(field.value, 'YYYY-MM').toDate()
+                        ? dayjs(field.value, 'YYYY-MM-DD').toDate()
                         : null
                     }
                     onChange={(date) =>
-                      field.onChange(date ? dayjs(date).format('YYYY-MM') : '')
+                      field.onChange(
+                        date ? dayjs(date).format('YYYY-MM-DD') : ''
+                      )
                     }
-                    valueFormat='MMMM YYYY'
+                    valueFormat='DD-MM-YYYY'
                     placeholder={t('addPayment.startDatePlaceholder')}
                     id='startDate'
                     size='md'

@@ -117,31 +117,31 @@
     }
   },
   "addPayment": {
-    "addButton": "Ödəniş əlavə et",
+    "addButton": "Əlavə et",
     "nameLabel": "Ad",
     "namePlaceholder": "Ödəniş adını daxil et",
     "amountLabel": "Məbləğ",
     "amountPlaceholder": "Ödəniş məbləğini daxil et",
-    "startDateLabel": "Başlanğıc ay",
-    "startDatePlaceholder": "Başlanğıc ayı seç",
+    "startDateLabel": "Başlanğıc tarix",
+    "startDatePlaceholder": "Başlanğıc tarixini seç",
     "monthCountLabel": "Ayların sayı",
     "monthCountPlaceholder": "Ayların sayını daxil et",
     "monthlyBreakdownTitle": "Aylıq bölgü",
-    "monthlyPaymentsEmpty": "Forma doldurulduqdan sonra aylıq ödənişlər görsənəcək",
+    "monthlyPaymentsEmpty": "Aylıq ödənişlər forma doldurulduqdan sonra görsənəcək.",
     "monthlyPaymentsDatePlaceholder": "Tarix seçin",
     "monthlyPaymentsAmountPlaceholder": "Məbləği daxil et",
     "error": {
       "nameRequired": "Ad tələb olunur",
       "amountPositive": "Məbləğ müsbət olmalıdır",
       "amountRequired": "Məbləğ tələb olunur",
-      "startMonthRequired": "Başlanğıc ay tələb olunur",
-      "startMonthFormat": "Yanlış ay formatı",
+      "startDateRequired": "Başlanğıc tarixi tələb olunur",
+      "startDateFormat": "Tarix formatı yanlışdır",
       "monthCountMin": "Ən azı 1 ay olmalıdır",
       "monthCountRequired": "Ayların sayı tələb olunur",
       "monthlyPaymentDateRequired": "Tarix tələb olunur",
       "monthlyPaymentAmountPositive": "Məbləğ müsbət olmalıdır",
       "monthlyPaymentAmountRequired": "Məbləğ tələb olunur",
-      "sumMismatch": "Aylıq ödənişlərin cəmi ümumi məbləğə bərabər olmalıdır."
+      "sumMismatch": "Aylıq ödənişlərin cəmi ümumi məbləğə bərabər olmalıdır"
     },
     "notifications": {
       "successTitle": "Ödəniş əlavə olundu",
