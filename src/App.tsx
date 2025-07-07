@@ -3,11 +3,11 @@ import Home from './componenets/Home';
 import LoginForm from './componenets/LoginForm';
 import RegisterForm from './componenets/RegisterForm';
 import PrivateRoute from './componenets/PrivateRoute';
-import PaymentsCurrent from './componenets/PaymentsCurrent';
+import FilteredInstallmentsCurrent from './componenets/FilteredInstallmentsCurrent';
 import DashboardLayout from './componenets/DashboardLayout';
 import DashboardCards from './componenets/DashboardCards';
-import PaymentsRemaining from './componenets/PaymentsRemaining';
-import PaymentsPaid from './componenets/PaymentsPaid';
+import FilteredInstallmentsRemaining from './componenets/FilteredInstallmentsRemaining';
+import FilteredInstallmentsPaid from './componenets/FilteredInstallmentsPaid';
 import PaymentsLayout from './componenets/PaymentsLayout';
 import AddPayment from './componenets/AddPayment';
 
@@ -43,9 +43,12 @@ function App() {
               }
             >
               <Route index element={<DashboardCards />} />
-              <Route path='current' element={<PaymentsCurrent />} />
-              <Route path='remaining' element={<PaymentsRemaining />} />
-              <Route path='paid' element={<PaymentsPaid />} />
+              <Route path='current' element={<FilteredInstallmentsCurrent />} />
+              <Route
+                path='remaining'
+                element={<FilteredInstallmentsRemaining />}
+              />
+              <Route path='paid' element={<FilteredInstallmentsPaid />} />
               {/* <Route path='all' element={<PaymentsAll />} /> */}
             </Route>
             <Route

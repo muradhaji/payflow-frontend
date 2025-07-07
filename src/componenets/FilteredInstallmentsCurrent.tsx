@@ -1,5 +1,5 @@
 import type { IInstallment, ISelectedPayment } from '../types/installment';
-import PaymentCard from './PaymentCard';
+import FilteredInstallmentCard from './FilteredIntallmentCard';
 import MonthSelector from './MonthSelector';
 import { useAppSelector } from '../app/hooks';
 import { useEffect, useState } from 'react';
@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { sumByKeyDecimal } from '../utils/math';
 import dayjs from 'dayjs';
 
-const PaymentsCurrent = () => {
+const FilteredInstallmentsCurrent = () => {
   const { installments } = useAppSelector((state) => state.installments);
   const [currentInstallments, setCurrentInstallment] = useState<IInstallment[]>(
     []
@@ -102,9 +102,9 @@ const PaymentsCurrent = () => {
         >
           {selectedPaymentsAmount > 0
             ? `${t(
-                'payments.current.buttons.pay.selected'
+                'filteredInstallments.current.buttons.pay.selected'
               )} ${selectedPaymentsAmount} ₼`
-            : t('payments.current.buttons.pay.notselected')}
+            : t('filteredInstallments.current.buttons.pay.notselected')}
         </button>
       </div>
 
@@ -112,7 +112,7 @@ const PaymentsCurrent = () => {
         <>
           <div className='flex items-center justify-between md:justify-start gap-2 px-4 py-2 bg-white shadow-md rounded-lg'>
             <span className='text-xl text-gray-800 font-bold'>
-              {t('payments.current.totalForMonth', {
+              {t('filteredInstallments.current.totalForMonth', {
                 month: capitalize(dayjs().month(currentMonth).format('MMMM')),
               })}
             </span>
@@ -126,7 +126,7 @@ const PaymentsCurrent = () => {
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3'>
             {currentInstallments.map((installment) => (
-              <PaymentCard
+              <FilteredInstallmentCard
                 key={installment._id}
                 {...installment}
                 togglePaymentSelect={handlePaymentSelect}
@@ -140,13 +140,13 @@ const PaymentsCurrent = () => {
         <div className='grow flex flex-col items-center justify-center text-center col-span-full mt-8 text-gray-500'>
           <LineChart className='w-12 h-12 mb-2 text-gray-400' />
           <p className='text-lg font-semibold'>
-            {t('payments.current.empty.textLg')}
+            {t('filteredInstallments.current.empty.textLg')}
           </p>
-          <p className='text-sm'>{t('payments.current.empty.textSm')}</p>
+          <p className='text-sm'>{t('filteredInstallments.current.empty.textSm')}</p>
         </div>
       )}
     </div>
   );
 };
 
-export default PaymentsCurrent;
+export default FilteredInstallmentsCurrent;

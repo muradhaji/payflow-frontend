@@ -18,7 +18,7 @@ interface PaymentCardProps extends IInstallment {
   type: 'current' | 'remaining' | 'paid' | 'all';
 }
 
-const PaymentCard = ({
+const FilteredInstallmentCard = ({
   _id: installmentId,
   title,
   monthlyPayments,
@@ -47,7 +47,7 @@ const PaymentCard = ({
       {monthlyPayments.length > 1 && (
         <div className='flex items-center justify-between px-4 py-2 bg-blue-50 rounded-lg'>
           <span className='text-sm text-blue-800 font-medium'>
-            {t('payments.card.totalAmountLabel')}
+            {t('filteredInstallments.card.totalAmountLabel')}
           </span>
           <span className={`text-lg ${paymentAmountColor} font-bold`}>
             ₼ {sumByKeyDecimal(monthlyPayments, 'amount')}
@@ -89,7 +89,7 @@ const PaymentCard = ({
                 </p>
                 {payment.paid && payment.paidDate && (
                   <p className='text-xs text-green-600'>
-                    {t('payments.card.paidOn', {
+                    {t('filteredInstallments.card.paidOn', {
                       date: `${dayjs(payment.paidDate).format(
                         'D'
                       )} ${capitalize(
@@ -110,4 +110,4 @@ const PaymentCard = ({
   );
 };
 
-export default PaymentCard;
+export default FilteredInstallmentCard;

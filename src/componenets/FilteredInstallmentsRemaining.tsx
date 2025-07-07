@@ -1,5 +1,5 @@
 import type { IInstallment, ISelectedPayment } from '../types/installment';
-import PaymentCard from './PaymentCard';
+import FilteredInstallmentCard from './FilteredIntallmentCard';
 import { useAppSelector } from '../app/hooks';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { ArrowLeft, Wallet } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { sumByKeyDecimal } from '../utils/math';
 
-const PaymentsRemaining = () => {
+const FilteredInstallmentsRemaining = () => {
   const { installments } = useAppSelector((state) => state.installments);
   const [remainingInstallments, setRemainingInstallments] = useState<
     IInstallment[]
@@ -85,16 +85,16 @@ const PaymentsRemaining = () => {
         >
           {selectedPaymentsAmount > 0
             ? `${t(
-                'payments.remaining.buttons.pay.selected'
+                'filteredInstallments.remaining.buttons.pay.selected'
               )} ${selectedPaymentsAmount} ₼`
-            : t('payments.remaining.buttons.pay.notselected')}
+            : t('filteredInstallments.remaining.buttons.pay.notselected')}
         </button>
       </div>
       {remainingInstallments.length ? (
         <>
           <div className='flex items-center justify-between md:justify-start gap-2 px-4 py-2 bg-white shadow-md rounded-lg'>
             <span className='text-xl text-gray-800 font-bold'>
-              {t('payments.remaining.total')}
+              {t('filteredInstallments.remaining.total')}
             </span>
             <span className='text-lg text-yellow-600 font-bold'>
               ₼{' '}
@@ -106,7 +106,7 @@ const PaymentsRemaining = () => {
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3'>
             {remainingInstallments.map((installment) => (
-              <PaymentCard
+              <FilteredInstallmentCard
                 key={installment._id}
                 {...installment}
                 togglePaymentSelect={handlePaymentSelect}
@@ -120,13 +120,13 @@ const PaymentsRemaining = () => {
         <div className='flex flex-col items-center justify-center text-center col-span-full mt-8 text-gray-500'>
           <Wallet className='w-12 h-12 mb-2 text-gray-400' />
           <p className='text-lg font-semibold'>
-            {t('payments.remaining.empty.textLg')}
+            {t('filteredInstallments.remaining.empty.textLg')}
           </p>
-          <p className='text-sm'>{t('payments.remaining.empty.textSm')}</p>
+          <p className='text-sm'>{t('filteredInstallments.remaining.empty.textSm')}</p>
         </div>
       )}
     </div>
   );
 };
 
-export default PaymentsRemaining;
+export default FilteredInstallmentsRemaining;
