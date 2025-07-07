@@ -11,6 +11,8 @@ export type MonthlyPaymentCreate = Omit<
   '_id' | 'paid' | 'paidDate'
 >;
 
+export type MonthlyPaymentEdit = Omit<IMonthlyPayment, '_id' | 'paidDate'>;
+
 export interface IInstallment {
   _id: string;
   user: string;
@@ -28,6 +30,13 @@ export type InstallmentCreate = Omit<
   '_id' | 'user' | 'createdAt' | 'updatedAt' | 'monthlyPayments'
 > & {
   monthlyPayments: MonthlyPaymentCreate[];
+};
+
+export type InstallmentEdit = Omit<
+  IInstallment,
+  '_id' | 'user' | 'createdAt' | 'updatedAt' | 'monthlyPayments'
+> & {
+  monthlyPayments: MonthlyPaymentEdit[];
 };
 
 export interface ISelectedPayment {

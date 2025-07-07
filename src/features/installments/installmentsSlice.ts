@@ -1,15 +1,28 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import type { IInstallment, InstallmentCreate } from '../../types/installment';
+import type {
+  IInstallment,
+  InstallmentCreate,
+  InstallmentEdit,
+} from '../../types/installment';
 import api from '../../api';
-import type { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 
 interface InstallmentsState {
   installments: IInstallment[];
+  selectedInstallment: IInstallment | null;
   fetchInstallments: {
     loading: boolean;
     error: string | null;
   };
   addInstallment: {
+    loading: boolean;
+    error: string | null;
+  };
+  getInstallmentById: {
+    loading: boolean;
+    error: string | null;
+  };
+  updateInstallment: {
     loading: boolean;
     error: string | null;
   };
@@ -17,11 +30,20 @@ interface InstallmentsState {
 
 const initialState: InstallmentsState = {
   installments: [],
+  selectedInstallment: null,
   fetchInstallments: {
     loading: false,
     error: null,
   },
   addInstallment: {
+    loading: false,
+    error: null,
+  },
+  getInstallmentById: {
+    loading: false,
+    error: null,
+  },
+  updateInstallment: {
     loading: false,
     error: null,
   },
@@ -57,12 +79,44 @@ export const addInstallment = createAsyncThunk<
   }
 });
 
+export const updateInstallment = createAsyncThunk<
+  IInstallment,
+  { id: string; newData: InstallmentEdit },
+  { rejectValue: string }
+>('installments/edit', async ({ id, newData }, { rejectWithValue }) => {
+  try {
+    const res = await api.put(`api/installments/${id}`, newData);
+    return res.data;
+  } catch (err: unknown) {
+    const axiosErr = err as AxiosError<{ message: string }>;
+    return rejectWithValue(axiosErr.response?.data?.message || 'Server error');
+  }
+});
+
+export const getInstallmentById = createAsyncThunk<
+  IInstallment,
+  string,
+  { rejectValue: string }
+>('installments/getById', async (id, { rejectWithValue }) => {
+  try {
+    const res = await api.get(`api/installments/${id}`);
+
+    return res.data;
+  } catch (err: unknown) {
+    const axiosErr = err as AxiosError<{ message: string }>;
+    return rejectWithValue(axiosErr.response?.data?.message || 'Server error');
+  }
+});
+
 const installmentsSlice = createSlice({
   name: 'installments',
   initialState,
   reducers: {
     clearInstallments: (state) => {
       state.installments = [];
+    },
+    clearSelectedInstallment: (state) => {
+      state.selectedInstallment = null;
     },
   },
   extraReducers: (builder) => {
@@ -91,10 +145,38 @@ const installmentsSlice = createSlice({
       .addCase(addInstallment.rejected, (state, action) => {
         state.addInstallment.loading = false;
         state.addInstallment.error = action.payload as string;
+      })
+      // getInstallmentById
+      .addCase(getInstallmentById.pending, (state) => {
+        state.getInstallmentById.loading = true;
+        state.getInstallmentById.error = null;
+      })
+      .addCase(getInstallmentById.fulfilled, (state, action) => {
+        state.getInstallmentById.loading = false;
+        state.getInstallmentById.error = null;
+        state.selectedInstallment = action.payload;
+      })
+      .addCase(getInstallmentById.rejected, (state, action) => {
+        state.getInstallmentById.loading = false;
+        state.getInstallmentById.error = action.payload as string;
+      })
+      // updateInstallment
+      .addCase(updateInstallment.pending, (state) => {
+        state.updateInstallment.loading = true;
+        state.updateInstallment.error = null;
+      })
+      .addCase(updateInstallment.fulfilled, (state) => {
+        state.updateInstallment.loading = false;
+        state.updateInstallment.error = null;
+      })
+      .addCase(updateInstallment.rejected, (state, action) => {
+        state.updateInstallment.loading = false;
+        state.updateInstallment.error = action.payload as string;
       });
   },
 });
 
-export const { clearInstallments } = installmentsSlice.actions;
+export const { clearInstallments, clearSelectedInstallment } =
+  installmentsSlice.actions;
 
 export default installmentsSlice.reducer;

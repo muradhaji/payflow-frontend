@@ -20,6 +20,7 @@ import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import './App.css';
+import EditPayment from './componenets/EditPayment';
 
 function App() {
   const { i18n } = useTranslation();
@@ -57,6 +58,7 @@ function App() {
             >
               <Route index element={<>Payments</>}></Route>
               <Route path='add' element={<AddPayment />}></Route>
+              <Route path='edit/:id' element={<EditPayment />}></Route>
             </Route>
             <Route path='*' element={<h1>Not Found</h1>} />
           </Routes>

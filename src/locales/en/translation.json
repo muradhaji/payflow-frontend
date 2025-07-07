@@ -119,15 +119,15 @@
   "addPayment": {
     "addButton": "Add Payment",
     "nameLabel": "Name",
-    "namePlaceholder": "Enter Payment Name",
+    "namePlaceholder": "Enter payment name",
     "amountLabel": "Amount",
-    "amountPlaceholder": "Enter Payment Amount",
+    "amountPlaceholder": "Enter payment amount",
     "startDateLabel": "Start Date",
-    "startDatePlaceholder": "Select Start Date",
+    "startDatePlaceholder": "Select start date",
     "monthCountLabel": "Number of Months",
-    "monthCountPlaceholder": "Enter Number of Months",
+    "monthCountPlaceholder": "Enter number of months",
     "monthlyBreakdownTitle": "Monthly Breakdown",
-    "monthlyPaymentsEmpty": "Monthly payments will appear once the form is filled",
+    "monthlyPaymentsEmpty": "Monthly payments will appear once the form is filled.",
     "monthlyPaymentsDatePlaceholder": "Pick a date",
     "monthlyPaymentsAmountPlaceholder": "Enter amount",
     "error": {
@@ -141,13 +141,47 @@
       "monthlyPaymentDateRequired": "Date is required",
       "monthlyPaymentAmountPositive": "Amount must be positive",
       "monthlyPaymentAmountRequired": "Amount is required",
-      "sumMismatch": "Sum of monthly payments must equal total amount"
+      "sumMismatch": "Sum of monthly payments ({{sum}} ₼) must equal total amount ({{amount}} ₼)."
     },
     "notifications": {
       "successTitle": "Payment added",
       "successMessage": "Your payment has been successfully created.",
       "errorTitle": "Error",
       "errorMessage": "Something went wrong while adding the payment."
+    }
+  },
+  "editPayment": {
+    "editButton": "Save Changes",
+    "nameLabel": "Name",
+    "namePlaceholder": "Enter payment name",
+    "amountLabel": "Amount",
+    "amountPlaceholder": "Enter Payment Amount",
+    "startDateLabel": "Start Date",
+    "startDatePlaceholder": "Select Start Date",
+    "monthCountLabel": "Number of Months",
+    "monthCountPlaceholder": "Enter Number of Months",
+    "monthlyBreakdownTitle": "Monthly Breakdown",
+    "monthlyPaymentsDatePlaceholder": "Pick a date",
+    "monthlyPaymentsAmountPlaceholder": "Enter amount",
+    "monthlyPaymentsEmpty": "Monthly payments will appear once the form is filled.",
+    "error": {
+      "nameRequired": "Name is required",
+      "amountPositive": "Amount must be positive",
+      "amountRequired": "Amount is required",
+      "startDateRequired": "Start date is required",
+      "startDateFormat": "Invalid date format",
+      "monthCountMin": "At least {{paidCount}} month",
+      "monthCountRequired": "Month count required",
+      "monthlyPaymentDateRequired": "Date is required",
+      "monthlyPaymentAmountPositive": "Amount must be positive",
+      "monthlyPaymentAmountRequired": "Amount is required",
+      "sumMismatch": "Sum of monthly payments ({{sum}} ₼) must equal total amount ({{amount}} ₼)."
+    },
+    "notifications": {
+      "successTitle": "Payment updated",
+      "successMessage": "Your payment has been successfully updated.",
+      "errorTitle": "Error",
+      "errorMessage": "Something went wrong while updating the payment."
     }
   },
   "buttons": {

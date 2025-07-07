@@ -1,54 +1,72 @@
-import type {
-  InstallmentCreate,
-  MonthlyPaymentCreate,
-} from '../types/installment';
+import type { InstallmentEdit, MonthlyPaymentEdit } from '../types/installment';
 import { useEffect, useMemo } from 'react';
-import { useForm, useFieldArray, Controller } from 'react-hook-form';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useForm, Controller, useFieldArray } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { DatePickerInput } from '@mantine/dates';
-import { Loader, LoadingOverlay, NumberInput, TextInput } from '@mantine/core';
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Check, X } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { addInstallment } from '../features/installments/installmentsSlice';
 import { showNotification } from '@mantine/notifications';
+import { TextInput, NumberInput, Loader, LoadingOverlay } from '@mantine/core';
+import { DatePickerInput } from '@mantine/dates';
+import { ArrowLeft, Check, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { sumByKeyDecimal } from '../utils/math';
+import {
+  getInstallmentById,
+  updateInstallment,
+  clearSelectedInstallment,
+} from '../features/installments/installmentsSlice';
 import * as yup from 'yup';
 import dayjs from 'dayjs';
 
-const AddPayment = () => {
+const EditPayment = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  const { t } = useTranslation();
+
   const {
-    addInstallment: { loading },
+    selectedInstallment,
+    getInstallmentById: { loading: getInstallmentByIdLoading },
+    updateInstallment: { loading: updateInstallmentLoading },
   } = useAppSelector((state) => state.installments);
-  const { t, i18n } = useTranslation();
 
   const schema = useMemo(
     () =>
       yup.object({
-        title: yup.string().required(t('addPayment.error.nameRequired')),
+        title: yup.string().required(t('editPayment.error.nameRequired')),
         amount: yup
           .number()
-          .positive(t('addPayment.error.amountPositive'))
-          .required(t('addPayment.error.amountRequired'))
+          .positive(t('editPayment.error.amountPositive'))
+          .required(t('editPayment.error.amountRequired'))
           .transform((value, originalValue) => {
             return originalValue === '' ? undefined : value;
           }),
         startDate: yup
           .string()
-          .required(t('addPayment.error.startDateRequired'))
+          .required(t('editPayment.error.startDateRequired'))
           .matches(
             /^\d{4}-\d{2}-\d{2}$/,
-            t('addPayment.error.startDateFormat')
+            t('editPayment.error.startDateFormat')
           ),
         monthCount: yup
           .number()
-          .min(1, t('addPayment.error.monthCountMin'))
-          .required(t('addPayment.error.monthCountRequired'))
+          .required(t('editPayment.error.monthCountRequired'))
           .transform((value, originalValue) => {
             return originalValue === '' ? undefined : value;
+          })
+          .test('month-count-min', function (value) {
+            const { monthlyPayments } = this.parent;
+            const paidCount =
+              monthlyPayments?.filter((p: MonthlyPaymentEdit) => p.paid)
+                .length || 0;
+
+            const errorMessage = t('editPayment.error.monthCountMin', {
+              paidCount,
+            });
+
+            return (
+              value >= paidCount || this.createError({ message: errorMessage })
+            );
           }),
         monthlyPayments: yup
           .array()
@@ -56,24 +74,25 @@ const AddPayment = () => {
             yup.object({
               date: yup
                 .string()
-                .required(t('addPayment.error.monthlyPaymentDateRequired')),
+                .required(t('editPayment.error.monthlyPaymentDateRequired')),
               amount: yup
                 .number()
-                .positive(t('addPayment.error.monthlyPaymentAmountPositive'))
-                .required(t('addPayment.error.monthlyPaymentAmountRequired'))
+                .positive(t('editPayment.error.monthlyPaymentAmountPositive'))
+                .required(t('editPayment.error.monthlyPaymentAmountRequired'))
                 .transform((value, originalValue) => {
                   return originalValue === '' ? undefined : value;
                 }),
+              paid: yup.boolean().default(false),
             })
           )
           .default([])
-          .test('sum-mismatch', function (monthlyPayments) {
+          .test('sum-missmatch', function (monthlyPayments) {
             const { amount } = this.parent;
             if (!monthlyPayments || !amount) return true;
 
             const sum = sumByKeyDecimal(monthlyPayments, 'amount');
 
-            const errorMessage = t('addPayment.error.sumMismatch', {
+            const errorMessage = t('editPayment.error.sumMismatch', {
               sum: sum.toFixed(2),
               amount: amount.toFixed(2),
             });
@@ -88,18 +107,14 @@ const AddPayment = () => {
   );
 
   const {
+    control,
     register,
     handleSubmit,
-    control,
-    watch,
     reset,
+    watch,
+    trigger,
     formState: { errors },
-  } = useForm<InstallmentCreate>({
-    defaultValues: {
-      startDate: dayjs().add(1, 'month').startOf('month').format('YYYY-MM-DD'),
-      monthCount: 1,
-      monthlyPayments: [],
-    },
+  } = useForm<InstallmentEdit>({
     resolver: yupResolver(schema),
   });
 
@@ -111,57 +126,104 @@ const AddPayment = () => {
   const amount = watch('amount');
   const monthCount = watch('monthCount');
   const startDate = watch('startDate');
+  const monthlyPayments = watch('monthlyPayments');
 
   useEffect(() => {
-    const handleLanguageChange = () => {
-      reset(watch());
-    };
+    if (!id) {
+      navigate('/dashboard');
+      return;
+    }
 
-    i18n.on('languageChanged', handleLanguageChange);
+    dispatch(getInstallmentById(id));
 
     return () => {
-      i18n.off('languageChanged');
+      dispatch(clearSelectedInstallment());
     };
-  }, [i18n, reset, watch]);
+  }, [id, navigate, dispatch]);
+
+  useEffect(() => {
+    if (selectedInstallment) {
+      reset({
+        title: selectedInstallment.title,
+        amount: selectedInstallment.amount,
+        startDate: dayjs(selectedInstallment.startDate).format('YYYY-MM-DD'),
+        monthCount: selectedInstallment.monthCount,
+        monthlyPayments: selectedInstallment.monthlyPayments.map((p) => {
+          return { ...p, date: dayjs(p.date).format('YYYY-MM-DD') };
+        }),
+      });
+      replace(
+        selectedInstallment.monthlyPayments.map((p) => {
+          return { ...p, date: dayjs(p.date).format('YYYY-MM-DD') };
+        })
+      );
+    }
+  }, [selectedInstallment, reset, replace]);
 
   useEffect(() => {
     if (amount > 0 && monthCount > 0 && startDate) {
-      const base = dayjs(startDate, 'YYYY-MM-DD');
-      const payments: MonthlyPaymentCreate[] = [];
-      const baseAmount = Math.floor((amount * 100) / monthCount) / 100;
-      const remaining = +(amount - baseAmount * monthCount).toFixed(2);
+      const paidPayments = monthlyPayments.filter((p) => p.paid);
+      const newMonthCount = monthCount - paidPayments.length;
+      const remainingAmount = +(
+        amount - sumByKeyDecimal(paidPayments, 'amount')
+      ).toFixed(2);
 
-      for (let i = 0; i < monthCount; i++) {
+      const base = dayjs(startDate, 'YYYY-MM-DD').add(
+        paidPayments.length,
+        'month'
+      );
+
+      const payments: MonthlyPaymentEdit[] = [];
+      const baseAmount =
+        Math.floor((remainingAmount * 100) / newMonthCount) / 100;
+      const remaining = +(remainingAmount - baseAmount * newMonthCount).toFixed(
+        2
+      );
+
+      for (let i = 0; i < newMonthCount; i++) {
         const date = base.add(i, 'month').format('YYYY-MM-DD');
         let amount = baseAmount;
 
-        if (i === monthCount - 1) {
+        if (i === newMonthCount - 1) {
           amount = +(amount + remaining).toFixed(2);
         }
 
-        payments.push({ date, amount: +amount.toFixed(2) });
+        payments.push({ date, amount: +amount.toFixed(2), paid: false });
       }
 
-      replace(payments);
+      if (
+        JSON.stringify([...paidPayments, ...payments]) !==
+        JSON.stringify(monthlyPayments)
+      ) {
+        replace([...paidPayments, ...payments]);
+      }
     }
-  }, [amount, monthCount, startDate, replace]);
+  }, [amount, monthCount, startDate, monthlyPayments, replace]);
 
-  const onSubmit = async (data: InstallmentCreate): Promise<void> => {
+  useEffect(() => {
+    trigger('monthlyPayments');
+  }, [amount, monthCount, trigger]);
+
+  const onSubmit = async (newData: InstallmentEdit): Promise<void> => {
+    if (!id) {
+      return;
+    }
+
     try {
-      const resultAction = await dispatch(addInstallment(data));
+      const resultAction = await dispatch(updateInstallment({ id, newData }));
 
-      if (addInstallment.fulfilled.match(resultAction)) {
+      if (updateInstallment.fulfilled.match(resultAction)) {
         showNotification({
-          title: t('addPayment.notifications.successTitle'),
-          message: t('addPayment.notifications.successMessage'),
+          title: t('editPayment.notifications.successTitle'),
+          message: t('editPayment.notifications.successMessage'),
           color: 'green',
           icon: <Check />,
         });
-        navigate('/dashboard');
+        navigate(`/payments/details/${id}`);
       } else {
         showNotification({
-          title: t('addPayment.notifications.errorTitle'),
-          message: t('addPayment.notifications.errorMessage'),
+          title: t('editPayment.notifications.errorTitle'),
+          message: t('editPayment.notifications.errorMessage'),
           color: 'red',
           icon: <X />,
         });
@@ -169,8 +231,8 @@ const AddPayment = () => {
       }
     } catch (error) {
       showNotification({
-        title: t('addPayment.notifications.errorTitle'),
-        message: t('addPayment.notifications.errorMessage'),
+        title: t('editPayment.notifications.errorTitle'),
+        message: t('editPayment.notifications.errorMessage'),
         color: 'red',
         icon: <X />,
       });
@@ -189,22 +251,22 @@ const AddPayment = () => {
         </Link>
         <button
           type='submit'
-          form='add-payment-form'
+          form='edit-payment-form'
           className='flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-500'
         >
-          {t('addPayment.addButton')}
+          {t('editPayment.editButton')}
         </button>
       </div>
 
       <div className='relative w-full max-w-5xl mx-auto'>
         <LoadingOverlay
-          visible={loading}
+          visible={getInstallmentByIdLoading || updateInstallmentLoading}
           loaderProps={{ children: <Loader size='sm' type='dots' /> }}
           className='rounded-md'
         />
 
         <form
-          id='add-payment-form'
+          id='edit-payment-form'
           onSubmit={handleSubmit(onSubmit)}
           className='w-full grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white rounded-md shadow'
         >
@@ -214,11 +276,11 @@ const AddPayment = () => {
                 htmlFor='name'
                 className='block text-md font-medium text-gray-700 mb-1'
               >
-                {t('addPayment.nameLabel')}
+                {t('editPayment.nameLabel')}
               </label>
               <TextInput
                 id='name'
-                placeholder={t('addPayment.namePlaceholder')}
+                placeholder={t('editPayment.namePlaceholder')}
                 {...register('title')}
                 size='md'
               />
@@ -232,7 +294,7 @@ const AddPayment = () => {
                 htmlFor='totalAmount'
                 className='block text-md font-medium text-gray-700 mb-1'
               >
-                {t('addPayment.amountLabel')}
+                {t('editPayment.amountLabel')}
               </label>
 
               <Controller
@@ -241,7 +303,7 @@ const AddPayment = () => {
                 render={({ field }) => (
                   <NumberInput
                     id='totalAmount'
-                    placeholder={t('addPayment.amountPlaceholder')}
+                    placeholder={t('editPayment.amountPlaceholder')}
                     value={field.value}
                     onChange={field.onChange}
                     onBlur={field.onBlur}
@@ -263,13 +325,14 @@ const AddPayment = () => {
                 htmlFor='startDate'
                 className='block text-md font-medium text-gray-700 mb-1'
               >
-                {t('addPayment.startDateLabel')}
+                {t('editPayment.startDateLabel')}
               </label>
               <Controller
                 control={control}
                 name='startDate'
                 render={({ field }) => (
                   <DatePickerInput
+                    disabled
                     value={
                       field.value
                         ? dayjs(field.value, 'YYYY-MM-DD').toDate()
@@ -281,7 +344,7 @@ const AddPayment = () => {
                       )
                     }
                     valueFormat='DD-MM-YYYY'
-                    placeholder={t('addPayment.startDatePlaceholder')}
+                    placeholder={t('editPayment.startDatePlaceholder')}
                     id='startDate'
                     size='md'
                   />
@@ -300,7 +363,7 @@ const AddPayment = () => {
                 htmlFor='monthCount'
                 className='block text-md font-medium text-gray-700 mb-1'
               >
-                {t('addPayment.monthCountLabel')}
+                {t('editPayment.monthCountLabel')}
               </label>
               <Controller
                 control={control}
@@ -308,7 +371,7 @@ const AddPayment = () => {
                 render={({ field }) => (
                   <NumberInput
                     id='monthCount'
-                    placeholder={t('addPayment.monthCountPlaceholder')}
+                    placeholder={t('editPayment.monthCountPlaceholder')}
                     value={field.value}
                     onChange={field.onChange}
                     onBlur={field.onBlur}
@@ -327,7 +390,7 @@ const AddPayment = () => {
             {fields.length > 0 ? (
               <div className='bg-gray-100 p-4 rounded-md'>
                 <p className='font-semibold mb-2'>
-                  {t('addPayment.monthlyBreakdownTitle')}
+                  {t('editPayment.monthlyBreakdownTitle')}
                 </p>
                 {fields.map((field, index) => (
                   <div key={field.id} className='flex gap-2 mb-2'>
@@ -336,8 +399,9 @@ const AddPayment = () => {
                       name={`monthlyPayments.${index}.date`}
                       render={({ field }) => (
                         <DatePickerInput
+                          disabled={fields[index].paid}
                           placeholder={t(
-                            'addPayment.monthlyPaymentsDatePlaceholder'
+                            'editPayment.monthlyPaymentsDatePlaceholder'
                           )}
                           value={
                             field.value
@@ -363,11 +427,12 @@ const AddPayment = () => {
                       name={`monthlyPayments.${index}.amount`}
                       render={({ field }) => (
                         <NumberInput
+                          disabled={fields[index].paid}
                           value={field.value}
                           onChange={field.onChange}
                           onBlur={field.onBlur}
                           placeholder={t(
-                            'addPayment.monthlyPaymentsAmountPlaceholder'
+                            'editPayment.monthlyPaymentsAmountPlaceholder'
                           )}
                           suffix=' ₼'
                           allowDecimal
@@ -393,7 +458,7 @@ const AddPayment = () => {
               </div>
             ) : (
               <p className='text-gray-500 text-sm italic text-center'>
-                {t('addPayment.monthlyPaymentsEmpty')}
+                {t('editPayment.monthlyPaymentsEmpty')}
               </p>
             )}
           </div>
@@ -403,4 +468,4 @@ const AddPayment = () => {
   );
 };
 
-export default AddPayment;
+export default EditPayment;
