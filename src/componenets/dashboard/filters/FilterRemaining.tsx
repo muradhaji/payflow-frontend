@@ -86,18 +86,15 @@ const FilterRemaining = () => {
           className='bg-gray-600 text-white px-3 py-1 rounded-xl hover:bg-gray-500 transition flex gap-2'
           disabled={!(selectedPaymentsAmount > 0)}
         >
-          {selectedPaymentsAmount > 0
-            ? `${t(
-                'filteredInstallments.remaining.buttons.pay.selected'
-              )} ${selectedPaymentsAmount} ₼`
-            : t('filteredInstallments.remaining.buttons.pay.notselected')}
+          {t('dashboard.filters.common.buttons.pay.label')}
+          {selectedPaymentsAmount > 0 && ` ${selectedPaymentsAmount} ₼`}
         </button>
       </div>
       {remainingInstallments.length ? (
         <>
           <div className='flex items-center justify-between md:justify-start gap-2 px-4 py-2 bg-white shadow-md rounded-lg'>
             <span className='text-xl text-gray-800 font-bold'>
-              {t('filteredInstallments.remaining.total')}
+              {t('dashboard.filters.remaining.totalLabel')}
             </span>
             <span className='text-lg text-yellow-600 font-bold'>
               ₼{' '}
@@ -123,10 +120,10 @@ const FilterRemaining = () => {
         <div className='flex flex-col items-center justify-center text-center col-span-full mt-8 text-gray-500'>
           <Wallet className='w-12 h-12 mb-2 text-gray-400' />
           <p className='text-lg font-semibold'>
-            {t('filteredInstallments.remaining.empty.textLg')}
+            {t('dashboard.filters.remaining.empty.title')}
           </p>
           <p className='text-sm'>
-            {t('filteredInstallments.remaining.empty.textSm')}
+            {t('dashboard.filters.remaining.empty.description')}
           </p>
         </div>
       )}

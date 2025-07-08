@@ -51,7 +51,7 @@ const Dashboard = () => {
           className='bg-gray-600 text-white px-3 py-1 rounded-xl hover:bg-gray-500 transition flex gap-2'
         >
           <Plus />
-          <span>{t('buttons.addpayment')}</span>
+          <span>{t('common.buttons.addpayment.label')}</span>
         </Link>
       </div>
 

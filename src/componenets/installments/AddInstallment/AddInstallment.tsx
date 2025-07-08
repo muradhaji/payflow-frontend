@@ -28,25 +28,27 @@ const AddInstallment = () => {
   const schema = useMemo(
     () =>
       yup.object({
-        title: yup.string().required(t('addPayment.error.nameRequired')),
+        title: yup
+          .string()
+          .required(t('installments.add.errors.form.nameRequired')),
         amount: yup
           .number()
-          .positive(t('addPayment.error.amountPositive'))
-          .required(t('addPayment.error.amountRequired'))
+          .positive(t('installments.add.errors.form.amountPositive'))
+          .required(t('installments.add.errors.form.amountRequired'))
           .transform((value, originalValue) => {
             return originalValue === '' ? undefined : value;
           }),
         startDate: yup
           .string()
-          .required(t('addPayment.error.startDateRequired'))
+          .required(t('installments.add.errors.form.startDateRequired'))
           .matches(
             /^\d{4}-\d{2}-\d{2}$/,
-            t('addPayment.error.startDateFormat')
+            t('installments.add.errors.form.startDateFormat')
           ),
         monthCount: yup
           .number()
-          .min(1, t('addPayment.error.monthCountMin'))
-          .required(t('addPayment.error.monthCountRequired'))
+          .min(1, t('installments.add.errors.form.monthCountMin'))
+          .required(t('installments.add.errors.form.monthCountRequired'))
           .transform((value, originalValue) => {
             return originalValue === '' ? undefined : value;
           }),
@@ -56,11 +58,17 @@ const AddInstallment = () => {
             yup.object({
               date: yup
                 .string()
-                .required(t('addPayment.error.monthlyPaymentDateRequired')),
+                .required(
+                  t('installments.add.errors.form.monthlyPaymentDateRequired')
+                ),
               amount: yup
                 .number()
-                .positive(t('addPayment.error.monthlyPaymentAmountPositive'))
-                .required(t('addPayment.error.monthlyPaymentAmountRequired'))
+                .positive(
+                  t('installments.add.errors.form.monthlyPaymentAmountPositive')
+                )
+                .required(
+                  t('installments.add.errors.form.monthlyPaymentAmountRequired')
+                )
                 .transform((value, originalValue) => {
                   return originalValue === '' ? undefined : value;
                 }),
@@ -73,7 +81,7 @@ const AddInstallment = () => {
 
             const sum = sumByKeyDecimal(monthlyPayments, 'amount');
 
-            const errorMessage = t('addPayment.error.sumMismatch', {
+            const errorMessage = t('installments.add.errors.form.sumMismatch', {
               sum: sum.toFixed(2),
               amount: amount.toFixed(2),
             });
@@ -152,16 +160,16 @@ const AddInstallment = () => {
 
       if (addInstallment.fulfilled.match(resultAction)) {
         showNotification({
-          title: t('addPayment.notifications.successTitle'),
-          message: t('addPayment.notifications.successMessage'),
+          title: t('installments.add.notifications.successTitle'),
+          message: t('installments.add.notifications.successMessage'),
           color: 'green',
           icon: <Check />,
         });
         navigate('/dashboard');
       } else {
         showNotification({
-          title: t('addPayment.notifications.errorTitle'),
-          message: t('addPayment.notifications.errorMessage'),
+          title: t('installments.add.notifications.errorTitle'),
+          message: t('installments.add.notifications.errorMessage'),
           color: 'red',
           icon: <X />,
         });
@@ -169,8 +177,8 @@ const AddInstallment = () => {
       }
     } catch (error) {
       showNotification({
-        title: t('addPayment.notifications.errorTitle'),
-        message: t('addPayment.notifications.errorMessage'),
+        title: t('installments.add.notifications.errorTitle'),
+        message: t('installments.add.notifications.errorMessage'),
         color: 'red',
         icon: <X />,
       });
@@ -192,7 +200,7 @@ const AddInstallment = () => {
           form='add-payment-form'
           className='flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-500'
         >
-          {t('addPayment.addButton')}
+          {t('installments.add.buttons.addInstallment')}
         </button>
       </div>
 
@@ -214,11 +222,11 @@ const AddInstallment = () => {
                 htmlFor='name'
                 className='block text-md font-medium text-gray-700 mb-1'
               >
-                {t('addPayment.nameLabel')}
+                {t('installments.add.form.fields.name.label')}
               </label>
               <TextInput
                 id='name'
-                placeholder={t('addPayment.namePlaceholder')}
+                placeholder={t('installments.add.form.fields.name.placeholder')}
                 {...register('title')}
                 size='md'
               />
@@ -232,7 +240,7 @@ const AddInstallment = () => {
                 htmlFor='totalAmount'
                 className='block text-md font-medium text-gray-700 mb-1'
               >
-                {t('addPayment.amountLabel')}
+                {t('installments.add.form.fields.amount.label')}
               </label>
 
               <Controller
@@ -241,7 +249,9 @@ const AddInstallment = () => {
                 render={({ field }) => (
                   <NumberInput
                     id='totalAmount'
-                    placeholder={t('addPayment.amountPlaceholder')}
+                    placeholder={t(
+                      'installments.add.form.fields.amount.placeholder'
+                    )}
                     value={field.value}
                     onChange={field.onChange}
                     onBlur={field.onBlur}
@@ -263,7 +273,7 @@ const AddInstallment = () => {
                 htmlFor='startDate'
                 className='block text-md font-medium text-gray-700 mb-1'
               >
-                {t('addPayment.startDateLabel')}
+                {t('installments.add.form.fields.startDate.label')}
               </label>
               <Controller
                 control={control}
@@ -281,7 +291,9 @@ const AddInstallment = () => {
                       )
                     }
                     valueFormat='DD-MM-YYYY'
-                    placeholder={t('addPayment.startDatePlaceholder')}
+                    placeholder={t(
+                      'installments.add.form.fields.startDate.placeholder'
+                    )}
                     id='startDate'
                     size='md'
                   />
@@ -300,7 +312,7 @@ const AddInstallment = () => {
                 htmlFor='monthCount'
                 className='block text-md font-medium text-gray-700 mb-1'
               >
-                {t('addPayment.monthCountLabel')}
+                {t('installments.add.form.fields.monthCount.label')}
               </label>
               <Controller
                 control={control}
@@ -308,7 +320,9 @@ const AddInstallment = () => {
                 render={({ field }) => (
                   <NumberInput
                     id='monthCount'
-                    placeholder={t('addPayment.monthCountPlaceholder')}
+                    placeholder={t(
+                      'installments.add.form.fields.monthCount.placeholder'
+                    )}
                     value={field.value}
                     onChange={field.onChange}
                     onBlur={field.onBlur}
@@ -327,7 +341,9 @@ const AddInstallment = () => {
             {fields.length > 0 ? (
               <div className='bg-gray-100 p-4 rounded-md'>
                 <p className='font-semibold mb-2'>
-                  {t('addPayment.monthlyBreakdownTitle')}
+                  {t(
+                    'installments.add.form.fields.monthlyPayments.commonLabel'
+                  )}
                 </p>
                 {fields.map((field, index) => (
                   <div key={field.id} className='flex gap-2 mb-2'>
@@ -337,7 +353,7 @@ const AddInstallment = () => {
                       render={({ field }) => (
                         <DatePickerInput
                           placeholder={t(
-                            'addPayment.monthlyPaymentsDatePlaceholder'
+                            'installments.add.form.fields.monthlyPayments.date.placeholder'
                           )}
                           value={
                             field.value
@@ -367,7 +383,7 @@ const AddInstallment = () => {
                           onChange={field.onChange}
                           onBlur={field.onBlur}
                           placeholder={t(
-                            'addPayment.monthlyPaymentsAmountPlaceholder'
+                            'installments.add.form.fields.monthlyPayments.amount.placeholder'
                           )}
                           suffix=' ₼'
                           allowDecimal
@@ -393,7 +409,7 @@ const AddInstallment = () => {
               </div>
             ) : (
               <p className='text-gray-500 text-sm italic text-center'>
-                {t('addPayment.monthlyPaymentsEmpty')}
+                {t('installments.add.form.fields.monthlyPayments.empty.title')}
               </p>
             )}
           </div>

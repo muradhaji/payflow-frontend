@@ -103,11 +103,8 @@ const FilterCurrent = () => {
           className='bg-gray-600 text-white px-3 py-1 rounded-xl hover:bg-gray-500 transition flex gap-2'
           disabled={!(selectedPaymentsAmount > 0)}
         >
-          {selectedPaymentsAmount > 0
-            ? `${t(
-                'filteredInstallments.current.buttons.pay.selected'
-              )} ${selectedPaymentsAmount} ₼`
-            : t('filteredInstallments.current.buttons.pay.notselected')}
+          {t('dashboard.filters.common.buttons.pay.label')}
+          {selectedPaymentsAmount > 0 && ` ${selectedPaymentsAmount} ₼`}
         </button>
       </div>
 
@@ -115,7 +112,7 @@ const FilterCurrent = () => {
         <>
           <div className='flex items-center justify-between md:justify-start gap-2 px-4 py-2 bg-white shadow-md rounded-lg'>
             <span className='text-xl text-gray-800 font-bold'>
-              {t('filteredInstallments.current.totalForMonth', {
+              {t('dashboard.filters.current.totalLabel', {
                 month: capitalize(dayjs().month(currentMonth).format('MMMM')),
               })}
             </span>
@@ -143,10 +140,10 @@ const FilterCurrent = () => {
         <div className='grow flex flex-col items-center justify-center text-center col-span-full mt-8 text-gray-500'>
           <LineChart className='w-12 h-12 mb-2 text-gray-400' />
           <p className='text-lg font-semibold'>
-            {t('filteredInstallments.current.empty.textLg')}
+            {t('dashboard.filters.current.empty.title')}
           </p>
           <p className='text-sm'>
-            {t('filteredInstallments.current.empty.textSm')}
+            {t('dashboard.filters.current.empty.description')}
           </p>
         </div>
       )}

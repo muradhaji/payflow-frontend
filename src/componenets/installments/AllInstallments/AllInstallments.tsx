@@ -19,9 +19,9 @@ const AllInstallments = () => {
       <PageHeader
         title={t('installments.all.pageTitle')}
         breadcrumbs={[
-          { label: t('breadcrumbs.dashboard'), to: '/dashboard' },
+          { label: t('common.breadcrumbs.dashboard'), to: '/dashboard' },
           {
-            label: t('breadcrumbs.allPayments'),
+            label: t('common.breadcrumbs.allPayments'),
             to: '/dashboard/all',
             active: true,
           },

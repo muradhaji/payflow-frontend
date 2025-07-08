@@ -50,7 +50,7 @@ const FilterCard = ({
       {monthlyPayments.length > 1 && (
         <div className='flex items-center justify-between px-4 py-2 bg-blue-50 rounded-lg'>
           <span className='text-sm text-blue-800 font-medium'>
-            {t('filteredInstallments.card.totalAmountLabel')}
+            {t('dashboard.filters.card.totalLabel')}
           </span>
           <span className={`text-lg ${paymentAmountColor} font-bold`}>
             ₼ {sumByKeyDecimal(monthlyPayments, 'amount')}
@@ -92,7 +92,7 @@ const FilterCard = ({
                 </p>
                 {payment.paid && payment.paidDate && (
                   <p className='text-xs text-green-600'>
-                    {t('filteredInstallments.card.paidOn', {
+                    {t('dashboard.filters.card.paidLabel', {
                       date: `${dayjs(payment.paidDate).format(
                         'D'
                       )} ${capitalize(

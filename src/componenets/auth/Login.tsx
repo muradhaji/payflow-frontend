@@ -24,7 +24,7 @@ const Login = () => {
 
   const {
     loading,
-    error: loginAPIError,
+    error: apiError,
     token,
   } = useAppSelector((state) => state.auth);
   const { t } = useTranslation();
@@ -60,7 +60,7 @@ const Login = () => {
             to='/register'
             className='rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
           >
-            {t('loginForm.header.signupButton')}
+            {t('auth.login.header.buttons.signup')}
           </Link>
         }
       />
@@ -68,7 +68,7 @@ const Login = () => {
         <div className='bg-white p-8 rounded-2xl shadow-lg w-full max-w-md'>
           <h2 className='text-2xl font-bold mb-6 text-center text-gray-800'>
             <Trans
-              i18nKey='loginForm.form.title'
+              i18nKey='auth.login.form.title'
               components={{
                 1: <span className='text-blue-600' />,
                 2: <span />,
@@ -82,19 +82,17 @@ const Login = () => {
                 htmlFor='username'
                 className='block mb-1 font-medium text-gray-700'
               >
-                {t('loginForm.form.fields.username.label')}
+                {t('auth.login.form.fields.username.label')}
               </label>
               <input
                 id='username'
                 {...formRegister('username')}
                 className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
-                placeholder={t('loginForm.form.fields.username.placeholder')}
+                placeholder={t('auth.login.form.fields.username.placeholder')}
               />
               {formErrors.username?.message && (
                 <p className='text-red-500 text-sm mt-1'>
-                  {t(
-                    `loginForm.form.fields.username.${formErrors.username.message}`
-                  )}
+                  {t(`auth.login.errors.form.${formErrors.username.message}`)}
                 </p>
               )}
             </div>
@@ -104,20 +102,18 @@ const Login = () => {
                 htmlFor='password'
                 className='block mb-1 font-medium text-gray-700'
               >
-                {t('loginForm.form.fields.password.label')}
+                {t('auth.login.form.fields.password.label')}
               </label>
               <input
                 id='password'
                 type='password'
                 {...formRegister('password')}
                 className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
-                placeholder={t('loginForm.form.fields.password.placeholder')}
+                placeholder={t('auth.login.form.fields.password.placeholder')}
               />
               {formErrors.password?.message && (
                 <p className='text-red-500 text-sm mt-1'>
-                  {t(
-                    `loginForm.form.fields.password.${formErrors.password.message}`
-                  )}
+                  {t(`auth.login.errors.form.${formErrors.password.message}`)}
                 </p>
               )}
             </div>
@@ -126,12 +122,16 @@ const Login = () => {
               type='submit'
               className='w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition'
             >
-              {t(`loginForm.form.${loading ? 'submitting' : 'submit'}`)}
+              {t(
+                `auth.login.form.buttons.submit.${
+                  loading ? 'loadingLabel' : 'label'
+                }`
+              )}
             </button>
-            {loginAPIError && (
+            {apiError && (
               <p className='text-red-500 text-sm'>
-                {t(`loginForm.loginAPIError.${loginAPIError}`, {
-                  defaultValue: t('loginForm.loginAPIError.default'),
+                {t(`auth.login.errors.api.${apiError}`, {
+                  defaultValue: t('auth.login.errors.api.default'),
                 })}
               </p>
             )}

@@ -49,7 +49,7 @@ const FilterPaid = () => {
         <>
           <div className='flex items-center justify-between md:justify-start gap-2 px-4 py-2 bg-white shadow-md rounded-lg'>
             <span className='text-xl text-gray-800 font-bold'>
-              {t('filteredInstallments.paid.total')}
+              {t('dashboard.filters.paid.totalLabel')}
             </span>
             <span className='text-lg text-green-600 font-bold'>
               ₼{' '}
@@ -75,10 +75,10 @@ const FilterPaid = () => {
         <div className='flex flex-col items-center justify-center text-center col-span-full mt-8 text-gray-500'>
           <Banknote className='w-12 h-12 mb-2 text-gray-400' />
           <p className='text-lg font-semibold'>
-            {t('filteredInstallments.paid.empty.textLg')}
+            {t('dashboard.filters.paid.empty.title')}
           </p>
           <p className='text-sm'>
-            {t('filteredInstallments.paid.empty.textSm')}
+            {t('dashboard.filters.paid.empty.description')}
           </p>
         </div>
       )}

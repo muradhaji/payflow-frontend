@@ -26,9 +26,7 @@ const SignUp = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { loading, error: registerAPIError } = useAppSelector(
-    (state) => state.auth
-  );
+  const { loading, error: apiError } = useAppSelector((state) => state.auth);
   const { t } = useTranslation();
 
   const {
@@ -56,7 +54,7 @@ const SignUp = () => {
             to='/login'
             className='rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
           >
-            {t('registerForm.header.loginButton')}
+            {t('auth.signup.header.buttons.login')}
           </Link>
         }
       />
@@ -64,7 +62,7 @@ const SignUp = () => {
         <div className='bg-white p-8 rounded-2xl shadow-lg w-full max-w-md'>
           <h2 className='text-2xl font-bold mb-6 text-center text-gray-800'>
             <Trans
-              i18nKey='registerForm.form.title'
+              i18nKey='auth.signup.form.title'
               components={{
                 1: <span className='text-blue-600' />,
                 2: <span />,
@@ -78,19 +76,17 @@ const SignUp = () => {
                 htmlFor='username'
                 className='block mb-1 font-medium text-gray-700'
               >
-                {t('registerForm.form.fields.username.label')}
+                {t('auth.signup.form.fields.username.label')}
               </label>
               <input
                 id='username'
                 {...formRegister('username')}
                 className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
-                placeholder={t('registerForm.form.fields.username.placeholder')}
+                placeholder={t('auth.signup.form.fields.username.placeholder')}
               />
               {formErrors.username?.message && (
                 <p className='text-red-500 text-sm mt-1'>
-                  {t(
-                    `registerForm.form.fields.username.${formErrors.username.message}`
-                  )}
+                  {t(`auth.signup.errors.form.${formErrors.username.message}`)}
                 </p>
               )}
             </div>
@@ -100,20 +96,18 @@ const SignUp = () => {
                 htmlFor='password'
                 className='block mb-1 font-medium text-gray-700'
               >
-                {t('registerForm.form.fields.password.label')}
+                {t('auth.signup.form.fields.password.label')}
               </label>
               <input
                 id='password'
                 type='password'
                 {...formRegister('password')}
                 className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
-                placeholder={t('registerForm.form.fields.password.placeholder')}
+                placeholder={t('auth.signup.form.fields.password.placeholder')}
               />
               {formErrors.password?.message && (
                 <p className='text-red-500 text-sm mt-1'>
-                  {t(
-                    `registerForm.form.fields.password.${formErrors.password.message}`
-                  )}
+                  {t(`auth.signup.errors.form.${formErrors.password.message}`)}
                 </p>
               )}
             </div>
@@ -123,7 +117,7 @@ const SignUp = () => {
                 htmlFor='confirmPassword'
                 className='block mb-1 font-medium text-gray-700'
               >
-                {t('registerForm.form.fields.confirmPassword.label')}
+                {t('auth.signup.form.fields.confirmPassword.label')}
               </label>
               <input
                 id='confirmPassword'
@@ -131,13 +125,13 @@ const SignUp = () => {
                 {...formRegister('confirmPassword')}
                 className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
                 placeholder={t(
-                  'registerForm.form.fields.confirmPassword.placeholder'
+                  'auth.signup.form.fields.confirmPassword.placeholder'
                 )}
               />
               {formErrors.confirmPassword?.message && (
                 <p className='text-red-500 text-sm mt-1'>
                   {t(
-                    `registerForm.form.fields.confirmPassword.${formErrors.confirmPassword.message}`
+                    `auth.signup.errors.form.${formErrors.confirmPassword.message}`
                   )}
                 </p>
               )}
@@ -148,13 +142,17 @@ const SignUp = () => {
               className='w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition'
               disabled={loading}
             >
-              {t(`registerForm.form.${loading ? 'submitting' : 'submit'}`)}
+              {t(
+                `auth.signup.form.buttons.submit.${
+                  loading ? 'loadingLabel' : 'label'
+                }`
+              )}
             </button>
 
-            {registerAPIError && (
+            {apiError && (
               <p className='text-red-500 text-sm'>
-                {t(`registerForm.registerAPIError.${registerAPIError}`, {
-                  defaultValue: t('registerForm.registerAPIError.default'),
+                {t(`auth.signup.errors.api.${apiError}`, {
+                  defaultValue: t('auth.signup.errors.api.default'),
                 })}
               </p>
             )}

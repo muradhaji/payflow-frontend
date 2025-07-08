@@ -1,72 +1,118 @@
 {
   "home": {
-    "loginButton": "Log in",
-    "getStartedButton": "Get started",
-    "viewOtherProjectsButton": "View other projects",
-    "headingText": "Track Your Payments, <1 /> Stay on Top of Your Budget",
-    "paragraphText": "PayFlow is a simple and efficient platform for tracking your personal payments. <1 /> Easily record your monthly obligations, monitor how much you've paid so far, and keep an eye on your remaining balances."
-  },
-  "loginForm": {
-    "header": {
-      "signupButton": "Sign up"
+    "buttons": {
+      "login": "LOG IN",
+      "getStarted": "GET STARTED",
+      "otherProjects": "VIEW OTHER PROJECTS"
     },
-    "form": {
-      "title": "Log in to <1>Pay</1><2>Flow</2>",
-      "fields": {
-        "username": {
-          "label": "Username",
-          "placeholder": "Enter your username",
-          "usernameMin": "Must be at least 6 characters",
-          "usernameRequired": "Username is required"
-        },
-        "password": {
-          "label": "Password",
-          "placeholder": "••••••••",
-          "passwordMin": "Must be at least 8 characters",
-          "passwordRequired": "Password is required"
-        }
-      },
-      "submit": "Login",
-      "submitting": "Logging in..."
-    },
-    "loginAPIError": {
-      "usernameNotFound": "Username not found",
-      "incorrectPassword": "Incorrect password",
-      "default": "An unknown error occurred. Please try again later."
+    "intro": {
+      "heading": "Track Your Payments, <1 /> Stay on Top of Your Budget",
+      "paragraph": "PayFlow is a simple and efficient platform for tracking your personal payments. <1 /> Easily record your monthly obligations, monitor how much you've paid so far, and keep an eye on your remaining balances."
     }
   },
-  "registerForm": {
-    "header": {
-      "loginButton": "Log in"
-    },
-    "form": {
-      "title": "Sign up to <1>Pay</1><2>Flow</2>",
-      "fields": {
-        "username": {
-          "label": "Username",
-          "placeholder": "Enter your username",
-          "usernameMin": "Must be at least 6 characters",
-          "usernameRequired": "Username is required"
-        },
-        "password": {
-          "label": "Password",
-          "placeholder": "Enter your password",
-          "passwordMin": "Must be at least 8 characters",
-          "passwordRequired": "Password is required"
-        },
-        "confirmPassword": {
-          "label": "Confirm Password",
-          "placeholder": "Confirm your password",
-          "confirmPasswordMatch": "Passwords must match",
-          "confirmPasswordRequired": "Password is required"
+  "auth": {
+    "login": {
+      "header": {
+        "buttons": {
+          "signup": "SIGN UP"
         }
       },
-      "submit": "Sign up",
-      "submitting": "Signing up..."
+      "form": {
+        "title": "Log in to <1>Pay</1><2>Flow</2>",
+        "fields": {
+          "username": {
+            "label": "Username",
+            "placeholder": "Enter your username"
+          },
+          "password": {
+            "label": "Password",
+            "placeholder": "Enter your password"
+          }
+        },
+        "buttons": {
+          "submit": {
+            "label": "LOG IN",
+            "loadingLabel": "LOGGING IN..."
+          }
+        }
+      },
+      "errors": {
+        "form": {
+          "usernameMin": "Must be at least 6 characters.",
+          "usernameRequired": "Username is required.",
+          "passwordMin": "Must be at least 8 characters.",
+          "passwordRequired": "Password is required."
+        },
+        "api": {
+          "usernameNotFound": "Username not found.",
+          "incorrectPassword": "Incorrect password.",
+          "default": "An unknown error occurred. Try again later."
+        }
+      }
     },
-    "registerAPIError": {
-      "usernameAlreadyExists": "Username already exists",
-      "default": "An unknown error occurred. Please try again later."
+    "signup": {
+      "header": {
+        "buttons": {
+          "login": "LOG IN"
+        }
+      },
+      "form": {
+        "title": "Sign up to <1>Pay</1><2>Flow</2>",
+        "fields": {
+          "username": {
+            "label": "Username",
+            "placeholder": "Enter your username"
+          },
+          "password": {
+            "label": "Password",
+            "placeholder": "Enter your password"
+          },
+          "confirmPassword": {
+            "label": "Confirm Password",
+            "placeholder": "Confirm your password"
+          }
+        },
+        "buttons": {
+          "submit": {
+            "label": "SIGN UP",
+            "loadingLabel": "SIGNING UP..."
+          }
+        }
+      },
+      "errors": {
+        "form": {
+          "usernameMin": "Must be at least 6 characters.",
+          "usernameRequired": "Username is required.",
+          "passwordMin": "Must be at least 8 characters.",
+          "passwordRequired": "Password is required.",
+          "confirmPasswordMatch": "Passwords must match.",
+          "confirmPasswordRequired": "Confirm password is required."
+        },
+        "api": {
+          "usernameAlreadyExists": "Username already exists.",
+          "default": "An unknown error occurred. Please try again later."
+        }
+      }
+    }
+  },
+  "common": {
+    "emptyState": {
+      "default": {
+        "title": "No data available",
+        "description": "There is no data to display here."
+      }
+    },
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "allPayments": "All Payments"
+    },
+    "buttons": {
+      "logout": {
+        "label": "LOG OUT"
+      },
+      "addpayment": {
+        "label": "ADD PAYMENT"
+      }
     }
   },
   "dashboard": {
@@ -75,6 +121,40 @@
       "remaining": "Remaining debts",
       "paid": "Total paid",
       "all": "All Payments"
+    },
+    "filters": {
+      "current": {
+        "totalLabel": "Total for {{month}}:",
+        "empty": {
+          "title": "Nothing to pay",
+          "description": "No unpaid payments found for the selected month."
+        }
+      },
+      "remaining": {
+        "totalLabel": "Total Remaining:",
+        "empty": {
+          "title": "No remaining payments",
+          "description": "All future payments have already been completed."
+        }
+      },
+      "paid": {
+        "totalLabel": "Total Paid:",
+        "empty": {
+          "title": "No payments completed",
+          "description": "You haven't completed any payments yet."
+        }
+      },
+      "card": {
+        "totalLabel": "Total Amount",
+        "paidLabel": "Paid: {{date}}"
+      },
+      "common": {
+        "buttons": {
+          "pay": {
+            "label": "Pay"
+          }
+        }
+      }
     }
   },
   "installments": {
@@ -91,130 +171,127 @@
         }
       }
     },
+    "add": {
+      "buttons": {
+        "addInstallment": "Add Payment"
+      },
+      "form": {
+        "fields": {
+          "name": {
+            "label": "Name",
+            "placeholder": "Enter payment name"
+          },
+          "amount": {
+            "label": "Amount",
+            "placeholder": "Enter payment amount"
+          },
+          "startDate": {
+            "label": "Start Date",
+            "placeholder": "Select start date"
+          },
+          "monthCount": {
+            "label": "Number of Months",
+            "placeholder": "Enter number of months"
+          },
+          "monthlyPayments": {
+            "label": "Monthly Breakdown",
+            "empty": {
+              "title": "Monthly payments will appear once the form is filled."
+            },
+            "date": {
+              "placeholder": "Pick a date"
+            },
+            "amount": {
+              "placeholder": "Enter amount"
+            }
+          }
+        }
+      },
+      "errors": {
+        "form": {
+          "nameRequired": "Name is required.",
+          "amountPositive": "Amount must be positive.",
+          "amountRequired": "Amount is required.",
+          "startDateRequired": "Start date is required.",
+          "startDateFormat": "Invalid date format.",
+          "monthCountMin": "At least 1 month.",
+          "monthCountRequired": "Month count required.",
+          "monthlyPaymentDateRequired": "Date is required.",
+          "monthlyPaymentAmountPositive": "Amount must be positive.",
+          "monthlyPaymentAmountRequired": "Amount is required.",
+          "sumMismatch": "Sum of monthly payments ({{sum}} ₼) must equal total amount ({{amount}} ₼)."
+        }
+      },
+      "notifications": {
+        "successTitle": "Payment added",
+        "successMessage": "Your payment has been successfully created.",
+        "errorTitle": "Error",
+        "errorMessage": "Something went wrong while adding the payment."
+      }
+    },
+    "edit": {
+      "buttons": {
+        "save": "Save Changes"
+      },
+      "form": {
+        "fields": {
+          "name": {
+            "label": "Name",
+            "placeholder": "Enter payment name"
+          },
+          "amount": {
+            "label": "Amount",
+            "placeholder": "Enter Payment Amount"
+          },
+          "startDate": {
+            "label": "Start Date",
+            "placeholder": "Select Start Date"
+          },
+          "monthCount": {
+            "label": "Number of Months",
+            "placeholder": "Enter Number of Months"
+          },
+          "monthlyPayments": {
+            "commonLabel": "Monthly Breakdown",
+            "empty": {
+              "title": "Monthly payments will appear once the form is filled."
+            },
+            "date": {
+              "placeholder": "Pick a date"
+            },
+            "amount": {
+              "placeholder": "Enter amount"
+            }
+          }
+        }
+      },
+      "errors": {
+        "form": {
+          "nameRequired": "Name is required.",
+          "amountPositive": "Amount must be positive.",
+          "amountRequired": "Amount is required.",
+          "startDateRequired": "Start date is required.",
+          "startDateFormat": "Invalid date format.",
+          "monthCountMin": "At least {{paidCount}} month.",
+          "monthCountRequired": "Month count required.",
+          "monthlyPaymentDateRequired": "Date is required.",
+          "monthlyPaymentAmountPositive": "Amount must be positive.",
+          "monthlyPaymentAmountRequired": "Amount is required.",
+          "sumMismatch": "Sum of monthly payments ({{sum}} ₼) must equal total amount ({{amount}} ₼)."
+        }
+      },
+      "notifications": {
+        "successTitle": "Payment updated",
+        "successMessage": "Your payment has been successfully updated.",
+        "errorTitle": "Error",
+        "errorMessage": "Something went wrong while updating the payment."
+      }
+    },
     "card": {
       "badge": {
         "paid": "Paid",
         "active": "Active"
       }
     }
-  },
-  "breadcrumbs": {
-    "dashboard": "Dashboard",
-    "allPayments": "All Payments"
-  },
-  "filteredInstallments": {
-    "current": {
-      "totalForMonth": "Total for {{month}}:",
-      "empty": {
-        "textLg": "Nothing to pay",
-        "textSm": "No unpaid payments found for the selected month."
-      },
-      "buttons": {
-        "pay": {
-          "selected": "Pay",
-          "notselected": "Select to Pay"
-        }
-      }
-    },
-    "remaining": {
-      "total": "Total Remaining:",
-      "empty": {
-        "textLg": "No remaining payments",
-        "textSm": "All future payments have already been completed."
-      },
-      "buttons": {
-        "pay": {
-          "selected": "Pay",
-          "notselected": "Select to Pay"
-        }
-      }
-    },
-    "paid": {
-      "total": "Total Paid:",
-      "empty": {
-        "textLg": "No payments completed",
-        "textSm": "You haven't completed any payments yet."
-      }
-    },
-    "card": {
-      "totalAmountLabel": "Total Amount",
-      "paidOn": "Paid: {{date}}"
-    }
-  },
-  "addPayment": {
-    "addButton": "Add Payment",
-    "nameLabel": "Name",
-    "namePlaceholder": "Enter payment name",
-    "amountLabel": "Amount",
-    "amountPlaceholder": "Enter payment amount",
-    "startDateLabel": "Start Date",
-    "startDatePlaceholder": "Select start date",
-    "monthCountLabel": "Number of Months",
-    "monthCountPlaceholder": "Enter number of months",
-    "monthlyBreakdownTitle": "Monthly Breakdown",
-    "monthlyPaymentsEmpty": "Monthly payments will appear once the form is filled.",
-    "monthlyPaymentsDatePlaceholder": "Pick a date",
-    "monthlyPaymentsAmountPlaceholder": "Enter amount",
-    "error": {
-      "nameRequired": "Name is required",
-      "amountPositive": "Amount must be positive",
-      "amountRequired": "Amount is required",
-      "startDateRequired": "Start date is required",
-      "startDateFormat": "Invalid date format",
-      "monthCountMin": "At least 1 month",
-      "monthCountRequired": "Month count required",
-      "monthlyPaymentDateRequired": "Date is required",
-      "monthlyPaymentAmountPositive": "Amount must be positive",
-      "monthlyPaymentAmountRequired": "Amount is required",
-      "sumMismatch": "Sum of monthly payments ({{sum}} ₼) must equal total amount ({{amount}} ₼)."
-    },
-    "notifications": {
-      "successTitle": "Payment added",
-      "successMessage": "Your payment has been successfully created.",
-      "errorTitle": "Error",
-      "errorMessage": "Something went wrong while adding the payment."
-    }
-  },
-  "editPayment": {
-    "editButton": "Save Changes",
-    "nameLabel": "Name",
-    "namePlaceholder": "Enter payment name",
-    "amountLabel": "Amount",
-    "amountPlaceholder": "Enter Payment Amount",
-    "startDateLabel": "Start Date",
-    "startDatePlaceholder": "Select Start Date",
-    "monthCountLabel": "Number of Months",
-    "monthCountPlaceholder": "Enter Number of Months",
-    "monthlyBreakdownTitle": "Monthly Breakdown",
-    "monthlyPaymentsDatePlaceholder": "Pick a date",
-    "monthlyPaymentsAmountPlaceholder": "Enter amount",
-    "monthlyPaymentsEmpty": "Monthly payments will appear once the form is filled.",
-    "error": {
-      "nameRequired": "Name is required",
-      "amountPositive": "Amount must be positive",
-      "amountRequired": "Amount is required",
-      "startDateRequired": "Start date is required",
-      "startDateFormat": "Invalid date format",
-      "monthCountMin": "At least {{paidCount}} month",
-      "monthCountRequired": "Month count required",
-      "monthlyPaymentDateRequired": "Date is required",
-      "monthlyPaymentAmountPositive": "Amount must be positive",
-      "monthlyPaymentAmountRequired": "Amount is required",
-      "sumMismatch": "Sum of monthly payments ({{sum}} ₼) must equal total amount ({{amount}} ₼)."
-    },
-    "notifications": {
-      "successTitle": "Payment updated",
-      "successMessage": "Your payment has been successfully updated.",
-      "errorTitle": "Error",
-      "errorMessage": "Something went wrong while updating the payment."
-    }
-  },
-  "buttons": {
-    "logout": "Log out",
-    "addpayment": "Add Payment"
-  },
-  "emptyState": {
-    "defaultTitle": "No data available",
-    "defaultDescription": "There is no data to display here."
   }
 }
