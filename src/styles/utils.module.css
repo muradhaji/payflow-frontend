@@ -1,0 +1,7 @@
+.noSelect {
+  user-select: none;
+}
+
+.pointerEventsNone {
+  pointer-events: none;
+}

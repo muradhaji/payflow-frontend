@@ -1,12 +1,12 @@
 import { useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { login } from '../features/auth/authSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { login } from '../../features/auth/authSlice';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import Header from './Header';
+import Header from '../common/Header/Header';
 
 const LoginSchema = yup.object().shape({
   username: yup.string().min(6, 'usernameMin').required('usernameRequired'),
@@ -18,7 +18,7 @@ type LoginFormInputs = {
   password: string;
 };
 
-const LoginForm = () => {
+const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -142,4 +142,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default Login;

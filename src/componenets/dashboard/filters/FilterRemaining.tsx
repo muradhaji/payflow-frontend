@@ -1,31 +1,27 @@
-import type { IInstallment, ISelectedPayment } from '../types/installment';
-import FilteredInstallmentCard from './FilteredIntallmentCard';
-import MonthSelector from './MonthSelector';
-import { useAppSelector } from '../app/hooks';
+import type {
+  IInstallment,
+  ISelectedPayment,
+} from '../../../types/installment';
+import FilterCard from './FilterCard/FilterCard';
+import { useAppSelector } from '../../../app/hooks';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, LineChart } from 'lucide-react';
+import { ArrowLeft, Wallet } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { sumByKeyDecimal } from '../utils/math';
-import dayjs from 'dayjs';
+import { sumByKeyDecimal } from '../../../utils/math';
 
-const FilteredInstallmentsCurrent = () => {
+const FilterRemaining = () => {
   const { installments } = useAppSelector((state) => state.installments);
-  const [currentInstallments, setCurrentInstallment] = useState<IInstallment[]>(
-    []
-  );
+  const [remainingInstallments, setRemainingInstallments] = useState<
+    IInstallment[]
+  >([]);
   const [selectedPayments, setSelectedPayments] = useState<ISelectedPayment[]>(
     []
   );
   const [selectedPaymentsAmount, setSelectedPaymentsAmount] =
     useState<number>(0);
-  const [currentMonth, setCurrentMonth] = useState<number>(0);
 
   const { t } = useTranslation();
-
-  useEffect(() => {
-    setCurrentMonth(dayjs().month());
-  }, []);
 
   useEffect(() => {
     const filteredInstallments: IInstallment[] = [];
@@ -33,9 +29,9 @@ const FilteredInstallmentsCurrent = () => {
     for (const installment of installments) {
       const { monthlyPayments, ...otherInstallmentData } = installment;
 
-      const filteredMonthlyPayments = monthlyPayments.filter((payment) => {
-        return !payment.paid && dayjs(payment.date).month() === currentMonth;
-      });
+      const filteredMonthlyPayments = monthlyPayments.filter(
+        (payment) => !payment.paid
+      );
 
       if (filteredMonthlyPayments.length) {
         filteredInstallments.push({
@@ -44,8 +40,9 @@ const FilteredInstallmentsCurrent = () => {
         });
       }
     }
-    setCurrentInstallment(filteredInstallments);
-  }, [installments, currentMonth]);
+
+    setRemainingInstallments(filteredInstallments);
+  }, [installments]);
 
   useEffect(() => {
     setSelectedPaymentsAmount(
@@ -75,16 +72,9 @@ const FilteredInstallmentsCurrent = () => {
     }
   };
 
-  const handleMonthChange = (newMonth: number) => {
-    setCurrentMonth(newMonth);
-    setSelectedPayments([]);
-  };
-
-  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
-
   return (
     <div className='flex flex-col gap-3'>
-      <div className='flex justify-end items-center gap-1'>
+      <div className='flex justify-end items-center gap-1 pb-6'>
         <Link
           to='/dashboard'
           className='bg-gray-600 text-white px-3 py-1 rounded-xl hover:bg-gray-500 transition flex gap-2'
@@ -92,61 +82,56 @@ const FilteredInstallmentsCurrent = () => {
           <ArrowLeft />
         </Link>
         <span className='grow'></span>
-        <MonthSelector
-          selectedMonth={currentMonth}
-          onChange={handleMonthChange}
-        />
         <button
           className='bg-gray-600 text-white px-3 py-1 rounded-xl hover:bg-gray-500 transition flex gap-2'
           disabled={!(selectedPaymentsAmount > 0)}
         >
           {selectedPaymentsAmount > 0
             ? `${t(
-                'filteredInstallments.current.buttons.pay.selected'
+                'filteredInstallments.remaining.buttons.pay.selected'
               )} ${selectedPaymentsAmount} ₼`
-            : t('filteredInstallments.current.buttons.pay.notselected')}
+            : t('filteredInstallments.remaining.buttons.pay.notselected')}
         </button>
       </div>
-
-      {currentInstallments.length ? (
+      {remainingInstallments.length ? (
         <>
           <div className='flex items-center justify-between md:justify-start gap-2 px-4 py-2 bg-white shadow-md rounded-lg'>
             <span className='text-xl text-gray-800 font-bold'>
-              {t('filteredInstallments.current.totalForMonth', {
-                month: capitalize(dayjs().month(currentMonth).format('MMMM')),
-              })}
+              {t('filteredInstallments.remaining.total')}
             </span>
-            <span className='text-lg text-red-600 font-bold'>
+            <span className='text-lg text-yellow-600 font-bold'>
               ₼{' '}
               {sumByKeyDecimal(
-                currentInstallments.flatMap((i) => i.monthlyPayments),
+                remainingInstallments.flatMap((i) => i.monthlyPayments),
                 'amount'
               )}
             </span>
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3'>
-            {currentInstallments.map((installment) => (
-              <FilteredInstallmentCard
+            {remainingInstallments.map((installment) => (
+              <FilterCard
                 key={installment._id}
                 {...installment}
                 togglePaymentSelect={handlePaymentSelect}
                 selectedPayments={selectedPayments}
-                type='current'
+                type='remaining'
               />
             ))}
           </div>
         </>
       ) : (
-        <div className='grow flex flex-col items-center justify-center text-center col-span-full mt-8 text-gray-500'>
-          <LineChart className='w-12 h-12 mb-2 text-gray-400' />
+        <div className='flex flex-col items-center justify-center text-center col-span-full mt-8 text-gray-500'>
+          <Wallet className='w-12 h-12 mb-2 text-gray-400' />
           <p className='text-lg font-semibold'>
-            {t('filteredInstallments.current.empty.textLg')}
+            {t('filteredInstallments.remaining.empty.textLg')}
           </p>
-          <p className='text-sm'>{t('filteredInstallments.current.empty.textSm')}</p>
+          <p className='text-sm'>
+            {t('filteredInstallments.remaining.empty.textSm')}
+          </p>
         </div>
       )}
     </div>
   );
 };
 
-export default FilteredInstallmentsCurrent;
+export default FilterRemaining;

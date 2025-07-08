@@ -1,26 +1,19 @@
-import Footer from './Footer';
-import Header from './Header';
-import LogOutButton from './LogOutButton';
-import FullPageSpinner from './FullPageSpinner';
+import Footer from '../common/Footer/Footer';
+import Header from '../../componenets/common/Header/Header';
+import LogOutButton from '../common/LogOutButton/LogOutButton';
 import { Outlet } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useAppDispatch } from '../../app/hooks';
 import { useEffect } from 'react';
-import { fetchInstallments } from '../features/installments/installmentsSlice';
+import { fetchInstallments } from '../../features/installments/installmentsSlice';
 
 const DashboardLayout = () => {
   const dispatch = useAppDispatch();
-
-  const {
-    fetchInstallments: { loading },
-  } = useAppSelector((state) => state.installments);
 
   useEffect(() => {
     dispatch(fetchInstallments());
   }, [dispatch]);
 
-  return loading ? (
-    <FullPageSpinner />
-  ) : (
+  return (
     <div className='min-h-[100dvh] flex flex-col bg-gray-200'>
       <Header rightElement={<LogOutButton />} />
       <div className='flex-1 px-3 py-6'>

@@ -1,6 +1,6 @@
-import Card from './Card';
+import DashboardCard from './DashboardCard/DashboardCard';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../app/hooks';
+
 import { Link } from 'react-router-dom';
 import {
   CalendarCheck2,
@@ -9,10 +9,12 @@ import {
   Plus,
   Wallet,
 } from 'lucide-react';
-import { sumDecimal } from '../utils/math';
-import dayjs from 'dayjs';
 
-const DashboardCards = () => {
+import dayjs from 'dayjs';
+import { useAppSelector } from '../../app/hooks';
+import { sumDecimal } from '../../utils/math';
+
+const Dashboard = () => {
   const { installments } = useAppSelector((state) => state.installments);
 
   const { t } = useTranslation();
@@ -54,31 +56,31 @@ const DashboardCards = () => {
       </div>
 
       <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-2'>
-        <Card
+        <DashboardCard
           title={t('dashboard.cards.current')}
           amount={sumDecimal(currentMonthPayments)}
           routeUrl='/dashboard/current'
           icon={<CalendarCheck2 className='text-red-600' />}
           color='border-red-500'
         />
-        <Card
+        <DashboardCard
           title={t('dashboard.cards.remaining')}
           amount={sumDecimal(totalRemaining)}
           routeUrl='/dashboard/remaining'
           icon={<Wallet className='text-yellow-600' />}
           color='border-yellow-500'
         />
-        <Card
+        <DashboardCard
           title={t('dashboard.cards.paid')}
           amount={sumDecimal(totalPaid)}
           routeUrl='/dashboard/paid'
           icon={<CircleDollarSign className='text-green-600' />}
           color='border-green-500'
         />
-        <Card
+        <DashboardCard
           title={t('dashboard.cards.all')}
           amount={sumDecimal([...totalPaid, ...totalRemaining])}
-          routeUrl='/dashboard/all'
+          routeUrl='/payments/all'
           icon={<Layers className='text-gray-600' />}
           color='border-gray-500'
         />
@@ -87,4 +89,4 @@ const DashboardCards = () => {
   );
 };
 
-export default DashboardCards;
+export default Dashboard;

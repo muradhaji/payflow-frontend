@@ -1,5 +1,5 @@
 import App from './App.tsx';
-import FullPageSpinner from './componenets/FullPageSpinner.tsx';
+import FullPageSpinner from './componenets/common/FullPageSpinner/FullPageSpinner.tsx';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';

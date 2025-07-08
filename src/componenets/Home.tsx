@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import Header from './Header';
+import Header from './common/Header/Header';
 import { Trans, useTranslation } from 'react-i18next';
-import Footer from './Footer';
+import Footer from './common/Footer/Footer';
 import { useAuth } from '../hooks/useAuth';
 
 export default function Home() {

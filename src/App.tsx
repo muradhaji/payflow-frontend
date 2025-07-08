@@ -1,15 +1,19 @@
 import { Route, Routes } from 'react-router-dom';
 import Home from './componenets/Home';
-import LoginForm from './componenets/LoginForm';
-import RegisterForm from './componenets/RegisterForm';
-import PrivateRoute from './componenets/PrivateRoute';
-import FilteredInstallmentsCurrent from './componenets/FilteredInstallmentsCurrent';
-import DashboardLayout from './componenets/DashboardLayout';
-import DashboardCards from './componenets/DashboardCards';
-import FilteredInstallmentsRemaining from './componenets/FilteredInstallmentsRemaining';
-import FilteredInstallmentsPaid from './componenets/FilteredInstallmentsPaid';
-import PaymentsLayout from './componenets/PaymentsLayout';
-import AddPayment from './componenets/AddPayment';
+import Login from './componenets/auth/Login';
+import SignUp from './componenets/auth/SignUp';
+import PrivateRoute from './componenets/auth/PrivateRoute';
+
+import DashboardLayout from './componenets/dashboard/DashboardLayout';
+import Dashboard from './componenets/dashboard/Dashboard';
+import FilterCurrent from './componenets/dashboard/filters/FilterCurrent';
+import FilterRemaining from './componenets/dashboard/filters/FilterRemaining';
+import FilterPaid from './componenets/dashboard/filters/FilterPaid';
+
+import InstallmentsLayout from './componenets/installments/InstallmentsLayout';
+import AllInstallments from './componenets/installments/AllInstallments/AllInstallments';
+import AddInstallment from './componenets/installments/AddInstallment/AddInstallment';
+import EditInstallment from './componenets/installments/EditInstallment/EditInstallment';
 
 import { MantineProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
@@ -20,7 +24,6 @@ import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import './App.css';
-import EditPayment from './componenets/EditPayment';
 
 function App() {
   const { i18n } = useTranslation();
@@ -32,8 +35,8 @@ function App() {
         <DatesProvider settings={{ locale: i18n.language }}>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/login' element={<LoginForm />} />
-            <Route path='/register' element={<RegisterForm />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<SignUp />} />
             <Route
               path='/dashboard'
               element={
@@ -42,26 +45,23 @@ function App() {
                 </PrivateRoute>
               }
             >
-              <Route index element={<DashboardCards />} />
-              <Route path='current' element={<FilteredInstallmentsCurrent />} />
-              <Route
-                path='remaining'
-                element={<FilteredInstallmentsRemaining />}
-              />
-              <Route path='paid' element={<FilteredInstallmentsPaid />} />
-              {/* <Route path='all' element={<PaymentsAll />} /> */}
+              <Route index element={<Dashboard />} />
+              <Route path='current' element={<FilterCurrent />} />
+              <Route path='remaining' element={<FilterRemaining />} />
+              <Route path='paid' element={<FilterPaid />} />
             </Route>
             <Route
               path='/payments'
               element={
                 <PrivateRoute>
-                  <PaymentsLayout />
+                  <InstallmentsLayout />
                 </PrivateRoute>
               }
             >
               <Route index element={<>Payments</>}></Route>
-              <Route path='add' element={<AddPayment />}></Route>
-              <Route path='edit/:id' element={<EditPayment />}></Route>
+              <Route path='all' element={<AllInstallments />} />
+              <Route path='add' element={<AddInstallment />}></Route>
+              <Route path='edit/:id' element={<EditInstallment />}></Route>
             </Route>
             <Route path='*' element={<h1>Not Found</h1>} />
           </Routes>

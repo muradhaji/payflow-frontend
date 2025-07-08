@@ -77,6 +77,31 @@
       "all": "Bütün Ödənişlər"
     }
   },
+  "installments": {
+    "all": {
+      "pageTitle": "Bütün Ödənişlər",
+      "empty": {
+        "title": "Ödəniş tapılmadı",
+        "description": "Hələ heç bir ödəniş əlavə etməmisiniz."
+      },
+      "buttons": {
+        "addPayment": {
+          "label": "ƏLAVƏ ET",
+          "tooltip": "Yeni ödəniş əlavə et"
+        }
+      }
+    },
+    "card": {
+      "badge": {
+        "paid": "Ödənilib",
+        "active": "Aktiv"
+      }
+    }
+  },
+  "breadcrumbs": {
+    "dashboard": "İdarə Paneli",
+    "allPayments": "Bütün Ödənişlər"
+  },
   "filteredInstallments": {
     "current": {
       "totalForMonth": "{{month}} üçün ümumi:",
@@ -187,5 +212,9 @@
   "buttons": {
     "logout": "Çıxış et",
     "addpayment": "Yeni Ödəniş"
+  },
+  "emptyState": {
+    "defaultTitle": "Məlumat yoxdur",
+    "defaultDescription": "Burada göstəriləcək məlumat yoxdur."
   }
 }

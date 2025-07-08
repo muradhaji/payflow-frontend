@@ -1,13 +1,13 @@
-import type { IInstallment } from '../types/installment';
-import FilteredInstallmentCard from './FilteredIntallmentCard';
-import { useAppSelector } from '../app/hooks';
+import type { IInstallment } from '../../../types/installment';
+import FilterCard from './FilterCard/FilterCard';
+import { useAppSelector } from '../../../app/hooks';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Banknote } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { sumByKeyDecimal } from '../utils/math';
+import { sumByKeyDecimal } from '../../../utils/math';
 
-const FilteredInstallmentsPaid = () => {
+const FilterPaid = () => {
   const { installments } = useAppSelector((state) => state.installments);
   const [paidInstallments, setPaidInstallment] = useState<IInstallment[]>([]);
 
@@ -61,7 +61,7 @@ const FilteredInstallmentsPaid = () => {
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3'>
             {paidInstallments.map((installment) => (
-              <FilteredInstallmentCard
+              <FilterCard
                 key={installment._id}
                 {...installment}
                 togglePaymentSelect={() => {}}
@@ -77,11 +77,13 @@ const FilteredInstallmentsPaid = () => {
           <p className='text-lg font-semibold'>
             {t('filteredInstallments.paid.empty.textLg')}
           </p>
-          <p className='text-sm'>{t('filteredInstallments.paid.empty.textSm')}</p>
+          <p className='text-sm'>
+            {t('filteredInstallments.paid.empty.textSm')}
+          </p>
         </div>
       )}
     </div>
   );
 };
 
-export default FilteredInstallmentsPaid;
+export default FilterPaid;

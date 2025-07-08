@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { register } from '../features/auth/authSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { register } from '../../features/auth/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
-import Header from './Header';
+import Header from '../common/Header/Header';
 import { Trans, useTranslation } from 'react-i18next';
 
 const RegisterSchema = yup.object().shape({
@@ -22,7 +22,7 @@ type RegisterFormInputs = {
   confirmPassword: string;
 };
 
-const RegisterForm = () => {
+const SignUp = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -165,4 +165,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default SignUp;

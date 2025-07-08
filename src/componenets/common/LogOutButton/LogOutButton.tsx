@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '../app/hooks';
-import { logout } from '../features/auth/authSlice';
+import { useAppDispatch } from '../../../app/hooks';
+import { logout } from '../../../features/auth/authSlice';
 
 function LogOutButton() {
   const dispatch = useAppDispatch();

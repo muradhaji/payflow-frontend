@@ -77,6 +77,31 @@
       "all": "All Payments"
     }
   },
+  "installments": {
+    "all": {
+      "pageTitle": "All Payments",
+      "empty": {
+        "title": "No payments found",
+        "description": "You have not added any payments yet."
+      },
+      "buttons": {
+        "addPayment": {
+          "label": "ADD",
+          "tooltip": "Add new payment"
+        }
+      }
+    },
+    "card": {
+      "badge": {
+        "paid": "Paid",
+        "active": "Active"
+      }
+    }
+  },
+  "breadcrumbs": {
+    "dashboard": "Dashboard",
+    "allPayments": "All Payments"
+  },
   "filteredInstallments": {
     "current": {
       "totalForMonth": "Total for {{month}}:",
@@ -187,5 +212,9 @@
   "buttons": {
     "logout": "Log out",
     "addpayment": "Add Payment"
+  },
+  "emptyState": {
+    "defaultTitle": "No data available",
+    "defaultDescription": "There is no data to display here."
   }
 }

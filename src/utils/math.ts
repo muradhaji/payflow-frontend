@@ -16,3 +16,7 @@ export function sumByKeyDecimal<T>(items: T[], key: keyof T): number {
   }, 0);
   return totalCents / 100;
 }
+
+export function roundToTwoDecimals(value: number): number {
+  return Math.round((value + Number.EPSILON) * 100) / 100;
+}

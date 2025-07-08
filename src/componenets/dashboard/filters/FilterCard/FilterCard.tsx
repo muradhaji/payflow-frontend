@@ -1,9 +1,12 @@
 import dayjs from 'dayjs';
-import type { IInstallment, ISelectedPayment } from '../types/installment';
+import type {
+  IInstallment,
+  ISelectedPayment,
+} from '../../../../types/installment';
 import { Ellipsis } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { sumByKeyDecimal } from '../utils/math';
+import { sumByKeyDecimal } from '../../../../utils/math';
 
 const colorMap: Record<string, string> = {
   current: 'text-red-700',
@@ -18,7 +21,7 @@ interface PaymentCardProps extends IInstallment {
   type: 'current' | 'remaining' | 'paid' | 'all';
 }
 
-const FilteredInstallmentCard = ({
+const FilterCard = ({
   _id: installmentId,
   title,
   monthlyPayments,
@@ -110,4 +113,4 @@ const FilteredInstallmentCard = ({
   );
 };
 
-export default FilteredInstallmentCard;
+export default FilterCard;
