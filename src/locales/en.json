@@ -105,7 +105,8 @@
     "breadcrumbs": {
       "dashboard": "Dashboard",
       "allPayments": "All Payments",
-      "filterCurrent": "Current"
+      "filterCurrent": "Current",
+      "filterRemaining": "Remaining"
     },
     "buttons": {
       "logout": {
@@ -136,6 +137,7 @@
         }
       },
       "remaining": {
+        "pageTitle": "Remaining Payments",
         "totalLabel": "Total Remaining:",
         "empty": {
           "title": "No remaining payments",

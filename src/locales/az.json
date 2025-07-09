@@ -105,7 +105,8 @@
     "breadcrumbs": {
       "dashboard": "İdarə Paneli",
       "allPayments": "Bütün Ödənişlər",
-      "filterCurrent": "Cari"
+      "filterCurrent": "Cari",
+      "filterRemaining": "Qalan"
     },
     "buttons": {
       "logout": {
@@ -136,6 +137,7 @@
         }
       },
       "remaining": {
+        "pageTitle": "Qalan Ödənişlər",
         "totalLabel": "Qalan ümumi:",
         "empty": {
           "title": "Qalan ödəmə yoxdur",

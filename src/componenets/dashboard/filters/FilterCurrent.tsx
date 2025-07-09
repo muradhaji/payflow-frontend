@@ -45,28 +45,20 @@ const FilterCurrent = () => {
   const { t } = useTranslation();
 
   const filteredInstallments = useMemo(() => {
-    const filtered: IInstallment[] = [];
-
-    for (const installment of installments) {
-      const { monthlyPayments, ...otherInstallmentData } = installment;
-
-      const filteredMonthlyPayments = monthlyPayments.filter((payment) => {
-        return (
-          !payment.paid &&
-          dayjs(payment.date).year() === dayjs(selectedMonth).year() &&
-          dayjs(payment.date).month() === dayjs(selectedMonth).month()
-        );
-      });
-
-      if (filteredMonthlyPayments.length) {
-        filtered.push({
-          ...otherInstallmentData,
-          monthlyPayments: filteredMonthlyPayments,
+    return installments
+      .map((installment) => {
+        const filteredPayments = installment.monthlyPayments.filter((p) => {
+          return !p.paid && dayjs(p.date).isSame(dayjs(selectedMonth), 'month');
         });
-      }
-    }
 
-    return filtered;
+        if (filteredPayments.length === 0) return null;
+
+        return {
+          ...installment,
+          monthlyPayments: filteredPayments,
+        };
+      })
+      .filter(Boolean) as IInstallment[];
   }, [installments, selectedMonth]);
 
   const [minDate, maxDate] = useMemo(() => {
@@ -91,25 +83,25 @@ const FilterCurrent = () => {
   }, [selectedPayments]);
 
   const handlePaymentSelect = (payment: ISelectedPayment) => {
-    const exists = selectedPayments.some(
-      (p) =>
-        p.installmentId === payment.installmentId &&
-        p.paymentId === payment.paymentId
-    );
+    setSelectedPayments((prev) => {
+      const exists = prev.some(
+        (p) =>
+          p.installmentId === payment.installmentId &&
+          p.paymentId === payment.paymentId
+      );
 
-    if (exists) {
-      setSelectedPayments(
-        selectedPayments.filter(
+      if (exists) {
+        return prev.filter(
           (p) =>
             !(
               p.installmentId === payment.installmentId &&
               p.paymentId === payment.paymentId
             )
-        )
-      );
-    } else {
-      setSelectedPayments([...selectedPayments, payment]);
-    }
+        );
+      } else {
+        return [...prev, payment];
+      }
+    });
   };
 
   const handleMonthChange = (newMonth: string) => {
