@@ -106,7 +106,8 @@
       "dashboard": "Dashboard",
       "allPayments": "All Payments",
       "filterCurrent": "Current",
-      "filterRemaining": "Remaining"
+      "filterRemaining": "Remaining",
+      "filterPaid": "Paid"
     },
     "buttons": {
       "logout": {
@@ -145,6 +146,7 @@
         }
       },
       "paid": {
+        "pageTitle": "Paid Payments",
         "totalLabel": "Total Paid:",
         "empty": {
           "title": "No payments completed",

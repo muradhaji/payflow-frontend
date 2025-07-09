@@ -1,88 +1,99 @@
 import type { IInstallment } from '../../../types/installment';
+
 import FilterCard from './FilterCard/FilterCard';
+import EmptyState from '../../common/EmptyState/EmptyState';
+import PageHeader from '../../common/PageHeader/PageHeader';
+
 import { useAppSelector } from '../../../app/hooks';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowLeft, Banknote } from 'lucide-react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { Card, Group, SimpleGrid, Skeleton, Text } from '@mantine/core';
+
 import { sumByKeyDecimal } from '../../../utils/math';
 
 const FilterPaid = () => {
-  const { installments } = useAppSelector((state) => state.installments);
-  const [paidInstallments, setPaidInstallment] = useState<IInstallment[]>([]);
+  const {
+    installments,
+    fetchInstallments: { loading: fetchInstallmentsLoading },
+  } = useAppSelector((state) => state.installments);
 
   const { t } = useTranslation();
 
-  useEffect(() => {
-    const filteredInstallments: IInstallment[] = [];
-
-    for (const installment of installments) {
-      const { monthlyPayments, ...otherInstallmentData } = installment;
-
-      const filteredMonthlyPayments = monthlyPayments.filter(
-        (payment) => payment.paid
-      );
-
-      if (filteredMonthlyPayments.length) {
-        filteredInstallments.push({
-          ...otherInstallmentData,
-          monthlyPayments: filteredMonthlyPayments,
-        });
-      }
-    }
-
-    setPaidInstallment(filteredInstallments);
+  const filteredInstallments = useMemo(() => {
+    return installments
+      .map((installment) => {
+        const filtered = installment.monthlyPayments.filter((p) => p.paid);
+        if (filtered.length === 0) return null;
+        return {
+          ...installment,
+          monthlyPayments: filtered,
+        };
+      })
+      .filter(Boolean) as IInstallment[];
   }, [installments]);
 
   return (
-    <div className='flex flex-col gap-3'>
-      <div className='flex justify-end items-center gap-1 pb-6'>
-        <Link
-          to='/dashboard'
-          className='bg-gray-600 text-white px-3 py-1 rounded-xl hover:bg-gray-500 transition flex gap-2'
-        >
-          <ArrowLeft />
-        </Link>
-        <span className='grow'></span>
-      </div>
-      {paidInstallments.length ? (
-        <>
-          <div className='flex items-center justify-between md:justify-start gap-2 px-4 py-2 bg-white shadow-md rounded-lg'>
-            <span className='text-xl text-gray-800 font-bold'>
-              {t('dashboard.filters.paid.totalLabel')}
-            </span>
-            <span className='text-lg text-green-600 font-bold'>
-              ₼{' '}
-              {sumByKeyDecimal(
-                paidInstallments.flatMap((i) => i.monthlyPayments),
-                'amount'
-              )}
-            </span>
-          </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3'>
-            {paidInstallments.map((installment) => (
-              <FilterCard
-                key={installment._id}
-                {...installment}
-                togglePaymentSelect={() => {}}
-                selectedPayments={[]}
-                type='paid'
-              />
-            ))}
-          </div>
-        </>
-      ) : (
-        <div className='flex flex-col items-center justify-center text-center col-span-full mt-8 text-gray-500'>
-          <Banknote className='w-12 h-12 mb-2 text-gray-400' />
-          <p className='text-lg font-semibold'>
-            {t('dashboard.filters.paid.empty.title')}
-          </p>
-          <p className='text-sm'>
-            {t('dashboard.filters.paid.empty.description')}
-          </p>
-        </div>
-      )}
-    </div>
+    <>
+      <PageHeader
+        title={t('dashboard.filters.paid.pageTitle')}
+        breadcrumbs={[
+          { label: t('common.breadcrumbs.dashboard'), to: '/dashboard' },
+          {
+            label: t('common.breadcrumbs.filterPaid'),
+            to: '/dashboard/paid',
+            active: true,
+          },
+        ]}
+      />
+
+      <Skeleton visible={fetchInstallmentsLoading}>
+        {filteredInstallments.length > 0 ? (
+          <>
+            <Card
+              shadow='sm'
+              radius='sm'
+              withBorder
+              mb='md'
+              px='md'
+              py='sm'
+              bg='white'
+            >
+              <Group justify='space-between' gap='md' wrap='wrap'>
+                <Text size='lg' fw={700} c='gray.8'>
+                  {t('dashboard.filters.paid.totalLabel')}
+                </Text>
+                <Text size='md' fw={700} c='green'>
+                  {sumByKeyDecimal(
+                    filteredInstallments.flatMap((i) => i.monthlyPayments),
+                    'amount'
+                  )}{' '}
+                  ₼
+                </Text>
+              </Group>
+            </Card>
+
+            <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing='md'>
+              {filteredInstallments.map((installment) => (
+                <FilterCard
+                  key={installment._id}
+                  {...installment}
+                  togglePaymentSelect={() => {}}
+                  selectedPayments={[]}
+                  type='paid'
+                />
+              ))}
+            </SimpleGrid>
+          </>
+        ) : (
+          <EmptyState
+            icon
+            title={t('dashboard.filters.paid.empty.title')}
+            description={t('dashboard.filters.paid.empty.description')}
+          />
+        )}
+      </Skeleton>
+    </>
   );
 };
 

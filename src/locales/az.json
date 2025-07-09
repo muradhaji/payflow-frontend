@@ -106,7 +106,8 @@
       "dashboard": "İdarə Paneli",
       "allPayments": "Bütün Ödənişlər",
       "filterCurrent": "Cari",
-      "filterRemaining": "Qalan"
+      "filterRemaining": "Qalan",
+      "filterPaid": "Ödənilmiş"
     },
     "buttons": {
       "logout": {
@@ -145,6 +146,7 @@
         }
       },
       "paid": {
+        "pageTitle": "Ödənilmiş Ödənişlər",
         "totalLabel": "Ümumi ödənilib:",
         "empty": {
           "title": "Hələ ödəmə edilməyib",
