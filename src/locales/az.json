@@ -109,13 +109,16 @@
     "buttons": {
       "logout": {
         "label": "ÇIXIŞ ET"
-      },
-      "addpayment": {
-        "label": "ÖDƏNİŞ ƏLAVƏ ET"
       }
     }
   },
   "dashboard": {
+    "buttons": {
+      "addPayment": {
+        "label": "ƏLAVƏ ET",
+        "tooltip": "Yeni ödəniş əlavə et"
+      }
+    },
     "cards": {
       "current": "Bu Ayın Ödənişləri",
       "remaining": "Qalan Ödənişlər",

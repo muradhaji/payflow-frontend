@@ -109,13 +109,16 @@
     "buttons": {
       "logout": {
         "label": "LOG OUT"
-      },
-      "addpayment": {
-        "label": "ADD PAYMENT"
       }
     }
   },
   "dashboard": {
+    "buttons": {
+      "addPayment": {
+        "label": "ADD",
+        "tooltip": "Add new payment"
+      }
+    },
     "cards": {
       "current": "This Month's debts",
       "remaining": "Remaining debts",

@@ -1,6 +1,11 @@
 import DashboardCard from './DashboardCard/DashboardCard';
-import { useTranslation } from 'react-i18next';
+import PageHeader from '../common/PageHeader/PageHeader';
 
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '../../app/hooks';
+import { sumByKeyDecimal, sumDecimal } from '../../utils/math';
+import { Button, SimpleGrid, Skeleton, Tooltip } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import {
   CalendarCheck2,
@@ -11,80 +16,92 @@ import {
 } from 'lucide-react';
 
 import dayjs from 'dayjs';
-import { useAppSelector } from '../../app/hooks';
-import { sumDecimal } from '../../utils/math';
 
 const Dashboard = () => {
-  const { installments } = useAppSelector((state) => state.installments);
-
+  const {
+    installments,
+    fetchInstallments: { loading: fetchInstallmentsLoading },
+  } = useAppSelector((state) => state.installments);
   const { t } = useTranslation();
 
-  const currentMonth = dayjs().month();
-  const currentYear = dayjs().year();
+  const { totalCurrent, totalPaid, totalRemaining } = useMemo(() => {
+    const now = dayjs();
+    const allPayments = installments.flatMap((i) => i.monthlyPayments);
 
-  const currentMonthPayments: number[] = [];
-  const totalPaid: number[] = [];
-  const totalRemaining: number[] = [];
+    const totalCurrent = sumByKeyDecimal(
+      allPayments.filter(
+        (p) =>
+          !p.paid &&
+          dayjs(p.date).month() === now.month() &&
+          dayjs(p.date).year() === now.year()
+      ),
+      'amount'
+    );
 
-  installments.forEach((inst) => {
-    inst.monthlyPayments.forEach((payment) => {
-      const payDate = dayjs(payment.date);
-      const isCurrentMonth =
-        payDate.month() === currentMonth && payDate.year() === currentYear;
+    const totalPaid = sumByKeyDecimal(
+      allPayments.filter((p) => p.paid),
+      'amount'
+    );
 
-      if (!payment.paid) {
-        totalRemaining.push(payment.amount);
-        if (isCurrentMonth) {
-          currentMonthPayments.push(payment.amount);
-        }
-      } else {
-        totalPaid.push(payment.amount);
-      }
-    });
-  });
+    const totalRemaining = sumByKeyDecimal(
+      allPayments.filter((p) => !p.paid),
+      'amount'
+    );
+
+    return { totalCurrent, totalPaid, totalRemaining };
+  }, [installments]);
 
   return (
     <>
-      <div className='flex justify-end items-center pb-6'>
-        <Link
-          to='/payments/add'
-          className='bg-gray-600 text-white px-3 py-1 rounded-xl hover:bg-gray-500 transition flex gap-2'
-        >
-          <Plus />
-          <span>{t('common.buttons.addpayment.label')}</span>
-        </Link>
-      </div>
+      <PageHeader
+        title='Dashboard'
+        actions={
+          <Tooltip label={t('dashboard.buttons.addPayment.tooltip')}>
+            <Button
+              leftSection={<Plus size={18} />}
+              component={Link}
+              to='/payments/add'
+              variant='filled'
+              size='xs'
+            >
+              <span>{t('dashboard.buttons.addPayment.label')}</span>
+            </Button>
+          </Tooltip>
+        }
+      />
 
-      <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-2'>
-        <DashboardCard
-          title={t('dashboard.cards.current')}
-          amount={sumDecimal(currentMonthPayments)}
-          routeUrl='/dashboard/current'
-          icon={<CalendarCheck2 className='text-red-600' />}
-          color='border-red-500'
-        />
-        <DashboardCard
-          title={t('dashboard.cards.remaining')}
-          amount={sumDecimal(totalRemaining)}
-          routeUrl='/dashboard/remaining'
-          icon={<Wallet className='text-yellow-600' />}
-          color='border-yellow-500'
-        />
-        <DashboardCard
-          title={t('dashboard.cards.paid')}
-          amount={sumDecimal(totalPaid)}
-          routeUrl='/dashboard/paid'
-          icon={<CircleDollarSign className='text-green-600' />}
-          color='border-green-500'
-        />
-        <DashboardCard
-          title={t('dashboard.cards.all')}
-          amount={sumDecimal([...totalPaid, ...totalRemaining])}
-          routeUrl='/payments/all'
-          icon={<Layers className='text-gray-600' />}
-          color='border-gray-500'
-        />
-      </div>
+      <Skeleton visible={fetchInstallmentsLoading}>
+        <SimpleGrid cols={{ base: 1, sm: 2 }} spacing='md' mt='md'>
+          <DashboardCard
+            title={t('dashboard.cards.current')}
+            amount={totalCurrent}
+            routeUrl='/dashboard/current'
+            icon={<CalendarCheck2 className='text-red-600' />}
+            color='border-red-500'
+          />
+          <DashboardCard
+            title={t('dashboard.cards.remaining')}
+            amount={totalRemaining}
+            routeUrl='/dashboard/remaining'
+            icon={<Wallet className='text-yellow-600' />}
+            color='border-yellow-500'
+          />
+          <DashboardCard
+            title={t('dashboard.cards.paid')}
+            amount={totalPaid}
+            routeUrl='/dashboard/paid'
+            icon={<CircleDollarSign className='text-green-600' />}
+            color='border-green-500'
+          />
+          <DashboardCard
+            title={t('dashboard.cards.all')}
+            amount={sumDecimal([totalPaid, totalRemaining])}
+            routeUrl='/payments/all'
+            icon={<Layers className='text-gray-600' />}
+            color='border-gray-500'
+          />
+        </SimpleGrid>
+      </Skeleton>
     </>
   );
 };
