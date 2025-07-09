@@ -104,7 +104,8 @@
     },
     "breadcrumbs": {
       "dashboard": "İdarə Paneli",
-      "allPayments": "Bütün Ödənişlər"
+      "allPayments": "Bütün Ödənişlər",
+      "filterCurrent": "Cari"
     },
     "buttons": {
       "logout": {
@@ -127,6 +128,7 @@
     },
     "filters": {
       "current": {
+        "pageTitle": "Cari Ödənişlər",
         "totalLabel": "{{month}} üçün ümumi:",
         "empty": {
           "title": "Ödəməyə heç nə yoxdur",
@@ -154,7 +156,11 @@
       "common": {
         "buttons": {
           "pay": {
-            "label": "Ödə"
+            "label": "ÖDƏ",
+            "tooltip": "Ödəmək üçün ödənişi seçin"
+          },
+          "monthSelector": {
+            "tooltip": "Ödənişləri görmək üçün ay və ili seçin."
           }
         }
       }

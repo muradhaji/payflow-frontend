@@ -104,7 +104,8 @@
     },
     "breadcrumbs": {
       "dashboard": "Dashboard",
-      "allPayments": "All Payments"
+      "allPayments": "All Payments",
+      "filterCurrent": "Current"
     },
     "buttons": {
       "logout": {
@@ -127,6 +128,7 @@
     },
     "filters": {
       "current": {
+        "pageTitle": "Current Payments",
         "totalLabel": "Total for {{month}}:",
         "empty": {
           "title": "Nothing to pay",
@@ -154,7 +156,11 @@
       "common": {
         "buttons": {
           "pay": {
-            "label": "Pay"
+            "label": "PAY",
+            "tooltip": "Select payment to pay"
+          },
+          "monthSelector": {
+            "tooltip": "Select the month and year to view payments."
           }
         }
       }
