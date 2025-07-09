@@ -1,21 +1,27 @@
-import dayjs from 'dayjs';
 import type {
   IInstallment,
   ISelectedPayment,
 } from '../../../../types/installment';
-import { Ellipsis } from 'lucide-react';
-import { Link } from 'react-router-dom';
+
 import { useTranslation } from 'react-i18next';
 import { sumByKeyDecimal } from '../../../../utils/math';
 
+import { Link } from 'react-router-dom';
+import { Ellipsis } from 'lucide-react';
+import { Card, Group, Text, Checkbox, Stack, ActionIcon } from '@mantine/core';
+
+import dayjs from 'dayjs';
+
+import classes from './FilterCard.module.css';
+
 const colorMap: Record<string, string> = {
-  current: 'text-red-700',
-  remaining: 'text-yellow-700',
-  paid: 'text-green-700',
-  default: 'text-gray-700',
+  current: 'red',
+  remaining: 'orange',
+  paid: 'green',
+  default: 'gray',
 };
 
-interface PaymentCardProps extends IInstallment {
+interface FilterCardProps extends IInstallment {
   togglePaymentSelect: (payment: ISelectedPayment) => void;
   selectedPayments: ISelectedPayment[];
   type: 'current' | 'remaining' | 'paid' | 'all';
@@ -28,88 +34,97 @@ const FilterCard = ({
   togglePaymentSelect,
   selectedPayments,
   type,
-}: PaymentCardProps) => {
+}: FilterCardProps) => {
   const { t } = useTranslation();
+  const color = colorMap[type] ?? colorMap.default;
 
-  const paymentAmountColor = colorMap[type] || colorMap.default;
+  const isSelected = (paymentId: string) =>
+    selectedPayments.some(
+      (p) => p.installmentId === installmentId && p.paymentId === paymentId
+    );
 
-  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  const formatDate = (date: string | Date) => dayjs(date).format('D MMM, YYYY');
 
   return (
-    <div className='w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-md p-6 space-y-4'>
-      <div className='flex items-center justify-between'>
-        <h2 className='text-xl font-semibold text-gray-800'>{title}</h2>
-        <Link
-          to={`/payment/${installmentId}`}
-          className='px-2 rounded-md transition hover:bg-gray-50'
+    <Card shadow='sm' radius='sm' withBorder padding='md'>
+      <Group justify='space-between' align='center' mb='md'>
+        <Text fw={600} size='lg' c='gray.8'>
+          {title}
+        </Text>
+        <ActionIcon
+          component={Link}
+          to={`/payments/details/${installmentId}`}
+          variant='subtle'
+          c='gray'
+          size='md'
+          aria-label={t('dashboard.filters.card.viewDetails')}
         >
-          <Ellipsis />
-        </Link>
-      </div>
+          <Ellipsis size={20} />
+        </ActionIcon>
+      </Group>
 
       {monthlyPayments.length > 1 && (
-        <div className='flex items-center justify-between px-4 py-2 bg-blue-50 rounded-lg'>
-          <span className='text-sm text-blue-800 font-medium'>
+        <Group justify='space-between' className={classes.totalSummary}>
+          <Text size='sm' fw={500} c='blue.8'>
             {t('dashboard.filters.card.totalLabel')}
-          </span>
-          <span className={`text-lg ${paymentAmountColor} font-bold`}>
-            ₼ {sumByKeyDecimal(monthlyPayments, 'amount')}
-          </span>
-        </div>
+          </Text>
+          <Text size='lg' fw={700} c={`${color}.6`}>
+            {sumByKeyDecimal(monthlyPayments, 'amount')} ₼
+          </Text>
+        </Group>
       )}
 
-      <div className='space-y-3'>
+      <Stack gap='sm'>
         {monthlyPayments.map((payment) => (
-          <label
+          <Group
             key={payment._id}
-            className='flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-sm hover:bg-gray-100 transition cursor-pointer'
+            justify='space-between'
+            gap='sm'
+            p='xs'
+            className={`${classes.paymentItem} ${
+              type !== 'paid' ? classes.paymentItemHover : ''
+            }`}
+            onClick={() => {
+              if (type !== 'paid') {
+                togglePaymentSelect({
+                  installmentId,
+                  paymentId: payment._id,
+                  paymentAmount: payment.amount,
+                });
+              }
+            }}
           >
-            <div className='flex items-center space-x-3'>
-              {type != 'paid' && (
-                <input
-                  type='checkbox'
-                  checked={selectedPayments.some(
-                    (p) =>
-                      p.installmentId === installmentId &&
-                      p.paymentId === payment._id
-                  )}
+            <Group gap='xs' align='center'>
+              {type !== 'paid' && (
+                <Checkbox
+                  checked={isSelected(payment._id)}
                   readOnly
-                  className='form-checkbox h-5 w-5 accent-blue-600'
-                  onClick={() => {
-                    togglePaymentSelect({
-                      installmentId,
-                      paymentId: payment._id,
-                      paymentAmount: payment.amount,
-                    });
-                  }}
+                  tabIndex={-1}
+                  onClick={(e) => e.stopPropagation()}
+                  c='blue'
+                  size='sm'
                 />
               )}
               <div>
-                <p className='text-sm font-medium text-gray-800'>
-                  {`${dayjs(payment.date).format('D')} ${capitalize(
-                    dayjs(payment.date).format('MMM')
-                  )}, ${dayjs(payment.date).format('YYYY')}`}
-                </p>
+                <Text size='sm' fw={500} c='gray.8'>
+                  {formatDate(payment.date)}
+                </Text>
                 {payment.paid && payment.paidDate && (
-                  <p className='text-xs text-green-600'>
+                  <Text size='xs' c='green.6'>
                     {t('dashboard.filters.card.paidLabel', {
-                      date: `${dayjs(payment.paidDate).format(
-                        'D'
-                      )} ${capitalize(
-                        dayjs(payment.paidDate).format('MMM')
-                      )}, ${dayjs(payment.paidDate).format('YYYY')}`,
+                      date: formatDate(payment.paidDate),
                     })}
-                  </p>
+                  </Text>
                 )}
               </div>
-            </div>
-            <p className={`text-right font-semibold ${paymentAmountColor}`}>
+            </Group>
+            <Text size='md' fw={600} c={`${color}.7`} ta='right'>
               ₼ {payment.amount}
-            </p>
-          </label>
+            </Text>
+          </Group>
         ))}
-      </div>
-    </div>
+      </Stack>
+    </Card>
   );
 };
 

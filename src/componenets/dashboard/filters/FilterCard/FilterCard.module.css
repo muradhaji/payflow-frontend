@@ -1,0 +1,21 @@
+.totalSummary {
+  background-color: #e3f2fd; /* Mantine blue[0] */
+  border-radius: var(--mantine-radius-sm);
+  padding: 8px 16px;
+  margin-bottom: 16px;
+}
+
+.paymentItem {
+  background-color: #f8f9fa; /* Mantine gray[0] */
+  border-radius: var(--mantine-radius-sm);
+  transition: background-color 0.2s ease;
+  cursor: default;
+}
+
+.paymentItemHover {
+  cursor: pointer;
+}
+
+.paymentItemHover:hover {
+  background-color: #f1f3f5; /* Mantine gray[1] */
+}
