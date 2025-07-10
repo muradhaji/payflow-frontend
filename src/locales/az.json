@@ -107,7 +107,8 @@
       "allPayments": "Bütün Ödənişlər",
       "filterCurrent": "Cari",
       "filterRemaining": "Qalan",
-      "filterPaid": "Ödənilmiş"
+      "filterPaid": "Ödənilmiş",
+      "details": "Təfərrüatlar"
     },
     "buttons": {
       "logout": {
@@ -304,6 +305,20 @@
       "badge": {
         "paid": "Ödənilib",
         "active": "Aktiv"
+      }
+    },
+    "details": {
+      "pageTitle": "Ödəniş Təfərrüatları",
+      "buttons": {
+        "edit": {
+          "label": "REDAKTƏ ET"
+        }
+      },
+      "fields": {
+        "amount": "Məbləğ",
+        "startDate": "Başlama tarixi",
+        "createdAt": "Yaradılma tarixi",
+        "updatedAt": "Yenilənmə tarixi"
       }
     }
   }

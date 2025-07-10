@@ -1,0 +1,17 @@
+.wrapper {
+  background-color: var(--mantine-color-gray-0);
+  border-radius: var(--mantine-radius-sm);
+  padding: var(--mantine-spacing-sm);
+  transition: background-color 0.2s ease;
+}
+
+.wrapperActive {
+  cursor: pointer;
+}
+.wrapperActive:hover {
+  background-color: var(--mantine-color-gray-1);
+}
+
+.wrapperDisabled {
+  cursor: not-allowed;
+}

@@ -107,7 +107,8 @@
       "allPayments": "All Payments",
       "filterCurrent": "Current",
       "filterRemaining": "Remaining",
-      "filterPaid": "Paid"
+      "filterPaid": "Paid",
+      "details": "Details"
     },
     "buttons": {
       "logout": {
@@ -304,6 +305,20 @@
       "badge": {
         "paid": "Paid",
         "active": "Active"
+      }
+    },
+    "details": {
+      "pageTitle": "Payment Details",
+      "buttons": {
+        "edit": {
+          "label": "EDIT"
+        }
+      },
+      "fields": {
+        "amount": "Amount",
+        "startDate": "Start date",
+        "createdAt": "Created at",
+        "updatedAt": "Updated at"
       }
     }
   }

@@ -24,6 +24,7 @@ import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import './App.css';
+import InstallmentDetails from './componenets/installments/InstallmentDetails.tsx/InstallmentDetails';
 
 function App() {
   const { i18n } = useTranslation();
@@ -62,6 +63,10 @@ function App() {
               <Route path='all' element={<AllInstallments />} />
               <Route path='add' element={<AddInstallment />}></Route>
               <Route path='edit/:id' element={<EditInstallment />}></Route>
+              <Route
+                path='details/:id'
+                element={<InstallmentDetails />}
+              ></Route>
             </Route>
             <Route path='*' element={<h1>Not Found</h1>} />
           </Routes>
