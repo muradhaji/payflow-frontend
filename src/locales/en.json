@@ -312,6 +312,9 @@
       "buttons": {
         "edit": {
           "label": "EDIT"
+        },
+        "delete": {
+          "label": "DELETE"
         }
       },
       "fields": {
@@ -363,6 +366,18 @@
               "title": "Cancellation failed",
               "message": "An error occurred while cancelling the payments."
             }
+          }
+        }
+      },
+      "notifications": {
+        "delete": {
+          "error": {
+            "message": "An error occurred while deleting the payment.",
+            "title": "Error occurred"
+          },
+          "success": {
+            "message": "Payment was deleted successfully.",
+            "title": "Deleted"
           }
         }
       }

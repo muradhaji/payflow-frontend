@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -7,6 +7,7 @@ import {
   Card,
   Grid,
   Group,
+  Loader,
   Skeleton,
   Stack,
   Text,
@@ -15,7 +16,11 @@ import {
 import dayjs from 'dayjs';
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { getInstallmentById } from '../../../features/installments/installmentsSlice';
+import {
+  deleteInstallment,
+  fetchInstallments,
+  getInstallmentById,
+} from '../../../features/installments/installmentsSlice';
 
 import PageHeader from '../../common/PageHeader/PageHeader';
 import EmptyState from '../../common/EmptyState/EmptyState';
@@ -24,14 +29,21 @@ import PaidPayments from './PaidPayments';
 import UnpaidPayments from './UnpaidPayments';
 
 import utilStyles from '../../../styles/utils.module.css';
+import { showNotification } from '@mantine/notifications';
+import { Check, X } from 'lucide-react';
 
 const InstallmentDetails = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
 
-  const { selectedInstallment, getInstallmentById: getByIdStatus } =
-    useAppSelector((state) => state.installments);
+  const {
+    selectedInstallment,
+    getInstallmentById: { loading: getByIdLoading },
+    deleteInstallment: { loading: deleteLoading },
+  } = useAppSelector((state) => state.installments);
 
   useEffect(() => {
     if (id) {
@@ -60,6 +72,30 @@ const InstallmentDetails = () => {
     [selectedInstallment, t]
   );
 
+  const handleDelete = async () => {
+    if (!selectedInstallment) return;
+
+    const result = await dispatch(deleteInstallment(selectedInstallment._id));
+
+    if (deleteInstallment.fulfilled.match(result)) {
+      showNotification({
+        title: t('installments.details.notifications.delete.success.title'),
+        message: t('installments.details.notifications.delete.success.message'),
+        color: 'green',
+        icon: <Check />,
+      });
+      dispatch(fetchInstallments());
+      navigate('/dashboard');
+    } else {
+      showNotification({
+        title: t('installments.details.notifications.delete.error.title'),
+        message: t('installments.details.notifications.delete.error.message'),
+        color: 'red',
+        icon: <X />,
+      });
+    }
+  };
+
   return (
     <>
       <PageHeader
@@ -82,10 +118,23 @@ const InstallmentDetails = () => {
           >
             {t('installments.details.buttons.edit.label')}
           </Button>,
+          <Button
+            key='edit'
+            variant='light'
+            color='red'
+            size='xs'
+            onClick={handleDelete}
+            loading={deleteLoading}
+            loaderProps={{
+              children: <Loader size='sm' type='dots' color='white' />,
+            }}
+          >
+            {t('installments.details.buttons.delete.label')}
+          </Button>,
         ]}
       />
 
-      <Skeleton visible={getByIdStatus.loading}>
+      <Skeleton visible={getByIdLoading}>
         {selectedInstallment ? (
           <Grid gutter='md'>
             <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>

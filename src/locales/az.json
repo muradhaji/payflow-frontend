@@ -312,6 +312,9 @@
       "buttons": {
         "edit": {
           "label": "REDAKTƏ ET"
+        },
+        "delete": {
+          "label": "SİL"
         }
       },
       "fields": {
@@ -363,6 +366,18 @@
               "title": "Ləğv etmə alınmadı",
               "message": "Ödənişlərin ləğvi zamanı xəta baş verdi."
             }
+          }
+        }
+      },
+      "notifications": {
+        "delete": {
+          "success": {
+            "title": "Silindi",
+            "message": "Ödəniş uğurla silindi."
+          },
+          "error": {
+            "title": "Xəta baş verdi",
+            "message": "Ödənişi silinərkən xəta baş verdi."
           }
         }
       }

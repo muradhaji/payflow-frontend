@@ -27,6 +27,10 @@ interface InstallmentsState {
     loading: boolean;
     error: string | null;
   };
+  deleteInstallment: {
+    loading: boolean;
+    error: string | null;
+  };
   completePayments: {
     loading: boolean;
     error: string | null;
@@ -53,6 +57,10 @@ const initialState: InstallmentsState = {
     error: null,
   },
   updateInstallment: {
+    loading: false,
+    error: null,
+  },
+  deleteInstallment: {
     loading: false,
     error: null,
   },
@@ -119,6 +127,20 @@ export const getInstallmentById = createAsyncThunk<
     const res = await api.get(`api/installments/${id}`);
 
     return res.data;
+  } catch (err: unknown) {
+    const axiosErr = err as AxiosError<{ message: string }>;
+    return rejectWithValue(axiosErr.response?.data?.message || 'Server error');
+  }
+});
+
+export const deleteInstallment = createAsyncThunk<
+  string,
+  string,
+  { rejectValue: string }
+>('installments/delete', async (id, { rejectWithValue }) => {
+  try {
+    const res = await api.delete(`/api/installments/${id}`);
+    return res.data.message;
   } catch (err: unknown) {
     const axiosErr = err as AxiosError<{ message: string }>;
     return rejectWithValue(axiosErr.response?.data?.message || 'Server error');
@@ -220,6 +242,19 @@ const installmentsSlice = createSlice({
       .addCase(updateInstallment.rejected, (state, action) => {
         state.updateInstallment.loading = false;
         state.updateInstallment.error = action.payload as string;
+      })
+      // deleteInstallment
+      .addCase(deleteInstallment.pending, (state) => {
+        state.deleteInstallment.loading = true;
+        state.deleteInstallment.error = null;
+      })
+      .addCase(deleteInstallment.fulfilled, (state) => {
+        state.deleteInstallment.loading = false;
+        state.deleteInstallment.error = null;
+      })
+      .addCase(deleteInstallment.rejected, (state, action) => {
+        state.deleteInstallment.loading = false;
+        state.deleteInstallment.error = action.payload as string;
       })
       // completePayments
       .addCase(completePayments.pending, (state) => {

@@ -165,7 +165,7 @@ const AddInstallment = () => {
           color: 'green',
           icon: <Check />,
         });
-        navigate('/dashboard');
+        navigate(`/payments/details/${resultAction.payload._id}`);
       } else {
         showNotification({
           title: t('installments.add.notifications.errorTitle'),
