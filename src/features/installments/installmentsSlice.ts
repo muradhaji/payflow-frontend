@@ -27,7 +27,11 @@ interface InstallmentsState {
     loading: boolean;
     error: string | null;
   };
-  togglePaymentStatus: {
+  completePayments: {
+    loading: boolean;
+    error: string | null;
+  };
+  cancelPayments: {
     loading: boolean;
     error: string | null;
   };
@@ -52,7 +56,11 @@ const initialState: InstallmentsState = {
     loading: false,
     error: null,
   },
-  togglePaymentStatus: {
+  completePayments: {
+    loading: false,
+    error: null,
+  },
+  cancelPayments: {
     loading: false,
     error: null,
   },
@@ -117,24 +125,33 @@ export const getInstallmentById = createAsyncThunk<
   }
 });
 
-export const togglePaymentStatus = createAsyncThunk<
+export const completePayments = createAsyncThunk<
   { message: string; installments: IInstallment[] },
   IPaymentUpdate[],
   { rejectValue: string }
->(
-  'installments/toggleMultiplePaymentStatuses',
-  async (payments, { rejectWithValue }) => {
-    try {
-      const res = await api.post('api/installments/toggle', payments);
-      return res.data;
-    } catch (err: unknown) {
-      const axiosErr = err as AxiosError<{ message: string }>;
-      return rejectWithValue(
-        axiosErr.response?.data?.message || 'Server error'
-      );
-    }
+>('installments/completePayments', async (payments, { rejectWithValue }) => {
+  try {
+    const res = await api.post('api/installments/toggle', payments);
+    return res.data;
+  } catch (err: unknown) {
+    const axiosErr = err as AxiosError<{ message: string }>;
+    return rejectWithValue(axiosErr.response?.data?.message || 'Server error');
   }
-);
+});
+
+export const cancelPayments = createAsyncThunk<
+  { message: string; installments: IInstallment[] },
+  IPaymentUpdate[],
+  { rejectValue: string }
+>('installments/cancelPayments', async (payments, { rejectWithValue }) => {
+  try {
+    const res = await api.post('api/installments/toggle', payments);
+    return res.data;
+  } catch (err: unknown) {
+    const axiosErr = err as AxiosError<{ message: string }>;
+    return rejectWithValue(axiosErr.response?.data?.message || 'Server error');
+  }
+});
 
 const installmentsSlice = createSlice({
   name: 'installments',
@@ -204,18 +221,31 @@ const installmentsSlice = createSlice({
         state.updateInstallment.loading = false;
         state.updateInstallment.error = action.payload as string;
       })
-      // toggleMultiplePaymentStatuses
-      .addCase(togglePaymentStatus.pending, (state) => {
-        state.togglePaymentStatus.loading = true;
-        state.togglePaymentStatus.error = null;
+      // completePayments
+      .addCase(completePayments.pending, (state) => {
+        state.completePayments.loading = true;
+        state.completePayments.error = null;
       })
-      .addCase(togglePaymentStatus.fulfilled, (state) => {
-        state.togglePaymentStatus.loading = false;
-        state.togglePaymentStatus.error = null;
+      .addCase(completePayments.fulfilled, (state) => {
+        state.completePayments.loading = false;
+        state.completePayments.error = null;
       })
-      .addCase(togglePaymentStatus.rejected, (state, action) => {
-        state.togglePaymentStatus.loading = false;
-        state.togglePaymentStatus.error = action.payload as string;
+      .addCase(completePayments.rejected, (state, action) => {
+        state.completePayments.loading = false;
+        state.completePayments.error = action.payload as string;
+      })
+      // cancelPayments
+      .addCase(cancelPayments.pending, (state) => {
+        state.cancelPayments.loading = true;
+        state.cancelPayments.error = null;
+      })
+      .addCase(cancelPayments.fulfilled, (state) => {
+        state.cancelPayments.loading = false;
+        state.cancelPayments.error = null;
+      })
+      .addCase(cancelPayments.rejected, (state, action) => {
+        state.cancelPayments.loading = false;
+        state.cancelPayments.error = action.payload as string;
       });
   },
 });

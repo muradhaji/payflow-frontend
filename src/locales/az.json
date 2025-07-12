@@ -312,14 +312,6 @@
       "buttons": {
         "edit": {
           "label": "REDAKTƏ ET"
-        },
-        "pay": {
-          "label": "TAMAMLA",
-          "tooltip": "Tamamlamaq üçün ödənişi seçin"
-        },
-        "cancel": {
-          "label": "LƏĞV ET",
-          "tooltip": "Ləğv etmək üçün ödənişi seçin"
         }
       },
       "fields": {
@@ -331,14 +323,46 @@
       "payments": {
         "unpaid": {
           "cardTitle": "Tamamlanmamış",
+          "buttons": {
+            "pay": {
+              "label": "TAMAMLA",
+              "tooltip": "Tamamlamaq üçün ödənişi seçin"
+            }
+          },
           "empty": {
             "title": "Tamamlanmış ödəniş yoxdur"
+          },
+          "notifications": {
+            "error": {
+              "title": "Ödəniş uğursuz oldu",
+              "message": "Ödənişlərin tamamlanması zamanı xəta baş verdi."
+            },
+            "success": {
+              "message": "Seçilmiş ödənişlər uğurla tamamlandı.",
+              "title": "Ödənişlər tamamlandı"
+            }
           }
         },
         "paid": {
           "cardTitle": "Tamamlanmış",
+          "buttons": {
+            "cancel": {
+              "label": "LƏĞV ET",
+              "tooltip": "Ləğv etmək üçün ödənişi seçin"
+            }
+          },
           "empty": {
             "title": "Tamamlanmış ödəniş yoxdur"
+          },
+          "notifications": {
+            "success": {
+              "title": "Ödənişlər ləğv edildi",
+              "message": "Seçilmiş ödənişlər uğurla ləğv edildi."
+            },
+            "error": {
+              "title": "Ləğv etmə alınmadı",
+              "message": "Ödənişlərin ləğvi zamanı xəta baş verdi."
+            }
           }
         }
       }

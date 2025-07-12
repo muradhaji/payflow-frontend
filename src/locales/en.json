@@ -312,14 +312,6 @@
       "buttons": {
         "edit": {
           "label": "EDIT"
-        },
-        "pay": {
-          "label": "COMPLETE",
-          "tooltip": "Select payment to complete"
-        },
-        "cancel": {
-          "label": "CANCEL",
-          "tooltip": "Select payment to cancel"
         }
       },
       "fields": {
@@ -331,14 +323,46 @@
       "payments": {
         "unpaid": {
           "cardTitle": "Not completed",
+          "buttons": {
+            "pay": {
+              "label": "COMPLETE",
+              "tooltip": "Select payment to complete"
+            }
+          },
           "empty": {
             "title": "All payments are completed"
+          },
+          "notifications": {
+            "success": {
+              "title": "Payments completed",
+              "message": "Selected payments were successfully marked as paid."
+            },
+            "error": {
+              "title": "Payment failed",
+              "message": "An error occurred while completing the payments."
+            }
           }
         },
         "paid": {
           "cardTitle": "Completed",
+          "buttons": {
+            "cancel": {
+              "label": "CANCEL",
+              "tooltip": "Select payment to cancel"
+            }
+          },
           "empty": {
             "title": "No payments completed"
+          },
+          "notifications": {
+            "success": {
+              "title": "Payments cancelled",
+              "message": "Selected payments were successfully cancelled."
+            },
+            "error": {
+              "title": "Cancellation failed",
+              "message": "An error occurred while cancelling the payments."
+            }
           }
         }
       }
