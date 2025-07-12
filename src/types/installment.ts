@@ -39,7 +39,7 @@ export type InstallmentEdit = Omit<
   monthlyPayments: MonthlyPaymentEdit[];
 };
 
-export interface ISelectedPayment {
+export interface IPaymentUpdate {
   installmentId: string;
   paymentId: string;
   paymentAmount: number;

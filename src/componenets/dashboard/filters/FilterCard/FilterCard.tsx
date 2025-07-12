@@ -1,6 +1,6 @@
 import type {
   IInstallment,
-  ISelectedPayment,
+  IPaymentUpdate,
 } from '../../../../types/installment';
 
 import { useTranslation } from 'react-i18next';
@@ -13,6 +13,7 @@ import { Card, Group, Text, Checkbox, Stack, ActionIcon } from '@mantine/core';
 import dayjs from 'dayjs';
 
 import classes from './FilterCard.module.css';
+import utilStyles from '../../../../styles/utils.module.css';
 
 const colorMap: Record<string, string> = {
   current: 'red',
@@ -22,8 +23,8 @@ const colorMap: Record<string, string> = {
 };
 
 interface FilterCardProps extends IInstallment {
-  togglePaymentSelect: (payment: ISelectedPayment) => void;
-  selectedPayments: ISelectedPayment[];
+  togglePaymentSelect: (payment: IPaymentUpdate) => void;
+  selectedPayments: IPaymentUpdate[];
   type: 'current' | 'remaining' | 'paid' | 'all';
 }
 
@@ -106,11 +107,16 @@ const FilterCard = ({
                 />
               )}
               <div>
-                <Text size='sm' fw={500} c='gray.8'>
+                <Text
+                  size='sm'
+                  fw={500}
+                  c='gray.8'
+                  className={utilStyles.capitalize}
+                >
                   {formatDate(payment.date)}
                 </Text>
                 {payment.paid && payment.paidDate && (
-                  <Text size='xs' c='green.6'>
+                  <Text size='xs' c='green.6' className={utilStyles.capitalize}>
                     {t('dashboard.filters.card.paidLabel', {
                       date: formatDate(payment.paidDate),
                     })}

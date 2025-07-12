@@ -312,6 +312,14 @@
       "buttons": {
         "edit": {
           "label": "REDAKTƏ ET"
+        },
+        "pay": {
+          "label": "TAMAMLA",
+          "tooltip": "Tamamlamaq üçün ödənişi seçin"
+        },
+        "cancel": {
+          "label": "LƏĞV ET",
+          "tooltip": "Ləğv etmək üçün ödənişi seçin"
         }
       },
       "fields": {
@@ -319,6 +327,20 @@
         "startDate": "Başlama tarixi",
         "createdAt": "Yaradılma tarixi",
         "updatedAt": "Yenilənmə tarixi"
+      },
+      "payments": {
+        "unpaid": {
+          "cardTitle": "Tamamlanmamış",
+          "empty": {
+            "title": "Tamamlanmış ödəniş yoxdur"
+          }
+        },
+        "paid": {
+          "cardTitle": "Tamamlanmış",
+          "empty": {
+            "title": "Tamamlanmış ödəniş yoxdur"
+          }
+        }
       }
     }
   }

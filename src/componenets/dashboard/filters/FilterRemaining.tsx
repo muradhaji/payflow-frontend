@@ -1,7 +1,4 @@
-import type {
-  IInstallment,
-  ISelectedPayment,
-} from '../../../types/installment';
+import type { IInstallment, IPaymentUpdate } from '../../../types/installment';
 
 import { useAppSelector } from '../../../app/hooks';
 import { useEffect, useMemo, useState } from 'react';
@@ -30,7 +27,7 @@ const FilterRemaining = () => {
     fetchInstallments: { loading: fetchInstallmentsLoading },
   } = useAppSelector((state) => state.installments);
 
-  const [selectedPayments, setSelectedPayments] = useState<ISelectedPayment[]>(
+  const [selectedPayments, setSelectedPayments] = useState<IPaymentUpdate[]>(
     []
   );
 
@@ -58,7 +55,7 @@ const FilterRemaining = () => {
     );
   }, [selectedPayments]);
 
-  const handlePaymentSelect = (payment: ISelectedPayment) => {
+  const handlePaymentSelect = (payment: IPaymentUpdate) => {
     setSelectedPayments((prev) => {
       const exists = prev.some(
         (p) =>

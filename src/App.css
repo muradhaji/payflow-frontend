@@ -1,0 +1,5 @@
+/* MonthPickerInput Capitalize for az locale */
+.mantine-MonthPickerInput-input,
+.mantine-MonthPickerInput-monthsListControl {
+  text-transform: capitalize;
+}

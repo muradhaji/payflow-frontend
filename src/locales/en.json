@@ -312,6 +312,14 @@
       "buttons": {
         "edit": {
           "label": "EDIT"
+        },
+        "pay": {
+          "label": "COMPLETE",
+          "tooltip": "Select payment to complete"
+        },
+        "cancel": {
+          "label": "CANCEL",
+          "tooltip": "Select payment to cancel"
         }
       },
       "fields": {
@@ -319,6 +327,20 @@
         "startDate": "Start date",
         "createdAt": "Created at",
         "updatedAt": "Updated at"
+      },
+      "payments": {
+        "unpaid": {
+          "cardTitle": "Not completed",
+          "empty": {
+            "title": "All payments are completed"
+          }
+        },
+        "paid": {
+          "cardTitle": "Completed",
+          "empty": {
+            "title": "No payments completed"
+          }
+        }
       }
     }
   }

@@ -1,7 +1,4 @@
-import type {
-  IInstallment,
-  ISelectedPayment,
-} from '../../../types/installment';
+import type { IInstallment, IPaymentUpdate } from '../../../types/installment';
 
 import { useAppSelector } from '../../../app/hooks';
 import { useEffect, useMemo, useState } from 'react';
@@ -24,7 +21,8 @@ import {
 } from '@mantine/core';
 
 import dayjs from 'dayjs';
-import { capitalize } from '../../../utils/strings';
+
+import utilStyles from '../../../styles/utils.module.css';
 
 const FilterCurrent = () => {
   const {
@@ -32,7 +30,7 @@ const FilterCurrent = () => {
     fetchInstallments: { loading: fetchInstallmentsLoading },
   } = useAppSelector((state) => state.installments);
 
-  const [selectedPayments, setSelectedPayments] = useState<ISelectedPayment[]>(
+  const [selectedPayments, setSelectedPayments] = useState<IPaymentUpdate[]>(
     []
   );
   const [selectedPaymentsAmount, setSelectedPaymentsAmount] =
@@ -82,7 +80,7 @@ const FilterCurrent = () => {
     );
   }, [selectedPayments]);
 
-  const handlePaymentSelect = (payment: ISelectedPayment) => {
+  const handlePaymentSelect = (payment: IPaymentUpdate) => {
     setSelectedPayments((prev) => {
       const exists = prev.some(
         (p) =>
@@ -166,9 +164,14 @@ const FilterCurrent = () => {
               bg='white'
             >
               <Group justify='space-between' gap='md' wrap='wrap'>
-                <Text size='lg' fw={700} c='gray.8'>
+                <Text
+                  size='lg'
+                  fw={700}
+                  c='gray.8'
+                  className={utilStyles.capitalize}
+                >
                   {t('dashboard.filters.current.totalLabel', {
-                    month: capitalize(dayjs(selectedMonth).format('MMMM')),
+                    month: dayjs(selectedMonth).format('MMMM'),
                   })}
                 </Text>
                 <Text size='md' fw={700} c='red.6'>

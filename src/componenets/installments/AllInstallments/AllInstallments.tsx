@@ -52,7 +52,7 @@ const AllInstallments = () => {
           <Grid gutter='lg'>
             {installments.map((installment) => (
               <Grid.Col key={installment._id} span={{ base: 12, sm: 6, md: 4 }}>
-                <InstallmentCard installment={installment} />
+                <InstallmentCard installment={installment} withLink />
               </Grid.Col>
             ))}
           </Grid>

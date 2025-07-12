@@ -7,9 +7,15 @@ type EmptyStateProps = {
   icon?: ReactNode | boolean;
   title?: string | boolean;
   description?: string | boolean;
+  my?: string;
 };
 
-const EmptyState = ({ icon, title, description }: EmptyStateProps) => {
+const EmptyState = ({
+  icon,
+  title,
+  description,
+  my = 'xl',
+}: EmptyStateProps) => {
   const { t } = useTranslation();
 
   const defaultIcon = <FolderX size={48} color='gray' />;
@@ -24,7 +30,7 @@ const EmptyState = ({ icon, title, description }: EmptyStateProps) => {
     description === true ? defaultDescription : description ?? null;
 
   return (
-    <Box my='xl'>
+    <Box my={my}>
       <Stack align='center' gap='xs'>
         {renderIcon && renderIcon}
         {renderTitle && (
@@ -33,7 +39,7 @@ const EmptyState = ({ icon, title, description }: EmptyStateProps) => {
           </Text>
         )}
         {renderDescription && (
-          <Text size='sm' c='gray.6' ta='center' maw={300}>
+          <Text size='sm' c='gray.6' ta='center'>
             {renderDescription}
           </Text>
         )}

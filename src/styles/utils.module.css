@@ -5,3 +5,7 @@
 .pointerEventsNone {
   pointer-events: none;
 }
+
+.capitalize {
+  text-transform: capitalize !important;
+}

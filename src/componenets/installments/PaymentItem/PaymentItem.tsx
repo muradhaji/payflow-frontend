@@ -1,8 +1,11 @@
-import { Checkbox, Group, Text } from '@mantine/core';
-import classes from './PaymentItem.module.css';
-import dayjs from 'dayjs';
-import { useTranslation } from 'react-i18next';
 import type { IMonthlyPayment } from '../../../types/installment';
+
+import { Checkbox, Group, Text } from '@mantine/core';
+import { useTranslation } from 'react-i18next';
+import dayjs from 'dayjs';
+
+import classes from './PaymentItem.module.css';
+import utilStyles from '../../../styles/utils.module.css';
 
 interface PaymentItemProps {
   payment: IMonthlyPayment;
@@ -13,7 +16,6 @@ interface PaymentItemProps {
 const PaymentItem = ({ payment, isSelected, onToggle }: PaymentItemProps) => {
   const { t } = useTranslation();
 
-  const isPaid = payment.paid;
   const formattedDate = dayjs(payment.date).format('D MMM, YYYY');
   const formattedPaidDate = payment.paidDate
     ? dayjs(payment.paidDate).format('D MMM, YYYY')
@@ -22,29 +24,26 @@ const PaymentItem = ({ payment, isSelected, onToggle }: PaymentItemProps) => {
   return (
     <Group
       justify='space-between'
-      className={`${classes.wrapper} ${
-        isPaid ? classes.wrapperDisabled : classes.wrapperActive
-      }`}
-      onClick={!isPaid ? onToggle : undefined}
+      className={classes.wrapper}
+      onClick={onToggle}
     >
       <Group align='center'>
         <Checkbox
-          checked={isSelected || isPaid}
-          disabled={isPaid}
+          checked={isSelected}
           onClick={(e) => {
             e.stopPropagation();
-            if (!isPaid) onToggle();
+            onToggle();
           }}
           readOnly
           size='sm'
           color='blue'
         />
         <div>
-          <Text size='sm' fw={500}>
+          <Text size='sm' fw={500} className={utilStyles.capitalize}>
             {formattedDate}
           </Text>
-          {isPaid && formattedPaidDate && (
-            <Text size='xs' c='green.6'>
+          {payment.paid && formattedPaidDate && (
+            <Text size='xs' c='green.6' className={utilStyles.capitalize}>
               {t('dashboard.filters.card.paidLabel', {
                 date: formattedPaidDate,
               })}

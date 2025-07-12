@@ -20,3 +20,25 @@ export function sumByKeyDecimal<T>(items: T[], key: keyof T): number {
 export function roundToTwoDecimals(value: number): number {
   return Math.round((value + Number.EPSILON) * 100) / 100;
 }
+
+export function getMostFrequentAmount(numbers: number[]): number | null {
+  if (!numbers.length) return null;
+
+  const frequencyMap = new Map<number, number>();
+
+  for (const num of numbers) {
+    frequencyMap.set(num, (frequencyMap.get(num) || 0) + 1);
+  }
+
+  let mostFrequent = numbers[0];
+  let maxCount = 0;
+
+  for (const [num, count] of frequencyMap) {
+    if (count > maxCount) {
+      mostFrequent = num;
+      maxCount = count;
+    }
+  }
+
+  return mostFrequent;
+}

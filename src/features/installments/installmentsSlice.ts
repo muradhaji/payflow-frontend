@@ -3,6 +3,7 @@ import type {
   IInstallment,
   InstallmentCreate,
   InstallmentEdit,
+  IPaymentUpdate,
 } from '../../types/installment';
 import api from '../../api';
 import { AxiosError } from 'axios';
@@ -26,6 +27,10 @@ interface InstallmentsState {
     loading: boolean;
     error: string | null;
   };
+  togglePaymentStatus: {
+    loading: boolean;
+    error: string | null;
+  };
 }
 
 const initialState: InstallmentsState = {
@@ -44,6 +49,10 @@ const initialState: InstallmentsState = {
     error: null,
   },
   updateInstallment: {
+    loading: false,
+    error: null,
+  },
+  togglePaymentStatus: {
     loading: false,
     error: null,
   },
@@ -108,6 +117,25 @@ export const getInstallmentById = createAsyncThunk<
   }
 });
 
+export const togglePaymentStatus = createAsyncThunk<
+  { message: string; installments: IInstallment[] },
+  IPaymentUpdate[],
+  { rejectValue: string }
+>(
+  'installments/toggleMultiplePaymentStatuses',
+  async (payments, { rejectWithValue }) => {
+    try {
+      const res = await api.post('api/installments/toggle', payments);
+      return res.data;
+    } catch (err: unknown) {
+      const axiosErr = err as AxiosError<{ message: string }>;
+      return rejectWithValue(
+        axiosErr.response?.data?.message || 'Server error'
+      );
+    }
+  }
+);
+
 const installmentsSlice = createSlice({
   name: 'installments',
   initialState,
@@ -117,6 +145,9 @@ const installmentsSlice = createSlice({
     },
     clearSelectedInstallment: (state) => {
       state.selectedInstallment = null;
+    },
+    setSelectedInstallment: (state, action) => {
+      state.selectedInstallment = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -172,11 +203,27 @@ const installmentsSlice = createSlice({
       .addCase(updateInstallment.rejected, (state, action) => {
         state.updateInstallment.loading = false;
         state.updateInstallment.error = action.payload as string;
+      })
+      // toggleMultiplePaymentStatuses
+      .addCase(togglePaymentStatus.pending, (state) => {
+        state.togglePaymentStatus.loading = true;
+        state.togglePaymentStatus.error = null;
+      })
+      .addCase(togglePaymentStatus.fulfilled, (state) => {
+        state.togglePaymentStatus.loading = false;
+        state.togglePaymentStatus.error = null;
+      })
+      .addCase(togglePaymentStatus.rejected, (state, action) => {
+        state.togglePaymentStatus.loading = false;
+        state.togglePaymentStatus.error = action.payload as string;
       });
   },
 });
 
-export const { clearInstallments, clearSelectedInstallment } =
-  installmentsSlice.actions;
+export const {
+  clearInstallments,
+  clearSelectedInstallment,
+  setSelectedInstallment,
+} = installmentsSlice.actions;
 
 export default installmentsSlice.reducer;
