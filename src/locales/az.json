@@ -108,11 +108,15 @@
       "filterCurrent": "Cari",
       "filterRemaining": "Qalan",
       "filterPaid": "Ödənilmiş",
-      "details": "Təfərrüatlar"
+      "details": "Təfərrüatlar",
+      "addPayment": "Redaktə Et"
     },
     "buttons": {
       "logout": {
         "label": "ÇIXIŞ ET"
+      },
+      "dashboard": {
+        "label": "İDARƏ PANELİ"
       }
     }
   },
@@ -187,7 +191,7 @@
     },
     "add": {
       "buttons": {
-        "addInstallment": "Əlavə et"
+        "addInstallment": "ƏLAVƏ ET"
       },
       "form": {
         "fields": {
@@ -241,11 +245,12 @@
         "successMessage": "Ödəniş uğurla yaradıldı.",
         "errorTitle": "Xəta",
         "errorMessage": "Ödəniş əlavə edilərkən xəta baş verdi."
-      }
+      },
+      "pageTitle": "Ödəniş Əlavə Et"
     },
     "edit": {
       "buttons": {
-        "save": "Yadda Saxla"
+        "save": "YADDA SAXLA"
       },
       "form": {
         "fields": {
@@ -299,7 +304,8 @@
         "successMessage": "Ödənişiniz uğurla yeniləndi.",
         "errorTitle": "Xəta baş verdi",
         "errorMessage": "Ödəniş yenilənərkən xəta baş verdi."
-      }
+      },
+      "pageTitle": "Ödənişi Redaktə Et"
     },
     "card": {
       "badge": {

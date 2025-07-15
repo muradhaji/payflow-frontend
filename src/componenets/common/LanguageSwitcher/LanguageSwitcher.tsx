@@ -1,19 +1,27 @@
+import { Menu, Button } from '@mantine/core';
+import { Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
 
+  const changeLang = (lang: string) => {
+    i18n.changeLanguage(lang);
+  };
+
   return (
-    <select
-      value={i18n.language}
-      onChange={(e) => {
-        i18n.changeLanguage(e.target.value);
-      }}
-      className='rounded-md bg-transparent p-2 font-medium text-gray-800 shadow-xs border border-gray-300 hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-400 cursor-pointer'
-    >
-      <option value='en'>En</option>
-      <option value='az'>Az</option>
-    </select>
+    <Menu shadow='md' position='bottom-end'>
+      <Menu.Target>
+        <Button variant='light' leftSection={<Globe size={18} />} size='xs'>
+          {i18n.language.toUpperCase()}
+        </Button>
+      </Menu.Target>
+
+      <Menu.Dropdown>
+        <Menu.Item onClick={() => changeLang('az')}>AZ</Menu.Item>
+        <Menu.Item onClick={() => changeLang('en')}>EN</Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
   );
 };
 

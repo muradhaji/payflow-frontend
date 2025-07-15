@@ -108,11 +108,15 @@
       "filterCurrent": "Current",
       "filterRemaining": "Remaining",
       "filterPaid": "Paid",
-      "details": "Details"
+      "details": "Details",
+      "addPayment": "Edit"
     },
     "buttons": {
       "logout": {
         "label": "LOG OUT"
+      },
+      "dashboard": {
+        "label": "DASHBOARD"
       }
     }
   },
@@ -187,7 +191,7 @@
     },
     "add": {
       "buttons": {
-        "addInstallment": "Add Payment"
+        "addInstallment": "ADD"
       },
       "form": {
         "fields": {
@@ -241,11 +245,12 @@
         "successMessage": "Your payment has been successfully created.",
         "errorTitle": "Error",
         "errorMessage": "Something went wrong while adding the payment."
-      }
+      },
+      "pageTitle": "Add Payment"
     },
     "edit": {
       "buttons": {
-        "save": "Save Changes"
+        "save": "SAVE"
       },
       "form": {
         "fields": {
@@ -299,7 +304,8 @@
         "successMessage": "Your payment has been successfully updated.",
         "errorTitle": "Error",
         "errorMessage": "Something went wrong while updating the payment."
-      }
+      },
+      "pageTitle": "Edit Payment"
     },
     "card": {
       "badge": {
