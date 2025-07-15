@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { login } from '../../features/auth/authSlice';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import Header from '../common/Header/Header';
@@ -54,16 +54,8 @@ const Login = () => {
 
   return (
     <div className='min-h-[100dvh] flex flex-col bg-gray-200'>
-      <Header
-        rightElement={
-          <Link
-            to='/register'
-            className='rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
-          >
-            {t('auth.login.header.buttons.signup')}
-          </Link>
-        }
-      />
+      <Header />
+
       <div className='flex-1 flex items-center justify-center p-3'>
         <div className='bg-white p-8 rounded-2xl shadow-lg w-full max-w-md'>
           <h2 className='text-2xl font-bold mb-6 text-center text-gray-800'>

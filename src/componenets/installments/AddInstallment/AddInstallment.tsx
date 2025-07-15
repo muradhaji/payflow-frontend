@@ -6,9 +6,15 @@ import { useEffect, useMemo } from 'react';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DatePickerInput } from '@mantine/dates';
-import { Loader, LoadingOverlay, NumberInput, TextInput } from '@mantine/core';
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Check, X } from 'lucide-react';
+import {
+  Button,
+  Loader,
+  LoadingOverlay,
+  NumberInput,
+  TextInput,
+} from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
+import { Check, X } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { addInstallment } from '../../../features/installments/installmentsSlice';
 import { showNotification } from '@mantine/notifications';
@@ -16,13 +22,16 @@ import { useTranslation } from 'react-i18next';
 import { sumByKeyDecimal } from '../../../utils/math';
 import * as yup from 'yup';
 import dayjs from 'dayjs';
+import PageHeader from '../../common/PageHeader/PageHeader';
 
 const AddInstallment = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const {
     addInstallment: { loading },
   } = useAppSelector((state) => state.installments);
+
   const { t, i18n } = useTranslation();
 
   const schema = useMemo(
@@ -188,21 +197,27 @@ const AddInstallment = () => {
 
   return (
     <div className='flex flex-col gap-4'>
-      <div className='flex justify-between items-center'>
-        <Link
-          to='/dashboard'
-          className='bg-gray-600 text-white px-3 py-1 rounded-xl hover:bg-gray-500 transition flex gap-2'
-        >
-          <ArrowLeft />
-        </Link>
-        <button
-          type='submit'
-          form='add-payment-form'
-          className='flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-500'
-        >
-          {t('installments.add.buttons.addInstallment')}
-        </button>
-      </div>
+      <PageHeader
+        title={t('installments.add.pageTitle')}
+        breadcrumbs={[
+          { label: t('common.breadcrumbs.dashboard'), to: '/dashboard' },
+          {
+            label: t('common.breadcrumbs.addPayment'),
+            to: '/payments/add',
+            active: true,
+          },
+        ]}
+        actions={
+          <Button
+            type='submit'
+            form='add-payment-form'
+            variant='filled'
+            size='xs'
+          >
+            {t('installments.add.buttons.addInstallment')}
+          </Button>
+        }
+      />
 
       <div className='relative w-full max-w-5xl mx-auto'>
         <LoadingOverlay

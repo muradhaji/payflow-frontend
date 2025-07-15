@@ -1,6 +1,5 @@
 import Footer from '../common/Footer/Footer';
 import Header from '../../componenets/common/Header/Header';
-import LogOutButton from '../common/LogOutButton/LogOutButton';
 import { Outlet } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { useEffect } from 'react';
@@ -15,7 +14,7 @@ const DashboardLayout = () => {
 
   return (
     <div className='min-h-[100dvh] flex flex-col bg-gray-200'>
-      <Header rightElement={<LogOutButton />} />
+      <Header />
       <div className='flex-1 px-3 py-6'>
         <div className='container mx-auto'>
           <Outlet />

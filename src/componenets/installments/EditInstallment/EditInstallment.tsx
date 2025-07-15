@@ -3,14 +3,20 @@ import type {
   MonthlyPaymentEdit,
 } from '../../../types/installment';
 import { useEffect, useMemo } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { showNotification } from '@mantine/notifications';
-import { TextInput, NumberInput, Loader, LoadingOverlay } from '@mantine/core';
+import {
+  TextInput,
+  NumberInput,
+  Loader,
+  LoadingOverlay,
+  Button,
+} from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
-import { ArrowLeft, Check, X } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { sumByKeyDecimal } from '../../../utils/math';
 import {
@@ -20,6 +26,7 @@ import {
 } from '../../../features/installments/installmentsSlice';
 import * as yup from 'yup';
 import dayjs from 'dayjs';
+import PageHeader from '../../common/PageHeader/PageHeader';
 
 const EditInstallment = () => {
   const dispatch = useAppDispatch();
@@ -263,21 +270,27 @@ const EditInstallment = () => {
 
   return (
     <div className='flex flex-col gap-4'>
-      <div className='flex justify-between items-center'>
-        <Link
-          to='/dashboard'
-          className='bg-gray-600 text-white px-3 py-1 rounded-xl hover:bg-gray-500 transition flex gap-2'
-        >
-          <ArrowLeft />
-        </Link>
-        <button
-          type='submit'
-          form='edit-payment-form'
-          className='flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-500'
-        >
-          {t('installments.edit.buttons.save')}
-        </button>
-      </div>
+      <PageHeader
+        title={t('installments.edit.pageTitle')}
+        breadcrumbs={[
+          { label: t('common.breadcrumbs.dashboard'), to: '/dashboard' },
+          {
+            label: t('common.breadcrumbs.addPayment'),
+            to: '/payments/edit',
+            active: true,
+          },
+        ]}
+        actions={
+          <Button
+            type='submit'
+            form='edit-payment-form'
+            variant='filled'
+            size='xs'
+          >
+            {t('installments.edit.buttons.save')}
+          </Button>
+        }
+      />
 
       <div className='relative w-full max-w-5xl mx-auto'>
         <LoadingOverlay

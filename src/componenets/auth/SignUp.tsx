@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { register } from '../../features/auth/authSlice';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Header from '../common/Header/Header';
 import { Trans, useTranslation } from 'react-i18next';
 
@@ -48,16 +48,7 @@ const SignUp = () => {
 
   return (
     <div className='min-h-[100dvh] flex flex-col bg-gray-200'>
-      <Header
-        rightElement={
-          <Link
-            to='/login'
-            className='rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
-          >
-            {t('auth.signup.header.buttons.login')}
-          </Link>
-        }
-      />
+      <Header />
       <div className='flex-1 flex items-center justify-center p-3'>
         <div className='bg-white p-8 rounded-2xl shadow-lg w-full max-w-md'>
           <h2 className='text-2xl font-bold mb-6 text-center text-gray-800'>
