@@ -156,6 +156,7 @@ const FilterCurrent = () => {
                 filteredInstallments.flatMap((i) => i.monthlyPayments),
                 'amount'
               )}
+              type='current'
             />
 
             <SimpleGrid

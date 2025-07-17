@@ -1,7 +1,4 @@
-import type { IInstallment, IPaymentUpdate } from '../../../types/installment';
-
-import { useAppSelector } from '../../../app/hooks';
-import { useEffect, useMemo, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { useTranslation } from 'react-i18next';
 
 import FilterCard from './FilterCard/FilterCard';
@@ -11,68 +8,76 @@ import EmptyState from '../../common/EmptyState/EmptyState';
 import {
   Badge,
   Button,
-  Card,
-  Group,
+  Loader,
+  LoadingOverlay,
   SimpleGrid,
   Skeleton,
-  Text,
   Tooltip,
 } from '@mantine/core';
 
 import { sumByKeyDecimal } from '../../../utils/math';
+import { useRemainingInstallments } from '../../../hooks/useRemainingInstallments';
+import { useSelectedPayments } from '../../../hooks/useSelectedPayments';
+import FilterHeader from './FilterHeader/FilterHeader';
+import {
+  completePayments,
+  updateInstallments,
+} from '../../../features/installments/installmentsSlice';
+import { showNotification } from '@mantine/notifications';
+import { Check, X } from 'lucide-react';
+import utilStyles from '../../../styles/utils.module.css';
 
 const FilterRemaining = () => {
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+
   const {
     installments,
     fetchInstallments: { loading: fetchInstallmentsLoading },
+    completePayments: { loading: completePaymentsLoading },
   } = useAppSelector((state) => state.installments);
 
-  const [selectedPayments, setSelectedPayments] = useState<IPaymentUpdate[]>(
-    []
-  );
+  const filteredInstallments = useRemainingInstallments(installments);
 
-  const [selectedPaymentsAmount, setSelectedPaymentsAmount] =
-    useState<number>(0);
+  const {
+    selectedPayments,
+    selectedPaymentsAmount,
+    togglePayment,
+    isSelected,
+    resetAll,
+  } = useSelectedPayments();
 
-  const { t } = useTranslation();
+  const handleSubmit = async () => {
+    try {
+      const response = await dispatch(completePayments(selectedPayments));
 
-  const filteredInstallments = useMemo(() => {
-    return installments
-      .map((installment) => {
-        const filtered = installment.monthlyPayments.filter((p) => !p.paid);
-        if (filtered.length === 0) return null;
-        return {
-          ...installment,
-          monthlyPayments: filtered,
-        };
-      })
-      .filter(Boolean) as IInstallment[];
-  }, [installments]);
-
-  useEffect(() => {
-    setSelectedPaymentsAmount(
-      sumByKeyDecimal(selectedPayments, 'paymentAmount')
-    );
-  }, [selectedPayments]);
-
-  const handlePaymentSelect = (payment: IPaymentUpdate) => {
-    setSelectedPayments((prev) => {
-      const exists = prev.some(
-        (p) =>
-          p.installmentId === payment.installmentId &&
-          p.paymentId === payment.paymentId
-      );
-
-      return exists
-        ? prev.filter(
-            (p) =>
-              !(
-                p.installmentId === payment.installmentId &&
-                p.paymentId === payment.paymentId
-              )
-          )
-        : [...prev, payment];
-    });
+      if (completePayments.fulfilled.match(response)) {
+        showNotification({
+          title: t('notifications.api.completePayments.success.title'),
+          message: t('notifications.api.completePayments.success.message'),
+          color: 'green',
+          icon: <Check />,
+        });
+        resetAll();
+        dispatch(updateInstallments(response.payload.installments));
+      } else {
+        showNotification({
+          title: t('notifications.api.completePayments.error.title'),
+          message: t('notifications.api.completePayments.error.message'),
+          color: 'red',
+          icon: <X />,
+        });
+        console.error(response.payload);
+      }
+    } catch (err) {
+      showNotification({
+        title: t('notifications.api.completePayments.error.title'),
+        message: t('notifications.api.completePayments.error.message'),
+        color: 'red',
+        icon: <X />,
+      });
+      console.error(err);
+    }
   };
 
   return (
@@ -92,9 +97,7 @@ const FilterRemaining = () => {
             <Button
               variant='filled'
               size='xs'
-              onClick={() => {
-                console.info({ selectedPayments });
-              }}
+              onClick={handleSubmit}
               disabled={!(selectedPaymentsAmount > 0)}
               rightSection={
                 selectedPaymentsAmount > 0 && (
@@ -103,6 +106,10 @@ const FilterRemaining = () => {
                   </Badge>
                 )
               }
+              loading={completePaymentsLoading}
+              loaderProps={{
+                children: <Loader size='sm' type='dots' color='white' />,
+              }}
             >
               {t('dashboard.filters.common.buttons.pay.label')}
             </Button>
@@ -113,36 +120,31 @@ const FilterRemaining = () => {
       <Skeleton visible={fetchInstallmentsLoading}>
         {filteredInstallments.length > 0 ? (
           <>
-            <Card
-              shadow='sm'
-              radius='sm'
-              withBorder
-              mb='md'
-              px='md'
-              py='sm'
-              bg='white'
-            >
-              <Group justify='space-between' gap='md' wrap='wrap'>
-                <Text size='lg' fw={700} c='gray.8'>
-                  {t('dashboard.filters.remaining.totalLabel')}
-                </Text>
-                <Text size='md' fw={700} c='orange'>
-                  {sumByKeyDecimal(
-                    filteredInstallments.flatMap((i) => i.monthlyPayments),
-                    'amount'
-                  )}{' '}
-                  ₼
-                </Text>
-              </Group>
-            </Card>
+            <FilterHeader
+              title={t('dashboard.filters.remaining.totalLabel')}
+              amount={sumByKeyDecimal(
+                filteredInstallments.flatMap((i) => i.monthlyPayments),
+                'amount'
+              )}
+              type='remaining'
+            />
 
-            <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing='md'>
+            <SimpleGrid
+              cols={{ base: 1, sm: 2, md: 3 }}
+              spacing='md'
+              className='relative'
+            >
+              <LoadingOverlay
+                loaderProps={{ children: <></> }}
+                visible={completePaymentsLoading}
+                className={utilStyles.radiusSm}
+              />
               {filteredInstallments.map((installment) => (
                 <FilterCard
                   key={installment._id}
                   {...installment}
-                  togglePaymentSelect={handlePaymentSelect}
-                  selectedPayments={selectedPayments}
+                  togglePayment={togglePayment}
+                  isSelected={isSelected}
                   type='remaining'
                 />
               ))}
