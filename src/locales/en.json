@@ -388,5 +388,28 @@
         }
       }
     }
+  },
+  "buttons": {
+    "filters": {
+      "card": {
+        "details": {
+          "tooltip": "Details"
+        }
+      }
+    }
+  },
+  "notifications": {
+    "api": {
+      "completePayments": {
+        "success": {
+          "title": "Payment Successful",
+          "message": "Payments completed successfully."
+        },
+        "error": {
+          "title": "Payment Failed",
+          "message": "Failed to complete payments."
+        }
+      }
+    }
   }
 }

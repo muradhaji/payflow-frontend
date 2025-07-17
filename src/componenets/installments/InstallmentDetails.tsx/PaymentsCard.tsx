@@ -19,11 +19,11 @@ import type {
   IMonthlyPayment,
   IInstallment,
 } from '../../../types/installment';
-import { useMemo, useState } from 'react';
-import { sumByKeyDecimal } from '../../../utils/math';
 import { showNotification } from '@mantine/notifications';
 import { Check, X } from 'lucide-react';
 import type { AsyncThunk } from '@reduxjs/toolkit';
+import utilStyles from '../../../styles/utils.module.css';
+import { useSelectedPayments } from '../../../hooks/useSelectedPayments';
 
 interface PaymentsCardProps {
   title: string;
@@ -65,33 +65,17 @@ const PaymentsCard = ({
 }: PaymentsCardProps) => {
   const dispatch = useAppDispatch();
 
+  const {
+    selectedPayments,
+    selectedPaymentsAmount,
+    togglePayment,
+    resetAll,
+    isSelected,
+  } = useSelectedPayments();
+
   const { selectedInstallment } = useAppSelector((state) => state.installments);
 
-  const [selectedPayments, setSelectedPayments] = useState<IPaymentUpdate[]>(
-    []
-  );
-
-  const totalSelected = useMemo(
-    () => sumByKeyDecimal(selectedPayments, 'paymentAmount'),
-    [selectedPayments]
-  );
-
   if (!selectedInstallment) return null;
-
-  const handleToggleSelection = (paymentId: string, amount: number) => {
-    setSelectedPayments((prev) =>
-      prev.some((p) => p.paymentId === paymentId)
-        ? prev.filter((p) => p.paymentId !== paymentId)
-        : [
-            ...prev,
-            {
-              installmentId: selectedInstallment._id,
-              paymentId,
-              paymentAmount: amount,
-            },
-          ]
-    );
-  };
 
   const handleSubmit = async () => {
     try {
@@ -104,7 +88,7 @@ const PaymentsCard = ({
           color: 'green',
           icon: <Check />,
         });
-        setSelectedPayments([]);
+        resetAll();
         dispatch(setSelectedInstallment(response.payload.installments[0]));
       } else {
         showNotification({
@@ -143,12 +127,12 @@ const PaymentsCard = ({
             variant='filled'
             size='xs'
             color={button.color}
-            disabled={!(totalSelected > 0)}
+            disabled={!(selectedPaymentsAmount > 0)}
             onClick={handleSubmit}
             rightSection={
-              totalSelected > 0 && (
+              selectedPaymentsAmount > 0 && (
                 <Badge variant='white' color={button.color}>
-                  {` ${totalSelected} ₼`}
+                  {` ${selectedPaymentsAmount} ₼`}
                 </Badge>
               )
             }
@@ -162,17 +146,19 @@ const PaymentsCard = ({
           <LoadingOverlay
             visible={loading}
             loaderProps={{ children: <></> }}
-            className='rounded-md'
+            className={utilStyles.radiusSm}
           />
           {filteredPayments.map((payment) => (
             <Grid.Col span={{ base: 12, md: 6, lg: 4 }} key={payment._id}>
               <PaymentItem
                 payment={payment}
-                isSelected={selectedPayments.some(
-                  (p) => p.paymentId === payment._id
-                )}
-                onToggle={() =>
-                  handleToggleSelection(payment._id, payment.amount)
+                isSelected={isSelected(payment._id)}
+                onToggle={(paymentId, paymentAmount) =>
+                  togglePayment({
+                    installmentId: selectedInstallment._id,
+                    paymentId,
+                    paymentAmount,
+                  })
                 }
               />
             </Grid.Col>

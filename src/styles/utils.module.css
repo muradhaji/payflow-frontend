@@ -9,3 +9,11 @@
 .capitalize {
   text-transform: capitalize !important;
 }
+
+.radiusSm {
+  border-radius: var(--mantine-radius-sm);
+}
+
+.radiusMd {
+  border-radius: var(--mantine-radius-md);
+}

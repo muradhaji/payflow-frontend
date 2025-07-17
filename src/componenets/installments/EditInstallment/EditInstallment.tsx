@@ -27,6 +27,7 @@ import {
 import * as yup from 'yup';
 import dayjs from 'dayjs';
 import PageHeader from '../../common/PageHeader/PageHeader';
+import utilStyles from '../../../styles/utils.module.css';
 
 const EditInstallment = () => {
   const dispatch = useAppDispatch();
@@ -286,6 +287,10 @@ const EditInstallment = () => {
             form='edit-payment-form'
             variant='filled'
             size='xs'
+            loading={updateInstallmentLoading}
+            loaderProps={{
+              children: <Loader size='sm' type='dots' color='white' />,
+            }}
           >
             {t('installments.edit.buttons.save')}
           </Button>
@@ -295,8 +300,14 @@ const EditInstallment = () => {
       <div className='relative w-full max-w-5xl mx-auto'>
         <LoadingOverlay
           visible={getInstallmentByIdLoading || updateInstallmentLoading}
-          loaderProps={{ children: <Loader size='sm' type='dots' /> }}
-          className='rounded-md'
+          loaderProps={{
+            children: getInstallmentByIdLoading ? (
+              <Loader size='sm' type='dots' />
+            ) : (
+              <></>
+            ),
+          }}
+          className={utilStyles.radiusMd}
         />
 
         <form

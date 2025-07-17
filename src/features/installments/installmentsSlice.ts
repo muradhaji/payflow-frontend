@@ -182,6 +182,13 @@ const installmentsSlice = createSlice({
     clearInstallments: (state) => {
       state.installments = [];
     },
+    updateInstallments: (state, action) => {
+      const updatedInstallments: IInstallment[] = action.payload;
+      state.installments = state.installments.map((item) => {
+        const updated = updatedInstallments.find((u) => u._id === item._id);
+        return updated ? updated : item;
+      });
+    },
     clearSelectedInstallment: (state) => {
       state.selectedInstallment = null;
     },
@@ -287,6 +294,7 @@ const installmentsSlice = createSlice({
 
 export const {
   clearInstallments,
+  updateInstallments,
   clearSelectedInstallment,
   setSelectedInstallment,
 } = installmentsSlice.actions;

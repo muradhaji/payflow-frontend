@@ -23,6 +23,7 @@ import { sumByKeyDecimal } from '../../../utils/math';
 import * as yup from 'yup';
 import dayjs from 'dayjs';
 import PageHeader from '../../common/PageHeader/PageHeader';
+import utilStyles from '../../../styles/utils.module.css';
 
 const AddInstallment = () => {
   const dispatch = useAppDispatch();
@@ -213,6 +214,10 @@ const AddInstallment = () => {
             form='add-payment-form'
             variant='filled'
             size='xs'
+            loading={loading}
+            loaderProps={{
+              children: <Loader size='sm' type='dots' color='white' />,
+            }}
           >
             {t('installments.add.buttons.addInstallment')}
           </Button>
@@ -222,8 +227,8 @@ const AddInstallment = () => {
       <div className='relative w-full max-w-5xl mx-auto'>
         <LoadingOverlay
           visible={loading}
-          loaderProps={{ children: <Loader size='sm' type='dots' /> }}
-          className='rounded-md'
+          loaderProps={{ children: <></> }}
+          className={utilStyles.radiusMd}
         />
 
         <form

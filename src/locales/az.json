@@ -388,5 +388,28 @@
         }
       }
     }
+  },
+  "buttons": {
+    "filters": {
+      "card": {
+        "details": {
+          "tooltip": "Ətraflı"
+        }
+      }
+    }
+  },
+  "notifications": {
+    "api": {
+      "completePayments": {
+        "success": {
+          "title": "Uğurlu Ödəniş",
+          "message": "Ödənişlər uğurla tamamlandı."
+        },
+        "error": {
+          "title": "Uğursuz Ödəniş",
+          "message": "Ödənişləri tamamlamaq mümkün olmadı."
+        }
+      }
+    }
   }
 }

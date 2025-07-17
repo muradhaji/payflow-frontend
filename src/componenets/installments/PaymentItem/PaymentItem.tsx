@@ -10,7 +10,7 @@ import utilStyles from '../../../styles/utils.module.css';
 interface PaymentItemProps {
   payment: IMonthlyPayment;
   isSelected: boolean;
-  onToggle: () => void;
+  onToggle: (paymentId: string, paymentAmount: number) => void;
 }
 
 const PaymentItem = ({ payment, isSelected, onToggle }: PaymentItemProps) => {
@@ -25,14 +25,16 @@ const PaymentItem = ({ payment, isSelected, onToggle }: PaymentItemProps) => {
     <Group
       justify='space-between'
       className={classes.wrapper}
-      onClick={onToggle}
+      onClick={() => {
+        onToggle(payment._id, payment.amount);
+      }}
     >
       <Group align='center'>
         <Checkbox
           checked={isSelected}
           onClick={(e) => {
             e.stopPropagation();
-            onToggle();
+            onToggle(payment._id, payment.amount);
           }}
           readOnly
           size='sm'

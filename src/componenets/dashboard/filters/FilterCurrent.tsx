@@ -1,7 +1,5 @@
-import type { IInstallment, IPaymentUpdate } from '../../../types/installment';
-
-import { useAppSelector } from '../../../app/hooks';
-import { useEffect, useMemo, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { sumByKeyDecimal } from '../../../utils/math';
 
@@ -12,99 +10,93 @@ import EmptyState from '../../common/EmptyState/EmptyState';
 import {
   Badge,
   Button,
-  Card,
-  Group,
+  Loader,
+  LoadingOverlay,
   SimpleGrid,
   Skeleton,
-  Text,
   Tooltip,
 } from '@mantine/core';
 
 import dayjs from 'dayjs';
-
 import utilStyles from '../../../styles/utils.module.css';
 
+import FilterHeader from './FilterHeader/FilterHeader';
+import {
+  completePayments,
+  updateInstallments,
+} from '../../../features/installments/installmentsSlice';
+import { showNotification } from '@mantine/notifications';
+import { Check, X } from 'lucide-react';
+import { useCurrentInstallments } from '../../../hooks/useCurrentInstallments';
+import { useInstallmenstsDateRange } from '../../../hooks/useInstallmentsDateRange';
+import { useSelectedPayments } from '../../../hooks/useSelectedPayments';
+
 const FilterCurrent = () => {
-  const {
-    installments,
-    fetchInstallments: { loading: fetchInstallmentsLoading },
-  } = useAppSelector((state) => state.installments);
-
-  const [selectedPayments, setSelectedPayments] = useState<IPaymentUpdate[]>(
-    []
-  );
-  const [selectedPaymentsAmount, setSelectedPaymentsAmount] =
-    useState<number>(0);
-
-  const [selectedMonth, setSelectedMonth] = useState<string>(
-    dayjs().format('YYYY-MM')
-  );
+  const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
 
-  const filteredInstallments = useMemo(() => {
-    return installments
-      .map((installment) => {
-        const filteredPayments = installment.monthlyPayments.filter((p) => {
-          return !p.paid && dayjs(p.date).isSame(dayjs(selectedMonth), 'month');
-        });
+  const {
+    installments,
+    fetchInstallments: { loading: fetchInstallmentsLoading },
+    completePayments: { loading: completePaymentsLoading },
+  } = useAppSelector((state) => state.installments);
 
-        if (filteredPayments.length === 0) return null;
+  const [currentMonth, setCurrentMonth] = useState<string>(
+    dayjs().format('YYYY-MM')
+  );
 
-        return {
-          ...installment,
-          monthlyPayments: filteredPayments,
-        };
-      })
-      .filter(Boolean) as IInstallment[];
-  }, [installments, selectedMonth]);
+  const [minDate, maxDate] = useInstallmenstsDateRange(installments);
 
-  const [minDate, maxDate] = useMemo(() => {
-    const allDates = installments.flatMap((i) =>
-      i.monthlyPayments.map((p) => dayjs(p.date))
-    );
+  const filteredInstallments = useCurrentInstallments(
+    installments,
+    currentMonth
+  );
 
-    if (allDates.length === 0) return [null, null];
-
-    const sorted = allDates.sort((a, b) => a.valueOf() - b.valueOf());
-
-    return [
-      sorted[0].startOf('month').toDate(),
-      sorted[sorted.length - 1].startOf('month').toDate(),
-    ];
-  }, [installments]);
-
-  useEffect(() => {
-    setSelectedPaymentsAmount(
-      sumByKeyDecimal(selectedPayments, 'paymentAmount')
-    );
-  }, [selectedPayments]);
-
-  const handlePaymentSelect = (payment: IPaymentUpdate) => {
-    setSelectedPayments((prev) => {
-      const exists = prev.some(
-        (p) =>
-          p.installmentId === payment.installmentId &&
-          p.paymentId === payment.paymentId
-      );
-
-      if (exists) {
-        return prev.filter(
-          (p) =>
-            !(
-              p.installmentId === payment.installmentId &&
-              p.paymentId === payment.paymentId
-            )
-        );
-      } else {
-        return [...prev, payment];
-      }
-    });
-  };
+  const {
+    selectedPayments,
+    selectedPaymentsAmount,
+    togglePayment,
+    resetAll,
+    isSelected,
+  } = useSelectedPayments();
 
   const handleMonthChange = (newMonth: string) => {
-    setSelectedMonth(newMonth);
-    setSelectedPayments([]);
+    setCurrentMonth(newMonth);
+    resetAll();
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await dispatch(completePayments(selectedPayments));
+
+      if (completePayments.fulfilled.match(response)) {
+        showNotification({
+          title: t('notifications.api.completePayments.success.title'),
+          message: t('notifications.api.completePayments.success.message'),
+          color: 'green',
+          icon: <Check />,
+        });
+        resetAll();
+        dispatch(updateInstallments(response.payload.installments));
+      } else {
+        showNotification({
+          title: t('notifications.api.completePayments.error.title'),
+          message: t('notifications.api.completePayments.error.message'),
+          color: 'red',
+          icon: <X />,
+        });
+        console.error(response.payload);
+      }
+    } catch (err) {
+      showNotification({
+        title: t('notifications.api.completePayments.error.title'),
+        message: t('notifications.api.completePayments.error.message'),
+        color: 'red',
+        icon: <X />,
+      });
+      console.error(err);
+    }
   };
 
   return (
@@ -121,7 +113,7 @@ const FilterCurrent = () => {
         ]}
         actions={[
           <MonthSelector
-            value={selectedMonth}
+            value={currentMonth}
             onChange={handleMonthChange}
             minDate={minDate}
             maxDate={maxDate}
@@ -133,9 +125,7 @@ const FilterCurrent = () => {
             <Button
               variant='filled'
               size='xs'
-              onClick={() => {
-                console.info({ selectedPayments });
-              }}
+              onClick={handleSubmit}
               disabled={!(selectedPaymentsAmount > 0)}
               rightSection={
                 selectedPaymentsAmount > 0 && (
@@ -144,6 +134,10 @@ const FilterCurrent = () => {
                   </Badge>
                 )
               }
+              loading={completePaymentsLoading}
+              loaderProps={{
+                children: <Loader size='sm' type='dots' color='white' />,
+              }}
             >
               {t('dashboard.filters.common.buttons.pay.label')}
             </Button>
@@ -154,43 +148,32 @@ const FilterCurrent = () => {
       <Skeleton visible={fetchInstallmentsLoading}>
         {filteredInstallments.length > 0 ? (
           <>
-            <Card
-              shadow='sm'
-              radius='sm'
-              withBorder
-              mb='md'
-              px='md'
-              py='sm'
-              bg='white'
-            >
-              <Group justify='space-between' gap='md' wrap='wrap'>
-                <Text
-                  size='lg'
-                  fw={700}
-                  c='gray.8'
-                  className={utilStyles.capitalize}
-                >
-                  {t('dashboard.filters.current.totalLabel', {
-                    month: dayjs(selectedMonth).format('MMMM'),
-                  })}
-                </Text>
-                <Text size='md' fw={700} c='red.6'>
-                  {sumByKeyDecimal(
-                    filteredInstallments.flatMap((i) => i.monthlyPayments),
-                    'amount'
-                  )}{' '}
-                  ₼
-                </Text>
-              </Group>
-            </Card>
+            <FilterHeader
+              title={t('dashboard.filters.current.totalLabel', {
+                month: dayjs(currentMonth).format('MMMM'),
+              })}
+              amount={sumByKeyDecimal(
+                filteredInstallments.flatMap((i) => i.monthlyPayments),
+                'amount'
+              )}
+            />
 
-            <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing='md'>
+            <SimpleGrid
+              cols={{ base: 1, sm: 2, md: 3 }}
+              spacing='md'
+              className='relative'
+            >
+              <LoadingOverlay
+                loaderProps={{ children: <></> }}
+                visible={completePaymentsLoading}
+                className={utilStyles.radiusSm}
+              />
               {filteredInstallments.map((installment) => (
                 <FilterCard
                   key={installment._id}
                   {...installment}
-                  togglePaymentSelect={handlePaymentSelect}
-                  selectedPayments={selectedPayments}
+                  togglePayment={togglePayment}
+                  isSelected={isSelected}
                   type='current'
                 />
               ))}
