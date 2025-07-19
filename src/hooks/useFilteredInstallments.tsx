@@ -1,17 +1,16 @@
-import type { IInstallment } from '../types/installment';
+import type { IInstallment, IMonthlyPayment } from '../types/installment';
 import { useMemo } from 'react';
-import dayjs from 'dayjs';
 
-export const useCurrentInstallments = (
+type PaymentFilterFn = (payment: IMonthlyPayment) => boolean;
+
+export const useFilteredInstallments = (
   installments: IInstallment[],
-  selectedMonth: string
-) => {
+  filterFn: PaymentFilterFn
+): IInstallment[] => {
   return useMemo(() => {
     return installments
       .map((installment) => {
-        const filteredPayments = installment.monthlyPayments.filter(
-          (p) => !p.paid && dayjs(p.date).isSame(dayjs(selectedMonth), 'month')
-        );
+        const filteredPayments = installment.monthlyPayments.filter(filterFn);
 
         if (filteredPayments.length === 0) return null;
 
@@ -21,5 +20,5 @@ export const useCurrentInstallments = (
         };
       })
       .filter(Boolean) as IInstallment[];
-  }, [installments, selectedMonth]);
+  }, [installments, filterFn]);
 };

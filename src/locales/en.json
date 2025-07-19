@@ -156,6 +156,12 @@
         "empty": {
           "title": "No payments completed",
           "description": "You haven't completed any payments yet."
+        },
+        "buttons": {
+          "cancel": {
+            "tooltip": "Select payment to cancel",
+            "label": "CANCEL"
+          }
         }
       },
       "card": {
@@ -408,6 +414,16 @@
         "error": {
           "title": "Payment Failed",
           "message": "Failed to complete payments."
+        }
+      },
+      "cancelPayments": {
+        "success": {
+          "title": "Payments cancelled",
+          "message": "Selected payments were successfully cancelled"
+        },
+        "error": {
+          "title": "Cancellation failed",
+          "message": "An error occurred while cancelling the payments."
         }
       }
     }

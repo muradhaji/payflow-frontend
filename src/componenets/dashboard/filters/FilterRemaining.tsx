@@ -16,7 +16,6 @@ import {
 } from '@mantine/core';
 
 import { sumByKeyDecimal } from '../../../utils/math';
-import { useRemainingInstallments } from '../../../hooks/useRemainingInstallments';
 import { useSelectedPayments } from '../../../hooks/useSelectedPayments';
 import FilterHeader from './FilterHeader/FilterHeader';
 import {
@@ -26,6 +25,7 @@ import {
 import { showNotification } from '@mantine/notifications';
 import { Check, X } from 'lucide-react';
 import utilStyles from '../../../styles/utils.module.css';
+import { useFilteredInstallments } from '../../../hooks/useFilteredInstallments';
 
 const FilterRemaining = () => {
   const dispatch = useAppDispatch();
@@ -37,7 +37,10 @@ const FilterRemaining = () => {
     completePayments: { loading: completePaymentsLoading },
   } = useAppSelector((state) => state.installments);
 
-  const filteredInstallments = useRemainingInstallments(installments);
+  const filteredInstallments = useFilteredInstallments(
+    installments,
+    (p) => !p.paid
+  );
 
   const {
     selectedPayments,

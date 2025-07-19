@@ -156,6 +156,12 @@
         "empty": {
           "title": "Hələ ödəmə edilməyib",
           "description": "Heç bir ödəniş tamamlanmayıb."
+        },
+        "buttons": {
+          "cancel": {
+            "tooltip": "Ləğv etmək üçün ödənişi seç",
+            "label": "LƏĞV ET"
+          }
         }
       },
       "card": {
@@ -408,6 +414,16 @@
         "error": {
           "title": "Uğursuz Ödəniş",
           "message": "Ödənişləri tamamlamaq mümkün olmadı."
+        }
+      },
+      "cancelPayments": {
+        "success": {
+          "title": "Ödənişlər ləğv edildi",
+          "message": "Seçilmiş ödənişlər uğurla ləğv edildi."
+        },
+        "error": {
+          "title": "Ləğv etmə alınmadı",
+          "message": "Ödənişlərin ləğvi zamanı xəta baş verdi."
         }
       }
     }

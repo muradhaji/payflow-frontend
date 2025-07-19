@@ -27,9 +27,9 @@ import {
 } from '../../../features/installments/installmentsSlice';
 import { showNotification } from '@mantine/notifications';
 import { Check, X } from 'lucide-react';
-import { useCurrentInstallments } from '../../../hooks/useCurrentInstallments';
 import { useInstallmenstsDateRange } from '../../../hooks/useInstallmentsDateRange';
 import { useSelectedPayments } from '../../../hooks/useSelectedPayments';
+import { useFilteredInstallments } from '../../../hooks/useFilteredInstallments';
 
 const FilterCurrent = () => {
   const dispatch = useAppDispatch();
@@ -48,9 +48,9 @@ const FilterCurrent = () => {
 
   const [minDate, maxDate] = useInstallmenstsDateRange(installments);
 
-  const filteredInstallments = useCurrentInstallments(
+  const filteredInstallments = useFilteredInstallments(
     installments,
-    currentMonth
+    (p) => !p.paid && dayjs(p.date).isSame(dayjs(currentMonth), 'month')
   );
 
   const {
