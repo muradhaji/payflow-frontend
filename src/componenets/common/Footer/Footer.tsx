@@ -1,12 +1,15 @@
+import { Box, Text } from '@mantine/core';
+import ResponsiveContainer from '../ResponsiveContainer/ResponsiveContainer';
+
 function Footer() {
   return (
-    <footer className='px-3 py-4 sm:px-0 bg-gray-100'>
-      <div className='container mx-auto'>
-        <p className='text-sm text-gray-700 text-center sm:text-md sm:text-left'>
+    <Box p='sm' bg='gray.1'>
+      <ResponsiveContainer>
+        <Text size='sm' c='gray.7' ta={{ base: 'center', xs: 'left' }}>
           © 2025 | Murad Hajiyev
-        </p>
-      </div>
-    </footer>
+        </Text>
+      </ResponsiveContainer>
+    </Box>
   );
 }
 

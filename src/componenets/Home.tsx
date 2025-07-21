@@ -1,45 +1,43 @@
 import { Link } from 'react-router-dom';
-import Header from './common/Header/Header';
 import { Trans, useTranslation } from 'react-i18next';
-import Footer from './common/Footer/Footer';
+import { Button, Flex, Text, Title } from '@mantine/core';
+import ResponsiveContainer from './common/ResponsiveContainer/ResponsiveContainer';
+import utilStyles from '../styles/utils.module.css';
+import { ArrowRight } from 'lucide-react';
 
 export default function Home() {
   const { t } = useTranslation();
 
   return (
-    <section className='home_page min-h-[100dvh] bg-gray-200 flex flex-col'>
-      <Header />
-      <main id='parent' className='px-3 py-12 flex-1 flex'>
-        <div id='child' className='container mx-auto max-w-2xl'>
-          <div className='flex flex-col gap-6 justify-center h-full'>
-            <h1 className='text-center text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl'>
-              <Trans i18nKey='home.intro.heading' components={{ 1: <br /> }} />
-            </h1>
-            <p className=' text-center text-md font-medium text-pretty text-gray-500 sm:text-lg/6'>
-              <Trans
-                i18nKey='home.intro.paragraph'
-                components={{ 1: <br /> }}
-              />
-            </p>
-            <div className='flex gap-2 items-center justify-center'>
-              <Link
-                to='/register'
-                className='rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
-              >
-                {t('home.buttons.getStarted')}
-              </Link>
-              <Link
-                to='https://muradhajiyev.vercel.app/projects'
-                className='text-sm/6 font-semibold text-gray-900 flex gap-2'
-              >
-                {t('home.buttons.otherProjects')}
-                <span aria-hidden='true'>→</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </section>
+    <ResponsiveContainer
+      flex
+      align='center'
+      justify='center'
+      className={utilStyles.flexFill}
+    >
+      <Flex py='lg' direction='column' gap='lg' justify='center' align='center'>
+        <Title order={1} size='h1' ta='center' c='gray.9' fw={700}>
+          <Trans i18nKey='home.intro.heading' components={{ 1: <br /> }} />
+        </Title>
+        <Text size='md' ta='center' c='gray.7' fw={700}>
+          <Trans i18nKey='home.intro.paragraph' components={{ 1: <br /> }} />
+        </Text>
+
+        <Flex justify='center' align='center' gap='md'>
+          <Button component={Link} to='/register'>
+            {t('home.buttons.getStarted')}
+          </Button>
+          <Button
+            component='a'
+            target='_blank'
+            href='https://muradhajiyev.vercel.app/projects'
+            variant='subtle'
+            rightSection={<ArrowRight size={14} />}
+          >
+            {t('home.buttons.otherProjects')}
+          </Button>
+        </Flex>
+      </Flex>
+    </ResponsiveContainer>
   );
 }

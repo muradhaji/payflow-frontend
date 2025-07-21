@@ -1,9 +1,8 @@
-import Footer from '../common/Footer/Footer';
-import Header from '../../componenets/common/Header/Header';
 import { Outlet } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { useEffect } from 'react';
 import { fetchInstallments } from '../../features/installments/installmentsSlice';
+import ResponsiveContainer from '../common/ResponsiveContainer/ResponsiveContainer';
 
 const DashboardLayout = () => {
   const dispatch = useAppDispatch();
@@ -13,15 +12,9 @@ const DashboardLayout = () => {
   }, [dispatch]);
 
   return (
-    <div className='min-h-[100dvh] flex flex-col bg-gray-200'>
-      <Header />
-      <div className='flex-1 px-3 py-6'>
-        <div className='container mx-auto'>
-          <Outlet />
-        </div>
-      </div>
-      <Footer />
-    </div>
+    <ResponsiveContainer>
+      <Outlet />
+    </ResponsiveContainer>
   );
 };
 

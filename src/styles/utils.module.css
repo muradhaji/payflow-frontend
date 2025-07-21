@@ -17,3 +17,7 @@
 .radiusMd {
   border-radius: var(--mantine-radius-md);
 }
+
+.flexFill {
+  flex-grow: 1;
+}

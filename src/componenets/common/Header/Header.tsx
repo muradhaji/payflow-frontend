@@ -2,8 +2,9 @@ import { Link, useLocation } from 'react-router-dom';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import { useAuth } from '../../../hooks/useAuth';
 import UserMenu from '../UserMenu/UserMenu';
-import { Button } from '@mantine/core';
+import { Button, Card, Flex, Text, Title } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
+import ResponsiveContainer from '../ResponsiveContainer/ResponsiveContainer';
 
 function Header() {
   const { isAuthenticated } = useAuth();
@@ -11,29 +12,38 @@ function Header() {
   const { t } = useTranslation();
 
   return (
-    <header className='bg-gray-100 p-3 shadow-xl'>
-      <div className='container mx-auto flex justify-between items-center'>
-        <Link to='/' className='text_logo text-2xl font-bold pointer'>
-          <span className='text-blue-600'>Pay</span>
-          <span>Flow</span>
-        </Link>
-        <div className='flex gap-2'>
-          <LanguageSwitcher />
+    <Card bg='gray.1' p='sm' shadow='lg'>
+      <ResponsiveContainer>
+        <Flex justify='space-between' align='center'>
+          <Link to='/'>
+            <Title order={2} size='h2' fw={700}>
+              <Text c='blue.6' span inherit>
+                Pay
+              </Text>
+              <Text c='gray.9' span inherit>
+                Flow
+              </Text>
+            </Title>
+          </Link>
 
-          {isAuthenticated ? (
-            <UserMenu />
-          ) : ['/login'].includes(pathname) ? (
-            <Button component={Link} to='/register' size='xs'>
-              {t('auth.login.header.buttons.signup')}
-            </Button>
-          ) : (
-            <Button component={Link} to='/login' size='xs'>
-              {t('auth.signup.header.buttons.login')}
-            </Button>
-          )}
-        </div>
-      </div>
-    </header>
+          <Flex gap='xs'>
+            <LanguageSwitcher />
+
+            {isAuthenticated ? (
+              <UserMenu />
+            ) : ['/login'].includes(pathname) ? (
+              <Button component={Link} to='/register' size='xs'>
+                {t('auth.login.header.buttons.signup')}
+              </Button>
+            ) : (
+              <Button component={Link} to='/login' size='xs'>
+                {t('auth.signup.header.buttons.login')}
+              </Button>
+            )}
+          </Flex>
+        </Flex>
+      </ResponsiveContainer>
+    </Card>
   );
 }
 
