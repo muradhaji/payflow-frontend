@@ -24,12 +24,8 @@ const PaidPayments = () => {
   };
 
   const notificationMessages = {
-    success: {
-      message: t('notifications.api.cancelPayments.success'),
-    },
-    error: {
-      message: t('notifications.api.cancelPayments.error'),
-    },
+    success: t('notifications.api.cancelPayments.success'),
+    error: t('notifications.api.cancelPayments.error'),
   };
 
   return (
