@@ -1,32 +1,69 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import {
+  Center,
+  Flex,
+  Paper,
+  RingProgress,
+  Stack,
+  Text,
+  useMantineTheme,
+  type MantineColor,
+} from '@mantine/core';
+
+import { type TablerIcon } from '@tabler/icons-react';
+
+import { Link, type LinkProps } from 'react-router-dom';
+
+type StatsRingProps = {
+  label: string;
+  stats: number;
+  percentage: number;
+  color: MantineColor;
+  Icon?: TablerIcon;
+} & Pick<LinkProps, 'to'>;
 
 const FilterCard = ({
-  title,
-  amount,
-  icon,
-  routeUrl,
+  to,
+  label,
+  stats,
+  percentage,
   color,
-}: {
-  title: string;
-  amount: number;
-  icon: React.ReactNode;
-  routeUrl: string;
-  color: string;
-}) => {
+  Icon,
+}: StatsRingProps) => {
+  const theme = useMantineTheme();
+
+  const [base, shade] = color.includes('.')
+    ? (color.split('.') as [keyof typeof theme.colors, string])
+    : [color as keyof typeof theme.colors, '6'];
+  const parsedShade = parseInt(shade);
+  const hexColor = theme.colors[base]?.[parsedShade] ?? color;
+
   return (
-    <Link
-      to={routeUrl}
-      className={`cursor-pointer rounded-2xl shadow-md bg-white hover:shadow-lg transition-all p-5 border-t-4 ${color}`}
-    >
-      <div className='flex items-center gap-4'>
-        <div className='p-2 bg-gray-100 rounded-full'>{icon}</div>
-        <div>
-          <h3 className='text-lg font-semibold text-gray-700'>{title}</h3>
-          <p className='text-2xl font-bold text-gray-900'>{amount} ₼</p>
-        </div>
-      </div>
-    </Link>
+    <Paper component={Link} to={to} withBorder radius='sm' p='xs'>
+      <Flex align='center' gap='sm' wrap='nowrap'>
+        <RingProgress
+          size={80}
+          roundCaps
+          thickness={8}
+          sections={[{ value: percentage, color }]}
+          label={
+            Icon ? (
+              <Center>
+                <Icon size={24} color={hexColor} />
+              </Center>
+            ) : null
+          }
+        />
+
+        <Stack gap={0}>
+          <Text c='black' size='sm' fw={700}>
+            {label}
+          </Text>
+          <Text fw={700} size='xl'>
+            {stats} ₼
+          </Text>
+        </Stack>
+      </Flex>
+    </Paper>
   );
 };
 

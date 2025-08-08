@@ -14,7 +14,7 @@
     },
     "installments": {
       "all": {
-        "pageTitle": "Bütün Ödənişlər",
+        "pageTitle": "Bütün Borclar",
         "empty": {
           "title": "Ödəniş tapılmadı",
           "description": "Hələ heç bir ödəniş əlavə etməmisiniz."
@@ -59,13 +59,22 @@
     "filters": {
       "pageTitle": "Ödənişlər",
       "cards": {
-        "current": "Cari Ödənişlər",
-        "remaining": "Qalan Ödənişlər",
-        "paid": "Ümumi Ödənilmiş",
-        "all": "Bütün Ödənişlər"
+        "overdue": "GECİKMİŞ BORCLAR",
+        "current": "BU AYIN BORCLARI",
+        "remaining": "QALAN BORCLAR",
+        "paid": "ÖDƏNMİŞ BORCLAR",
+        "all": "BÜTÜN BORCLAR"
+      },
+      "overdue": {
+        "pageTitle": "Gecikmiş Borclar",
+        "totalLabel": "Ümumi gecikmiş məbləğ:",
+        "empty": {
+          "title": "Gecikmiş ödəniş yoxdur",
+          "description": "Əvvəlki aylara aid heç bir ödənilməmiş borc yoxdur."
+        }
       },
       "current": {
-        "pageTitle": "Cari Ödənişlər",
+        "pageTitle": "Bu Ayın Borcları",
         "totalLabel": "{{month}} üçün ümumi:",
         "empty": {
           "title": "Ödəməyə heç nə yoxdur",
@@ -73,7 +82,7 @@
         }
       },
       "remaining": {
-        "pageTitle": "Qalan Ödənişlər",
+        "pageTitle": "Qalan Borclar",
         "totalLabel": "Qalan ümumi:",
         "empty": {
           "title": "Qalan ödəmə yoxdur",
@@ -81,7 +90,7 @@
         }
       },
       "paid": {
-        "pageTitle": "Ödənilmiş Ödənişlər",
+        "pageTitle": "Ödənmiş Borclar",
         "totalLabel": "Ümumi ödənilib:",
         "empty": {
           "title": "Hələ ödəmə edilməyib",
@@ -94,6 +103,11 @@
     },
     "paymentItem": {
       "paidLabel": "Ödənilib: {{date}}"
+    },
+    "statsCard": {
+      "totalLabel": "Toplam borc",
+      "paid": "ÖDƏNMİŞ",
+      "remaining": "QALAN"
     }
   },
   "forms": {
@@ -247,10 +261,11 @@
   },
   "breadcrumbs": {
     "payments": "Ödənişlər",
-    "allPayments": "Bütün Ödənişlər",
-    "filterCurrent": "Cari",
-    "filterRemaining": "Qalan",
-    "filterPaid": "Ödənilmiş",
+    "filterOverdue": "Gecikmiş Borclar",
+    "filterCurrent": "Bu Ayın Borcları",
+    "filterPaid": "Ödənmiş Borclar",
+    "filterRemaining": "Qalan Borclar",
+    "allPayments": "Bütün Borclar",
     "details": "Təfərrüatlar",
     "addPayment": "Redaktə Et"
   },

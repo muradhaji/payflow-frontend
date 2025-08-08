@@ -12,16 +12,17 @@ import classes from './FilteredPaymentsCard.module.css';
 import PaymentItem from '../../installments/PaymentItem/PaymentItem';
 
 const colorMap: Record<string, string> = {
-  current: 'red',
-  remaining: 'orange',
-  paid: 'green',
-  default: 'gray',
+  overdue: 'red.5',
+  current: 'orange.5',
+  remaining: 'dark',
+  paid: 'tale.5',
+  default: 'indigo.5',
 };
 
 interface FilteredPaymentsCardProps extends IInstallment {
   togglePayment: (payment: IPaymentUpdate) => void;
   isSelected: (paymentId: string) => boolean;
-  type: 'current' | 'remaining' | 'paid' | 'all';
+  type: 'overdue' | 'current' | 'remaining' | 'paid' | 'all';
 }
 
 const FilteredPaymentsCard = ({

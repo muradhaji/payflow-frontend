@@ -21,6 +21,14 @@ export function roundToTwoDecimals(value: number): number {
   return Math.round((value + Number.EPSILON) * 100) / 100;
 }
 
+export function calculatePercentageDecimal(
+  part: number,
+  total: number
+): number {
+  if (total === 0) return 0;
+  return Math.round((part / total) * 10000) / 100;
+}
+
 export function getMostFrequentAmount(numbers: number[]): number | null {
   if (!numbers.length) return null;
 

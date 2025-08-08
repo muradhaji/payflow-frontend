@@ -14,7 +14,7 @@
     },
     "installments": {
       "all": {
-        "pageTitle": "All Payments",
+        "pageTitle": "All Debts",
         "empty": {
           "title": "No payments found",
           "description": "You have not added any payments yet."
@@ -59,13 +59,22 @@
     "filters": {
       "pageTitle": "Payments",
       "cards": {
-        "current": "This Month's debts",
-        "remaining": "Remaining debts",
-        "paid": "Total paid",
-        "all": "All Payments"
+        "overdue": "OVERDUE DEBTS",
+        "current": "THIS MONTH'S DEBTS",
+        "remaining": "UNPAID DEBTS",
+        "paid": "PAID DEBTS",
+        "all": "ALL DEBTS"
+      },
+      "overdue": {
+        "pageTitle": "Overdue Debts",
+        "totalLabel": "Total Overdue Amount:",
+        "empty": {
+          "title": "No Overdue Payments",
+          "description": "You have no overdue payments for previous months."
+        }
       },
       "current": {
-        "pageTitle": "Current Payments",
+        "pageTitle": "This Month's Debts",
         "totalLabel": "Total for {{month}}:",
         "empty": {
           "title": "Nothing to pay",
@@ -73,7 +82,7 @@
         }
       },
       "remaining": {
-        "pageTitle": "Remaining Payments",
+        "pageTitle": "Unpaid Debts",
         "totalLabel": "Total Remaining:",
         "empty": {
           "title": "No remaining payments",
@@ -81,7 +90,7 @@
         }
       },
       "paid": {
-        "pageTitle": "Paid Payments",
+        "pageTitle": "Paid Debts",
         "totalLabel": "Total Paid:",
         "empty": {
           "title": "No payments completed",
@@ -94,6 +103,11 @@
     },
     "paymentItem": {
       "paidLabel": "Paid: {{date}}"
+    },
+    "statsCard": {
+      "totalLabel": "Total debt",
+      "paid": "PAID",
+      "remaining": "REMAINING"
     }
   },
   "forms": {
@@ -247,10 +261,11 @@
   },
   "breadcrumbs": {
     "payments": "Payments",
-    "allPayments": "All Payments",
-    "filterCurrent": "Current",
-    "filterRemaining": "Remaining",
-    "filterPaid": "Paid",
+    "filterOverdue": "Overdue Debts",
+    "filterCurrent": "This Month's Debts",
+    "filterPaid": "Paid Debts",
+    "filterRemaining": "Unpaid Debts",
+    "allPayments": "All Debts",
     "details": "Details",
     "addPayment": "Edit"
   },

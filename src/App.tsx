@@ -27,6 +27,7 @@ import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import './App.css';
+import FilterOverdue from './componenets/filters/FilterOverdue';
 
 const theme = createTheme({
   breakpoints: {
@@ -62,6 +63,7 @@ function App() {
               >
                 <Route index element={<Filters />} />
 
+                <Route path='overdue' element={<FilterOverdue />} />
                 <Route path='current' element={<FilterCurrent />} />
                 <Route path='remaining' element={<FilterRemaining />} />
                 <Route path='paid' element={<FilterPaid />} />

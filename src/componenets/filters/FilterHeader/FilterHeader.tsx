@@ -3,16 +3,17 @@ import { Card, Group, Text } from '@mantine/core';
 import utilStyles from '../../../styles/utils.module.css';
 
 const colorMap: Record<string, string> = {
-  current: 'red',
-  remaining: 'orange',
-  paid: 'green',
-  default: 'gray',
+  overdue: 'red.5',
+  current: 'orange.5',
+  remaining: 'dark',
+  paid: 'tale.5',
+  default: 'indigo.5',
 };
 
 interface FilterHeaderProps {
   title: string;
   amount: number;
-  type: 'current' | 'remaining' | 'paid' | 'all';
+  type: 'overdue' | 'current' | 'remaining' | 'paid' | 'all';
 }
 
 const FilterHeader = ({ title, amount, type }: FilterHeaderProps) => {
