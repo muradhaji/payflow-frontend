@@ -56,8 +56,8 @@
         }
       }
     },
-
     "filters": {
+      "pageTitle": "Payments",
       "cards": {
         "current": "This Month's debts",
         "remaining": "Remaining debts",
@@ -212,9 +212,6 @@
     "signup": {
       "label": "SIGN UP"
     },
-    "dashboard": {
-      "label": "DASHBOARD"
-    },
     "getStarted": {
       "label": "GET STARTED"
     },
@@ -237,18 +234,19 @@
       }
     },
     "payments": {
-      "cancel": {
-        "label": "CANCEL",
-        "tooltip": "Select payments to cancel"
-      },
-      "complete": {
-        "label": "COMPLETE",
-        "tooltip": "Select payments to complete"
-      }
+      "label": "PAYMENTS"
+    },
+    "completePayments": {
+      "label": "COMPLETE",
+      "tooltip": "Select payments to complete"
+    },
+    "cancelPayments": {
+      "label": "CANCEL",
+      "tooltip": "Select payments to cancel"
     }
   },
   "breadcrumbs": {
-    "dashboard": "Dashboard",
+    "payments": "Payments",
     "allPayments": "All Payments",
     "filterCurrent": "Current",
     "filterRemaining": "Remaining",

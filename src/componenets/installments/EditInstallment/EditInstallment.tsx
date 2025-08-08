@@ -159,7 +159,7 @@ const EditInstallment = () => {
 
   useEffect(() => {
     if (!id) {
-      navigate('/dashboard');
+      navigate('/payments');
       return;
     }
 
@@ -274,7 +274,7 @@ const EditInstallment = () => {
       <PageHeader
         title={t('components.installments.edit.pageTitle')}
         breadcrumbs={[
-          { label: t('breadcrumbs.dashboard'), to: '/dashboard' },
+          { label: t('breadcrumbs.payments'), to: '/payments' },
           {
             label: t('breadcrumbs.addPayment'),
             to: '/payments/edit',

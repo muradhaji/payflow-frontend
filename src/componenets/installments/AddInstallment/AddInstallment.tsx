@@ -211,7 +211,7 @@ const AddInstallment = () => {
       <PageHeader
         title={t('components.installments.add.pageTitle')}
         breadcrumbs={[
-          { label: t('breadcrumbs.dashboard'), to: '/dashboard' },
+          { label: t('breadcrumbs.payments'), to: '/payments' },
           {
             label: t('breadcrumbs.addPayment'),
             to: '/payments/add',

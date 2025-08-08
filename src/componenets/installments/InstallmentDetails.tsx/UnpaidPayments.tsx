@@ -22,8 +22,8 @@ const UnpaidPayments = () => {
   };
 
   const buttonProps = {
-    label: t('buttons.payments.complete.label'),
-    tooltip: t('buttons.payments.complete.tooltip'),
+    label: t('buttons.completePayments.label'),
+    tooltip: t('buttons.completePayments.tooltip'),
     color: 'blue',
   };
 

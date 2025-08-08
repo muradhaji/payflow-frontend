@@ -51,7 +51,7 @@ const Login = () => {
   const onSubmit = async (data: LoginFormInputs) => {
     try {
       await dispatch(login(data)).unwrap();
-      navigate('/dashboard', { replace: true });
+      navigate('/payments', { replace: true });
     } catch (err) {
       console.error(err);
     }
@@ -59,7 +59,7 @@ const Login = () => {
 
   useEffect(() => {
     if (token) {
-      navigate('/dashboard', { replace: true });
+      navigate('/payments', { replace: true });
     }
   }, [token, navigate]);
 

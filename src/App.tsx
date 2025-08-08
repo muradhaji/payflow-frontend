@@ -4,11 +4,11 @@ import Login from './componenets/auth/Login';
 import SignUp from './componenets/auth/SignUp';
 import PrivateRoute from './componenets/auth/PrivateRoute';
 
-import FiltersLayout from './componenets/dashboard/FiltersLayout/FiltersLayout';
-import Filters from './componenets/dashboard/Filters';
-import FilterCurrent from './componenets/dashboard/FilterCurrent';
-import FilterRemaining from './componenets/dashboard/FilterRemaining';
-import FilterPaid from './componenets/dashboard/FilterPaid';
+import FiltersLayout from './componenets/filters/FiltersLayout/FiltersLayout';
+import Filters from './componenets/filters/Filters';
+import FilterCurrent from './componenets/filters/FilterCurrent';
+import FilterRemaining from './componenets/filters/FilterRemaining';
+import FilterPaid from './componenets/filters/FilterPaid';
 
 import InstallmentsLayout from './componenets/installments/InstallmentsLayout';
 import AllInstallments from './componenets/installments/AllInstallments/AllInstallments';
@@ -50,19 +50,7 @@ function App() {
               <Route index element={<Home />} />
               <Route path='login' element={<Login />} />
               <Route path='/register' element={<SignUp />} />
-              <Route
-                path='/dashboard'
-                element={
-                  <PrivateRoute>
-                    <FiltersLayout />
-                  </PrivateRoute>
-                }
-              >
-                <Route index element={<Filters />} />
-                <Route path='current' element={<FilterCurrent />} />
-                <Route path='remaining' element={<FilterRemaining />} />
-                <Route path='paid' element={<FilterPaid />} />
-              </Route>
+
               <Route
                 path='/payments'
                 element={
@@ -71,7 +59,12 @@ function App() {
                   </PrivateRoute>
                 }
               >
-                <Route index element={<>Payments</>}></Route>
+                <Route index element={<Filters />} />
+
+                <Route path='current' element={<FilterCurrent />} />
+                <Route path='remaining' element={<FilterRemaining />} />
+                <Route path='paid' element={<FilterPaid />} />
+
                 <Route path='all' element={<AllInstallments />} />
                 <Route path='add' element={<AddInstallment />}></Route>
                 <Route path='edit/:id' element={<EditInstallment />}></Route>

@@ -85,7 +85,7 @@ const InstallmentDetails = () => {
         icon: <Check />,
       });
       dispatch(fetchInstallments());
-      navigate('/dashboard');
+      navigate('/payments');
     } else {
       showNotification({
         title: t('notifications.api.installment.delete.error.title'),
@@ -101,7 +101,7 @@ const InstallmentDetails = () => {
       <PageHeader
         title={t('components.installments.details.pageTitle')}
         breadcrumbs={[
-          { label: t('breadcrumbs.dashboard'), to: '/dashboard' },
+          { label: t('breadcrumbs.payments'), to: '/payments' },
           {
             label: t('breadcrumbs.details'),
             to: `/installments/details/${id}`,

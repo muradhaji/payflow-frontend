@@ -51,7 +51,7 @@ const SignUp = () => {
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
       await dispatch(register(data)).unwrap();
-      navigate('/dashboard', { replace: true });
+      navigate('/payments', { replace: true });
     } catch (err) {
       console.error(err);
     }

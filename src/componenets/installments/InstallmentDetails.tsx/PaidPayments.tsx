@@ -11,8 +11,8 @@ const PaidPayments = () => {
   const { t } = useTranslation();
 
   const buttonProps = {
-    label: t('buttons.payments.cancel.label'),
-    tooltip: t('buttons.payments.cancel.tooltip'),
+    label: t('buttons.cancelPayments.label'),
+    tooltip: t('buttons.cancelPayments.tooltip'),
     color: 'red',
   };
 

@@ -54,7 +54,7 @@ const Filters = () => {
   return (
     <>
       <PageHeader
-        title='Dashboard'
+        title={t('components.filters.pageTitle')}
         actions={
           <Tooltip label={t('buttons.installment.add.tooltip')}>
             <Button
@@ -75,21 +75,21 @@ const Filters = () => {
           <FilterCard
             title={t('components.filters.cards.current')}
             amount={totalCurrent}
-            routeUrl='/dashboard/current'
+            routeUrl='/payments/current'
             icon={<CalendarCheck2 className='text-red-600' />}
             color='border-red-500'
           />
           <FilterCard
             title={t('components.filters.cards.remaining')}
             amount={totalRemaining}
-            routeUrl='/dashboard/remaining'
+            routeUrl='/payments/remaining'
             icon={<Wallet className='text-yellow-600' />}
             color='border-yellow-500'
           />
           <FilterCard
             title={t('components.filters.cards.paid')}
             amount={totalPaid}
-            routeUrl='/dashboard/paid'
+            routeUrl='/payments/paid'
             icon={<CircleDollarSign className='text-green-600' />}
             color='border-green-500'
           />

@@ -57,6 +57,7 @@
       }
     },
     "filters": {
+      "pageTitle": "Ödənişlər",
       "cards": {
         "current": "Cari Ödənişlər",
         "remaining": "Qalan Ödənişlər",
@@ -211,9 +212,6 @@
     "signup": {
       "label": "QEYDİYYATDAN KEÇ"
     },
-    "dashboard": {
-      "label": "İDARƏ PANELİ"
-    },
     "getStarted": {
       "label": "İNDİ BAŞLA"
     },
@@ -236,18 +234,19 @@
       }
     },
     "payments": {
-      "cancel": {
-        "label": "LƏĞV ET",
-        "tooltip": "Ləğv etmək üçün ödənişi seç"
-      },
-      "complete": {
-        "label": "TAMAMLA",
-        "tooltip": "Tamamlamaq üçün ödənişi seçin"
-      }
+      "label": "ÖDƏNİŞLƏR"
+    },
+    "completePayments": {
+      "label": "TAMAMLA",
+      "tooltip": "Tamamlamaq üçün ödənişi seçin"
+    },
+    "cancelPayments": {
+      "label": "LƏĞV ET",
+      "tooltip": "Ləğv etmək üçün ödənişi seç"
     }
   },
   "breadcrumbs": {
-    "dashboard": "İdarə Paneli",
+    "payments": "Ödənişlər",
     "allPayments": "Bütün Ödənişlər",
     "filterCurrent": "Cari",
     "filterRemaining": "Qalan",

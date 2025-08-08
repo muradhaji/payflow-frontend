@@ -1,12 +1,10 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { sumByKeyDecimal } from '../../utils/math';
 
 import FilteredPaymentsCard from './FilteredPaymentsCard/FilteredPaymentsCard';
-import MonthSelector from '../common/MonthSelector/MonthSelector';
 import PageHeader from '../common/PageHeader/PageHeader';
 import EmptyState from '../common/EmptyState/EmptyState';
+
 import {
   Badge,
   Button,
@@ -17,9 +15,8 @@ import {
   Tooltip,
 } from '@mantine/core';
 
-import dayjs from 'dayjs';
-import utilStyles from '../../styles/utils.module.css';
-
+import { sumByKeyDecimal } from '../../utils/math';
+import { useSelectedPayments } from '../../hooks/useSelectedPayments';
 import FilterHeader from './FilterHeader/FilterHeader';
 import {
   completePayments,
@@ -27,13 +24,11 @@ import {
 } from '../../features/installments/installmentsSlice';
 import { showNotification } from '@mantine/notifications';
 import { Check, X } from 'lucide-react';
-import { useInstallmenstsDateRange } from '../../hooks/useInstallmentsDateRange';
-import { useSelectedPayments } from '../../hooks/useSelectedPayments';
+import utilStyles from '../../styles/utils.module.css';
 import { useFilteredInstallments } from '../../hooks/useFilteredInstallments';
 
-const FilterCurrent = () => {
+const FilterRemaining = () => {
   const dispatch = useAppDispatch();
-
   const { t } = useTranslation();
 
   const {
@@ -42,29 +37,18 @@ const FilterCurrent = () => {
     completePayments: { loading: completePaymentsLoading },
   } = useAppSelector((state) => state.installments);
 
-  const [currentMonth, setCurrentMonth] = useState<string>(
-    dayjs().format('YYYY-MM')
-  );
-
-  const [minDate, maxDate] = useInstallmenstsDateRange(installments);
-
   const filteredInstallments = useFilteredInstallments(
     installments,
-    (p) => !p.paid && dayjs(p.date).isSame(dayjs(currentMonth), 'month')
+    (p) => !p.paid
   );
 
   const {
     selectedPayments,
     selectedPaymentsAmount,
     togglePayment,
-    resetAll,
     isSelected,
+    resetAll,
   } = useSelectedPayments();
-
-  const handleMonthChange = (newMonth: string) => {
-    setCurrentMonth(newMonth);
-    resetAll();
-  };
 
   const handleSubmit = async () => {
     try {
@@ -102,24 +86,17 @@ const FilterCurrent = () => {
   return (
     <>
       <PageHeader
-        title={t('components.filters.current.pageTitle')}
+        title={t('components.filters.remaining.pageTitle')}
         breadcrumbs={[
-          { label: t('breadcrumbs.dashboard'), to: '/dashboard' },
+          { label: t('breadcrumbs.payments'), to: '/payments' },
           {
-            label: t('breadcrumbs.filterCurrent'),
-            to: '/dashboard/current',
+            label: t('breadcrumbs.filterRemaining'),
+            to: '/payments/remaining',
             active: true,
           },
         ]}
-        actions={[
-          <MonthSelector
-            value={currentMonth}
-            onChange={handleMonthChange}
-            minDate={minDate}
-            maxDate={maxDate}
-            tooltip={t('tooltips.monthSelector')}
-          />,
-          <Tooltip label={t('buttons.payments.complete.tooltip')}>
+        actions={
+          <Tooltip label={t('buttons.completePayments.tooltip')}>
             <Button
               variant='filled'
               size='xs'
@@ -137,24 +114,22 @@ const FilterCurrent = () => {
                 children: <Loader size='sm' type='dots' color='white' />,
               }}
             >
-              {t('buttons.payments.complete.label')}
+              {t('buttons.completePayments.label')}
             </Button>
-          </Tooltip>,
-        ]}
+          </Tooltip>
+        }
       />
 
       <Skeleton visible={fetchInstallmentsLoading}>
         {filteredInstallments.length > 0 ? (
           <>
             <FilterHeader
-              title={t('components.filters.current.totalLabel', {
-                month: dayjs(currentMonth).format('MMMM'),
-              })}
+              title={t('components.filters.remaining.totalLabel')}
               amount={sumByKeyDecimal(
                 filteredInstallments.flatMap((i) => i.monthlyPayments),
                 'amount'
               )}
-              type='current'
+              type='remaining'
             />
 
             <SimpleGrid
@@ -173,7 +148,7 @@ const FilterCurrent = () => {
                   {...installment}
                   togglePayment={togglePayment}
                   isSelected={isSelected}
-                  type='current'
+                  type='remaining'
                 />
               ))}
             </SimpleGrid>
@@ -181,8 +156,8 @@ const FilterCurrent = () => {
         ) : (
           <EmptyState
             icon
-            title={t('components.filters.current.empty.title')}
-            description={t('components.filters.current.empty.description')}
+            title={t('components.filters.remaining.empty.title')}
+            description={t('components.filters.remaining.empty.description')}
           />
         )}
       </Skeleton>
@@ -190,4 +165,4 @@ const FilterCurrent = () => {
   );
 };
 
-export default FilterCurrent;
+export default FilterRemaining;
