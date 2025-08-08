@@ -281,55 +281,25 @@
   "notifications": {
     "api": {
       "completePayments": {
-        "success": {
-          "title": "Uğurlu Ödəniş",
-          "message": "Ödənişlər uğurla tamamlandı."
-        },
-        "error": {
-          "title": "Uğursuz Ödəniş",
-          "message": "Ödənişləri tamamlamaq mümkün olmadı."
-        }
+        "success": "Ödənişlər uğurla tamamlandı.",
+        "error": "Ödənişləri tamamlamaq mümkün olmadı."
       },
       "cancelPayments": {
-        "success": {
-          "title": "Ödənişlər ləğv edildi",
-          "message": "Seçilmiş ödənişlər uğurla ləğv edildi"
-        },
-        "error": {
-          "title": "Ləğv etmə alınmadı",
-          "message": "Ödənişlərin ləğvi zamanı xəta baş verdi."
-        }
+        "success": "Ödənişlər uğurla ləğv edildi.",
+        "error": "Ödənişləri ləğv etmək mümkün olmadı."
       },
       "installment": {
         "add": {
-          "success": {
-            "title": "Ödəniş əlavə olundu",
-            "message": "Ödəniş uğurla yaradıldı."
-          },
-          "error": {
-            "title": "Xəta",
-            "message": "Ödəniş əlavə edilərkən xəta baş verdi."
-          }
+          "success": "Ödəniş uğurla yaradıldı.",
+          "error": "Ödənişi yaratmaq mümkün olmadı."
         },
         "edit": {
-          "success": {
-            "title": "Ödəniş yeniləndi",
-            "message": "Ödənişiniz uğurla yeniləndi."
-          },
-          "error": {
-            "title": "Xəta",
-            "message": "Ödəniş yenilənərkən xəta baş verdi."
-          }
+          "success": "Ödəniş uğurla yeniləndi.",
+          "error": "Ödənişi yeniləmək mümkün olmadı."
         },
         "delete": {
-          "success": {
-            "title": "Silindi",
-            "message": "Ödəniş uğurla silindi."
-          },
-          "error": {
-            "title": "Xəta baş verdi",
-            "message": "Ödənişi silinərkən xəta baş verdi."
-          }
+          "success": "Ödəniş uğurla silindi.",
+          "error": "Ödənişi silmək mümkün olmadı."
         }
       }
     }

@@ -281,55 +281,25 @@
   "notifications": {
     "api": {
       "completePayments": {
-        "success": {
-          "title": "Payment Successful",
-          "message": "Payments completed successfully."
-        },
-        "error": {
-          "title": "Payment Failed",
-          "message": "Failed to complete payments."
-        }
+        "success": "Payments completed successfully.",
+        "error": "Failed to complete payments."
       },
       "cancelPayments": {
-        "success": {
-          "title": "Payments cancelled",
-          "message": "Selected payments were successfully cancelled"
-        },
-        "error": {
-          "title": "Cancellation failed",
-          "message": "An error occurred while cancelling the payments."
-        }
+        "success": "Payments cancelled successfully.",
+        "error": "Failed to cancel payments."
       },
       "installment": {
         "add": {
-          "success": {
-            "title": "Payment added",
-            "message": "Your payment has been successfully created."
-          },
-          "error": {
-            "title": "Error",
-            "message": "Something went wrong while adding the payment."
-          }
+          "success": "Payment created successfully.",
+          "error": "Failed to create the payment."
         },
         "edit": {
-          "success": {
-            "title": "Payment updated",
-            "message": "Your payment has been successfully updated."
-          },
-          "error": {
-            "title": "Error",
-            "message": "Something went wrong while updating the payment."
-          }
+          "success": "Payment updated successfully.",
+          "error": "Failed to update the payment."
         },
         "delete": {
-          "success": {
-            "title": "Deleted",
-            "message": "Payment was deleted successfully."
-          },
-          "error": {
-            "title": "Error occurred",
-            "message": "An error occurred while deleting the payment."
-          }
+          "success": "Payment deleted successfully.",
+          "error": "Failed to delete the payment."
         }
       }
     }

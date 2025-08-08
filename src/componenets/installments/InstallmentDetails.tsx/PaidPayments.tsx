@@ -25,12 +25,10 @@ const PaidPayments = () => {
 
   const notificationMessages = {
     success: {
-      title: t('notifications.api.cancelPayments.success.title'),
-      message: t('notifications.api.cancelPayments.success.message'),
+      message: t('notifications.api.cancelPayments.success'),
     },
     error: {
-      title: t('notifications.api.cancelPayments.error.title'),
-      message: t('notifications.api.cancelPayments.error.message'),
+      message: t('notifications.api.cancelPayments.error'),
     },
   };
 

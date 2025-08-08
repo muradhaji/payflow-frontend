@@ -14,14 +14,8 @@ const UnpaidPayments = () => {
   const { t } = useTranslation();
 
   const notificationMessages = {
-    success: {
-      title: t('notifications.api.completePayments.success.title'),
-      message: t('notifications.api.completePayments.success.message'),
-    },
-    error: {
-      title: t('notifications.api.completePayments.error.title'),
-      message: t('notifications.api.completePayments.error.message'),
-    },
+    success: t('notifications.api.completePayments.success'),
+    error: t('notifications.api.completePayments.error'),
   };
 
   const buttonProps = {

@@ -188,16 +188,14 @@ const AddInstallment = () => {
 
       if (addInstallment.fulfilled.match(resultAction)) {
         showNotification({
-          title: t('notifications.api.installment.add.success.title'),
-          message: t('notifications.api.installment.add.success.message'),
+          message: t('notifications.api.installment.add.success'),
           color: 'green',
           icon: <IconCheck />,
         });
         navigate(`/payments/details/${resultAction.payload._id}`);
       } else {
         showNotification({
-          title: t('notifications.api.installment.add.error.title'),
-          message: t('notifications.api.installment.add.error.message'),
+          message: t('notifications.api.installment.add.error'),
           color: 'red',
           icon: <IconX />,
         });
@@ -205,8 +203,7 @@ const AddInstallment = () => {
       }
     } catch (error) {
       showNotification({
-        title: t('notifications.api.installment.add.error.title'),
-        message: t('notifications.api.installment.add.error.message'),
+        message: t('notifications.api.installment.add.error'),
         color: 'red',
         icon: <IconX />,
       });

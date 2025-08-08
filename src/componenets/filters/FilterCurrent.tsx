@@ -78,8 +78,7 @@ const FilterCurrent = () => {
 
       if (completePayments.fulfilled.match(response)) {
         showNotification({
-          title: t('notifications.api.completePayments.success.title'),
-          message: t('notifications.api.completePayments.success.message'),
+          message: t('notifications.api.completePayments.success'),
           color: 'green',
           icon: <IconCheck />,
         });
@@ -87,8 +86,7 @@ const FilterCurrent = () => {
         dispatch(updateInstallments(response.payload.installments));
       } else {
         showNotification({
-          title: t('notifications.api.completePayments.error.title'),
-          message: t('notifications.api.completePayments.error.message'),
+          message: t('notifications.api.completePayments.error'),
           color: 'red',
           icon: <IconX />,
         });
@@ -96,8 +94,7 @@ const FilterCurrent = () => {
       }
     } catch (err) {
       showNotification({
-        title: t('notifications.api.completePayments.error.title'),
-        message: t('notifications.api.completePayments.error.message'),
+        message: t('notifications.api.completePayments.error'),
         color: 'red',
         icon: <IconX />,
       });

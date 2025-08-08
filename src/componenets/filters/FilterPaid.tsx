@@ -59,8 +59,7 @@ const FilterPaid = () => {
 
       if (cancelPayments.fulfilled.match(response)) {
         showNotification({
-          title: t('notifications.api.cancelPayments.success.title'),
-          message: t('notifications.api.cancelPayments.success.message'),
+          message: t('notifications.api.cancelPayments.success'),
           color: 'green',
           icon: <IconCheck />,
         });
@@ -68,8 +67,7 @@ const FilterPaid = () => {
         dispatch(updateInstallments(response.payload.installments));
       } else {
         showNotification({
-          title: t('notifications.api.cancelPayments.error.title'),
-          message: t('notifications.api.cancelPayments.error.message'),
+          message: t('notifications.api.cancelPayments.error'),
           color: 'red',
           icon: <IconX />,
         });
@@ -77,8 +75,7 @@ const FilterPaid = () => {
       }
     } catch (err) {
       showNotification({
-        title: t('notifications.api.cancelPayments.error.title'),
-        message: t('notifications.api.cancelPayments.error.message'),
+        message: t('notifications.api.cancelPayments.error'),
         color: 'red',
         icon: <IconX />,
       });
