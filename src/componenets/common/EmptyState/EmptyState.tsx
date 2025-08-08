@@ -1,5 +1,5 @@
 import { Box, Stack, Text } from '@mantine/core';
-import { FolderX } from 'lucide-react';
+import { IconFolderX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 
 import type { ReactNode } from 'react';
@@ -19,7 +19,7 @@ const EmptyState = ({
 }: EmptyStateProps) => {
   const { t } = useTranslation();
 
-  const defaultIcon = <FolderX size={48} color='gray' />;
+  const defaultIcon = <IconFolderX size={48} color='gray' />;
   const defaultTitle = t('components.emptyState.default.title');
   const defaultDescription = t('components.emptyState.default.description');
 

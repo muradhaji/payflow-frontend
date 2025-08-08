@@ -16,7 +16,7 @@ import {
 } from '@mantine/core';
 
 import { DatePickerInput } from '@mantine/dates';
-import { Check, X } from 'lucide-react';
+import { IconCheck, IconX } from '@tabler/icons-react';
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { useTranslation } from 'react-i18next';
@@ -255,7 +255,7 @@ const EditInstallment = () => {
           title: t('notifications.api.installment.edit.success.title'),
           message: t('notifications.api.installment.edit.success.message'),
           color: 'green',
-          icon: <Check />,
+          icon: <IconCheck />,
         });
         navigate(`/payments/details/${id}`);
       } else {
@@ -263,7 +263,7 @@ const EditInstallment = () => {
           title: t('notifications.api.installment.edit.error.title'),
           message: t('notifications.api.installment.edit.error.message'),
           color: 'red',
-          icon: <X />,
+          icon: <IconX />,
         });
         console.error(resultAction.payload);
       }
@@ -272,7 +272,7 @@ const EditInstallment = () => {
         title: t('notifications.api.installment.edit.error.title'),
         message: t('notifications.api.installment.edit.error.message'),
         color: 'red',
-        icon: <X />,
+        icon: <IconX />,
       });
       console.error(error);
     }

@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from '@mantine/core';
 
-import { Check, X } from 'lucide-react';
+import { IconCheck, IconX } from '@tabler/icons-react';
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { showNotification } from '@mantine/notifications';
@@ -91,7 +91,7 @@ const PaymentsCard = ({
           title: notificationMessages.success.title,
           message: notificationMessages.success.message,
           color: 'green',
-          icon: <Check />,
+          icon: <IconCheck />,
         });
         resetAll();
         dispatch(setSelectedInstallment(response.payload.installments[0]));
@@ -100,7 +100,7 @@ const PaymentsCard = ({
           title: notificationMessages.error.title,
           message: notificationMessages.error.message,
           color: 'red',
-          icon: <X />,
+          icon: <IconX />,
         });
         console.error(response.payload);
       }
@@ -109,7 +109,7 @@ const PaymentsCard = ({
         title: notificationMessages.error.title,
         message: notificationMessages.error.message,
         color: 'red',
-        icon: <X />,
+        icon: <IconX />,
       });
       console.error(err);
     }

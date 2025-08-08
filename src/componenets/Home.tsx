@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 
 import { Button, Flex, Text, Title } from '@mantine/core';
-import { ArrowRight } from 'lucide-react';
+import { IconExternalLink } from '@tabler/icons-react';
 
 import ResponsiveContainer from './common/ResponsiveContainer/ResponsiveContainer';
 
@@ -41,7 +41,7 @@ export default function Home() {
             target='_blank'
             href='https://muradhajiyev.vercel.app/projects'
             variant='subtle'
-            rightSection={<ArrowRight size={14} />}
+            rightSection={<IconExternalLink size={20} />}
           >
             {t('buttons.otherProjects.label')}
           </Button>

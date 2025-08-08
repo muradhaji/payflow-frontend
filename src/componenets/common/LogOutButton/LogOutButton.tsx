@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Button } from '@mantine/core';
-import { LogOut } from 'lucide-react';
+import { IconLogout } from '@tabler/icons-react';
 
 import { useAppDispatch } from '../../../app/hooks';
 import { logout } from '../../../features/auth/authSlice';
@@ -20,7 +20,7 @@ function LogOutButton() {
     <Button
       onClick={handleLogout}
       variant='subtle'
-      leftSection={<LogOut size={14} color='red' />}
+      leftSection={<IconLogout size={14} color='red' />}
       color='red'
       size='xs'
     >

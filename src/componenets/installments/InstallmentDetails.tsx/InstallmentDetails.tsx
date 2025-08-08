@@ -15,7 +15,7 @@ import {
   Text,
 } from '@mantine/core';
 
-import { Check, X } from 'lucide-react';
+import { IconCheck, IconX } from '@tabler/icons-react';
 import { showNotification } from '@mantine/notifications';
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
@@ -84,7 +84,7 @@ const InstallmentDetails = () => {
         title: t('notifications.api.installment.delete.success.title'),
         message: t('notifications.api.installment.delete.success.message'),
         color: 'green',
-        icon: <Check />,
+        icon: <IconCheck />,
       });
       dispatch(fetchInstallments());
       navigate('/payments');
@@ -93,7 +93,7 @@ const InstallmentDetails = () => {
         title: t('notifications.api.installment.delete.error.title'),
         message: t('notifications.api.installment.delete.error.message'),
         color: 'red',
-        icon: <X />,
+        icon: <IconX />,
       });
     }
   };

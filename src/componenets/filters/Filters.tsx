@@ -6,7 +6,7 @@ import { useAppSelector } from '../../app/hooks';
 
 import { Button, SimpleGrid, Skeleton, Tooltip } from '@mantine/core';
 import { Link } from 'react-router-dom';
-import { Plus } from 'lucide-react';
+import { IconLibraryPlus } from '@tabler/icons-react';
 
 import {
   calculatePercentageDecimal,
@@ -81,7 +81,7 @@ const Filters = () => {
         actions={
           <Tooltip label={t('buttons.installment.add.tooltip')}>
             <Button
-              leftSection={<Plus size={18} />}
+              leftSection={<IconLibraryPlus size={18} />}
               component={Link}
               to='/payments/add'
               variant='filled'

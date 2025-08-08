@@ -1,7 +1,7 @@
 import { Card, Text, Group, Badge, Flex, Slider } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Check } from 'lucide-react';
+import { IconCheck } from '@tabler/icons-react';
 
 import type { IInstallment } from '../../../types/installment';
 
@@ -80,7 +80,7 @@ const InstallmentCard = ({
       </Flex>
 
       <Slider
-        thumbChildren={<Check />}
+        thumbChildren={<IconCheck />}
         color={paidAmount > 0 ? 'teal' : 'gray'}
         label={null}
         value={paidPercentage}

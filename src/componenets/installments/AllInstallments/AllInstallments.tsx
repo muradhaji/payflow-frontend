@@ -1,5 +1,5 @@
 import { Grid, Button, Tooltip, Skeleton } from '@mantine/core';
-import { Plus } from 'lucide-react';
+import { IconLibraryPlus } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -31,7 +31,7 @@ const AllInstallments = () => {
         actions={
           <Tooltip label={t('buttons.installment.add.tooltip')}>
             <Button
-              leftSection={<Plus size={18} />}
+              leftSection={<IconLibraryPlus size={18} />}
               component={Link}
               to='/payments/add'
               variant='filled'

@@ -13,7 +13,7 @@ import {
   Tooltip,
 } from '@mantine/core';
 
-import { Check, X } from 'lucide-react';
+import { IconCheck, IconX } from '@tabler/icons-react';
 import { showNotification } from '@mantine/notifications';
 
 import { sumByKeyDecimal } from '../../utils/math';
@@ -66,7 +66,7 @@ const FilterOverdue = () => {
           title: t('notifications.api.completePayments.success.title'),
           message: t('notifications.api.completePayments.success.message'),
           color: 'green',
-          icon: <Check />,
+          icon: <IconCheck />,
         });
         resetAll();
         dispatch(updateInstallments(response.payload.installments));
@@ -75,7 +75,7 @@ const FilterOverdue = () => {
           title: t('notifications.api.completePayments.error.title'),
           message: t('notifications.api.completePayments.error.message'),
           color: 'red',
-          icon: <X />,
+          icon: <IconX />,
         });
         console.error(response.payload);
       }
@@ -84,7 +84,7 @@ const FilterOverdue = () => {
         title: t('notifications.api.completePayments.error.title'),
         message: t('notifications.api.completePayments.error.message'),
         color: 'red',
-        icon: <X />,
+        icon: <IconX />,
       });
       console.error(err);
     }

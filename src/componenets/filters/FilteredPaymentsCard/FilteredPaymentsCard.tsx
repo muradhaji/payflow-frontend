@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { Link } from 'react-router-dom';
-import { Ellipsis } from 'lucide-react';
+import { IconDots } from '@tabler/icons-react';
 import { Card, Group, Text, Stack, ActionIcon, Tooltip } from '@mantine/core';
 
 import type { IInstallment, IPaymentUpdate } from '../../../types/installment';
@@ -50,7 +50,7 @@ const FilteredPaymentsCard = ({
             color='gray'
             size='md'
           >
-            <Ellipsis size={20} />
+            <IconDots size={20} />
           </ActionIcon>
         </Tooltip>
       </Group>

@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from '@mantine/core';
 
-import { Check, X } from 'lucide-react';
+import { IconCheck, IconX } from '@tabler/icons-react';
 import { showNotification } from '@mantine/notifications';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -62,7 +62,7 @@ const FilterPaid = () => {
           title: t('notifications.api.cancelPayments.success.title'),
           message: t('notifications.api.cancelPayments.success.message'),
           color: 'green',
-          icon: <Check />,
+          icon: <IconCheck />,
         });
         resetAll();
         dispatch(updateInstallments(response.payload.installments));
@@ -71,7 +71,7 @@ const FilterPaid = () => {
           title: t('notifications.api.cancelPayments.error.title'),
           message: t('notifications.api.cancelPayments.error.message'),
           color: 'red',
-          icon: <X />,
+          icon: <IconX />,
         });
         console.error(response.payload);
       }
@@ -80,7 +80,7 @@ const FilterPaid = () => {
         title: t('notifications.api.cancelPayments.error.title'),
         message: t('notifications.api.cancelPayments.error.message'),
         color: 'red',
-        icon: <X />,
+        icon: <IconX />,
       });
       console.error(err);
     }
