@@ -46,7 +46,7 @@ const PaymentItem = ({ payment, isSelected, onToggle }: PaymentItemProps) => {
           </Text>
           {payment.paid && formattedPaidDate && (
             <Text size='xs' c='green.6' className={utilStyles.capitalize}>
-              {t('dashboard.filters.card.paidLabel', {
+              {t('components.paymentItem.paidLabel', {
                 date: formattedPaidDate,
               })}
             </Text>

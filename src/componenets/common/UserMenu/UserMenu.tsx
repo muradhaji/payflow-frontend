@@ -30,7 +30,7 @@ const UserMenu = () => {
             variant='subtle'
             size='xs'
           >
-            {t('common.buttons.dashboard.label')}
+            {t('buttons.dashboard.label')}
           </Button>
           <Menu.Divider />
           <Menu.Target>

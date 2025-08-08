@@ -1,17 +1,14 @@
-import type {
-  IInstallment,
-  IPaymentUpdate,
-} from '../../../../types/installment';
+import type { IInstallment, IPaymentUpdate } from '../../../types/installment';
 
 import { useTranslation } from 'react-i18next';
-import { sumByKeyDecimal } from '../../../../utils/math';
+import { sumByKeyDecimal } from '../../../utils/math';
 
 import { Link } from 'react-router-dom';
 import { Ellipsis } from 'lucide-react';
 import { Card, Group, Text, Stack, ActionIcon, Tooltip } from '@mantine/core';
 
-import classes from './FilterCard.module.css';
-import PaymentItem from '../../../installments/PaymentItem/PaymentItem';
+import classes from './FilteredPaymentsCard.module.css';
+import PaymentItem from '../../installments/PaymentItem/PaymentItem';
 
 const colorMap: Record<string, string> = {
   current: 'red',
@@ -20,20 +17,20 @@ const colorMap: Record<string, string> = {
   default: 'gray',
 };
 
-interface FilterCardProps extends IInstallment {
+interface FilteredPaymentsCardProps extends IInstallment {
   togglePayment: (payment: IPaymentUpdate) => void;
   isSelected: (paymentId: string) => boolean;
   type: 'current' | 'remaining' | 'paid' | 'all';
 }
 
-const FilterCard = ({
+const FilteredPaymentsCard = ({
   _id: installmentId,
   title,
   monthlyPayments,
   togglePayment,
   isSelected,
   type,
-}: FilterCardProps) => {
+}: FilteredPaymentsCardProps) => {
   const { t } = useTranslation();
   const color = colorMap[type] ?? colorMap.default;
 
@@ -43,7 +40,7 @@ const FilterCard = ({
         <Text fw={600} size='lg' c='gray.8'>
           {title}
         </Text>
-        <Tooltip label={t('buttons.filters.card.details.tooltip')}>
+        <Tooltip label={t('tooltips.details')}>
           <ActionIcon
             component={Link}
             to={`/payments/details/${installmentId}`}
@@ -59,7 +56,7 @@ const FilterCard = ({
       {monthlyPayments.length > 1 && (
         <Group justify='space-between' className={classes.totalSummary}>
           <Text size='sm' fw={500} c='blue.8'>
-            {t('dashboard.filters.card.totalLabel')}
+            {t('components.filteredPaymentsCard.totalLabel')}
           </Text>
           <Text size='lg' fw={700} c={`${color}.6`}>
             {sumByKeyDecimal(monthlyPayments, 'amount')} ₼
@@ -87,4 +84,4 @@ const FilterCard = ({
   );
 };
 
-export default FilterCard;
+export default FilteredPaymentsCard;

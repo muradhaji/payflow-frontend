@@ -54,17 +54,17 @@ const InstallmentDetails = () => {
   const dateFields = useMemo(
     () => [
       {
-        label: t('installments.details.fields.startDate'),
+        label: t('components.installments.details.label.startDate'),
         date: selectedInstallment?.startDate,
         format: 'DD MMM YYYY',
       },
       {
-        label: t('installments.details.fields.createdAt'),
+        label: t('components.installments.details.label.createdAt'),
         date: selectedInstallment?.createdAt,
         format: 'HH:mm, DD MMM YYYY',
       },
       {
-        label: t('installments.details.fields.updatedAt'),
+        label: t('components.installments.details.label.updatedAt'),
         date: selectedInstallment?.updatedAt,
         format: 'HH:mm, DD MMM YYYY',
       },
@@ -79,8 +79,8 @@ const InstallmentDetails = () => {
 
     if (deleteInstallment.fulfilled.match(result)) {
       showNotification({
-        title: t('installments.details.notifications.delete.success.title'),
-        message: t('installments.details.notifications.delete.success.message'),
+        title: t('notifications.api.installment.delete.success.title'),
+        message: t('notifications.api.installment.delete.success.message'),
         color: 'green',
         icon: <Check />,
       });
@@ -88,8 +88,8 @@ const InstallmentDetails = () => {
       navigate('/dashboard');
     } else {
       showNotification({
-        title: t('installments.details.notifications.delete.error.title'),
-        message: t('installments.details.notifications.delete.error.message'),
+        title: t('notifications.api.installment.delete.error.title'),
+        message: t('notifications.api.installment.delete.error.message'),
         color: 'red',
         icon: <X />,
       });
@@ -99,11 +99,11 @@ const InstallmentDetails = () => {
   return (
     <>
       <PageHeader
-        title={t('installments.details.pageTitle')}
+        title={t('components.installments.details.pageTitle')}
         breadcrumbs={[
-          { label: t('common.breadcrumbs.dashboard'), to: '/dashboard' },
+          { label: t('breadcrumbs.dashboard'), to: '/dashboard' },
           {
-            label: t('common.breadcrumbs.details'),
+            label: t('breadcrumbs.details'),
             to: `/installments/details/${id}`,
             active: true,
           },
@@ -116,7 +116,7 @@ const InstallmentDetails = () => {
             variant='light'
             size='xs'
           >
-            {t('installments.details.buttons.edit.label')}
+            {t('buttons.installment.edit.label')}
           </Button>,
           <Button
             key='edit'
@@ -129,7 +129,7 @@ const InstallmentDetails = () => {
               children: <Loader size='sm' type='dots' color='white' />,
             }}
           >
-            {t('installments.details.buttons.delete.label')}
+            {t('buttons.installment.delete.label')}
           </Button>,
         ]}
       />
@@ -147,7 +147,8 @@ const InstallmentDetails = () => {
                       <Text c='dimmed'>{label}:</Text>
                       <Text fw={500} className={utilStyles.capitalize}>
                         {dayjs(date).format(
-                          label === t('installments.details.fields.startDate')
+                          label ===
+                            t('components.installments.details.label.startDate')
                             ? 'DD MMM YYYY'
                             : 'HH:mm, DD MMM YYYY'
                         )}

@@ -19,8 +19,8 @@ const EmptyState = ({
   const { t } = useTranslation();
 
   const defaultIcon = <FolderX size={48} color='gray' />;
-  const defaultTitle = t('common.emptyState.default.title');
-  const defaultDescription = t('common.emptyState.default.description');
+  const defaultTitle = t('components.emptyState.default.title');
+  const defaultDescription = t('components.emptyState.default.description');
 
   const renderIcon = icon === true ? defaultIcon : icon ?? null;
 

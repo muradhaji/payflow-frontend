@@ -1,12 +1,12 @@
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { sumByKeyDecimal } from '../../../utils/math';
+import { sumByKeyDecimal } from '../../utils/math';
 
-import FilterCard from './FilterCard/FilterCard';
-import MonthSelector from '../../common/MonthSelector/MonthSelector';
-import PageHeader from '../../common/PageHeader/PageHeader';
-import EmptyState from '../../common/EmptyState/EmptyState';
+import FilteredPaymentsCard from './FilteredPaymentsCard/FilteredPaymentsCard';
+import MonthSelector from '../common/MonthSelector/MonthSelector';
+import PageHeader from '../common/PageHeader/PageHeader';
+import EmptyState from '../common/EmptyState/EmptyState';
 import {
   Badge,
   Button,
@@ -18,18 +18,18 @@ import {
 } from '@mantine/core';
 
 import dayjs from 'dayjs';
-import utilStyles from '../../../styles/utils.module.css';
+import utilStyles from '../../styles/utils.module.css';
 
 import FilterHeader from './FilterHeader/FilterHeader';
 import {
   completePayments,
   updateInstallments,
-} from '../../../features/installments/installmentsSlice';
+} from '../../features/installments/installmentsSlice';
 import { showNotification } from '@mantine/notifications';
 import { Check, X } from 'lucide-react';
-import { useInstallmenstsDateRange } from '../../../hooks/useInstallmentsDateRange';
-import { useSelectedPayments } from '../../../hooks/useSelectedPayments';
-import { useFilteredInstallments } from '../../../hooks/useFilteredInstallments';
+import { useInstallmenstsDateRange } from '../../hooks/useInstallmentsDateRange';
+import { useSelectedPayments } from '../../hooks/useSelectedPayments';
+import { useFilteredInstallments } from '../../hooks/useFilteredInstallments';
 
 const FilterCurrent = () => {
   const dispatch = useAppDispatch();
@@ -102,11 +102,11 @@ const FilterCurrent = () => {
   return (
     <>
       <PageHeader
-        title={t('dashboard.filters.current.pageTitle')}
+        title={t('components.filters.current.pageTitle')}
         breadcrumbs={[
-          { label: t('common.breadcrumbs.dashboard'), to: '/dashboard' },
+          { label: t('breadcrumbs.dashboard'), to: '/dashboard' },
           {
-            label: t('common.breadcrumbs.filterCurrent'),
+            label: t('breadcrumbs.filterCurrent'),
             to: '/dashboard/current',
             active: true,
           },
@@ -117,11 +117,9 @@ const FilterCurrent = () => {
             onChange={handleMonthChange}
             minDate={minDate}
             maxDate={maxDate}
-            tooltip={t(
-              'dashboard.filters.common.buttons.monthSelector.tooltip'
-            )}
+            tooltip={t('tooltips.monthSelector')}
           />,
-          <Tooltip label={t('dashboard.filters.common.buttons.pay.tooltip')}>
+          <Tooltip label={t('buttons.payments.complete.tooltip')}>
             <Button
               variant='filled'
               size='xs'
@@ -139,7 +137,7 @@ const FilterCurrent = () => {
                 children: <Loader size='sm' type='dots' color='white' />,
               }}
             >
-              {t('dashboard.filters.common.buttons.pay.label')}
+              {t('buttons.payments.complete.label')}
             </Button>
           </Tooltip>,
         ]}
@@ -149,7 +147,7 @@ const FilterCurrent = () => {
         {filteredInstallments.length > 0 ? (
           <>
             <FilterHeader
-              title={t('dashboard.filters.current.totalLabel', {
+              title={t('components.filters.current.totalLabel', {
                 month: dayjs(currentMonth).format('MMMM'),
               })}
               amount={sumByKeyDecimal(
@@ -170,7 +168,7 @@ const FilterCurrent = () => {
                 className={utilStyles.radiusSm}
               />
               {filteredInstallments.map((installment) => (
-                <FilterCard
+                <FilteredPaymentsCard
                   key={installment._id}
                   {...installment}
                   togglePayment={togglePayment}
@@ -183,8 +181,8 @@ const FilterCurrent = () => {
         ) : (
           <EmptyState
             icon
-            title={t('dashboard.filters.current.empty.title')}
-            description={t('dashboard.filters.current.empty.description')}
+            title={t('components.filters.current.empty.title')}
+            description={t('components.filters.current.empty.description')}
           />
         )}
       </Skeleton>

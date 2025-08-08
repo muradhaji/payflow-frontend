@@ -11,35 +11,29 @@ const PaidPayments = () => {
   const { t } = useTranslation();
 
   const buttonProps = {
-    label: t('installments.details.payments.paid.buttons.cancel.label'),
-    tooltip: t('installments.details.payments.paid.buttons.cancel.tooltip'),
+    label: t('buttons.payments.cancel.label'),
+    tooltip: t('buttons.payments.cancel.tooltip'),
     color: 'red',
   };
 
   const emptyProps = {
-    title: t('installments.details.payments.paid.empty.title'),
+    title: t('components.paymentsCard.paid.empty.title'),
   };
 
   const notificationMessages = {
     success: {
-      title: t(
-        'installments.details.payments.paid.notifications.success.title'
-      ),
-      message: t(
-        'installments.details.payments.paid.notifications.success.message'
-      ),
+      title: t('notifications.api.cancelPayments.success.title'),
+      message: t('notifications.api.cancelPayments.success.message'),
     },
     error: {
-      title: t('installments.details.payments.paid.notifications.error.title'),
-      message: t(
-        'installments.details.payments.paid.notifications.error.message'
-      ),
+      title: t('notifications.api.cancelPayments.error.title'),
+      message: t('notifications.api.cancelPayments.error.message'),
     },
   };
 
   return (
     <PaymentsCard
-      title={t('installments.details.payments.paid.cardTitle')}
+      title={t('components.paymentsCard.paid.cardTitle')}
       button={buttonProps}
       empty={emptyProps}
       notificationMessages={notificationMessages}

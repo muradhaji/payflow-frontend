@@ -17,17 +17,17 @@ const AllInstallments = () => {
   return (
     <>
       <PageHeader
-        title={t('installments.all.pageTitle')}
+        title={t('components.installments.all.pageTitle')}
         breadcrumbs={[
-          { label: t('common.breadcrumbs.dashboard'), to: '/dashboard' },
+          { label: t('breadcrumbs.dashboard'), to: '/dashboard' },
           {
-            label: t('common.breadcrumbs.allPayments'),
+            label: t('breadcrumbs.allPayments'),
             to: '/dashboard/all',
             active: true,
           },
         ]}
         actions={
-          <Tooltip label={t('installments.all.buttons.addPayment.tooltip')}>
+          <Tooltip label={t('buttons.installment.add.tooltip')}>
             <Button
               leftSection={<Plus size={18} />}
               component={Link}
@@ -35,7 +35,7 @@ const AllInstallments = () => {
               variant='filled'
               size='xs'
             >
-              {t('installments.all.buttons.addPayment.label')}
+              {t('buttons.installment.add.label')}
             </Button>
           </Tooltip>
         }
@@ -45,8 +45,8 @@ const AllInstallments = () => {
         {installments.length === 0 ? (
           <EmptyState
             icon
-            title={t('installments.all.empty.title')}
-            description={t('installments.all.empty.description')}
+            title={t('components.installments.all.empty.title')}
+            description={t('components.installments.all.empty.description')}
           />
         ) : (
           <Grid gutter='lg'>

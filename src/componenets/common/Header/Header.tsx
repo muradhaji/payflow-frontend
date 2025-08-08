@@ -33,11 +33,11 @@ function Header() {
               <UserMenu />
             ) : ['/login'].includes(pathname) ? (
               <Button component={Link} to='/register' size='xs'>
-                {t('auth.login.header.buttons.signup')}
+                {t('buttons.signup.label')}
               </Button>
             ) : (
               <Button component={Link} to='/login' size='xs'>
-                {t('auth.signup.header.buttons.login')}
+                {t('buttons.login.label')}
               </Button>
             )}
           </Flex>

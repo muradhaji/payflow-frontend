@@ -77,7 +77,7 @@ const Login = () => {
         <Stack gap='xl'>
           <Title order={2} size='h2' fw={700} ta='center'>
             <Trans
-              i18nKey='auth.login.form.title'
+              i18nKey='forms.login.title'
               components={{
                 1: <Text span c='blue.6' inherit />,
                 2: <Text span c='gray.9' inherit />,
@@ -88,13 +88,15 @@ const Login = () => {
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <Stack gap='md'>
               <TextInput
-                label={t('auth.login.form.fields.username.label')}
+                label={t('forms.login.fields.username.label')}
                 labelProps={{ mb: 'xs' }}
-                placeholder={t('auth.login.form.fields.username.placeholder')}
+                placeholder={t('forms.login.fields.username.placeholder')}
                 {...formRegister('username')}
                 error={
                   formErrors.username
-                    ? t(`auth.login.errors.form.${formErrors.username.message}`)
+                    ? t(
+                        `forms.login.errors.form.${formErrors.username.message}`
+                      )
                     : null
                 }
                 disabled={loading}
@@ -103,13 +105,15 @@ const Login = () => {
               />
 
               <PasswordInput
-                label={t('auth.login.form.fields.password.label')}
+                label={t('forms.login.fields.password.label')}
                 labelProps={{ mb: 'xs' }}
-                placeholder={t('auth.login.form.fields.password.placeholder')}
+                placeholder={t('forms.login.fields.password.placeholder')}
                 {...formRegister('password')}
                 error={
                   formErrors.password
-                    ? t(`auth.login.errors.form.${formErrors.password.message}`)
+                    ? t(
+                        `forms.login.errors.form.${formErrors.password.message}`
+                      )
                     : null
                 }
                 disabled={loading}
@@ -128,13 +132,13 @@ const Login = () => {
                 color='blue'
                 radius='sm'
               >
-                {t(`auth.login.form.buttons.submit.label`)}
+                {t(`buttons.login.label`)}
               </Button>
 
               {apiError && (
                 <Text c='red' size='sm'>
-                  {t(`auth.login.errors.api.${apiError}`, {
-                    defaultValue: t('auth.login.errors.api.default'),
+                  {t(`forms.login.errors.api.${apiError}`, {
+                    defaultValue: t('forms.login.errors.api.default'),
                   })}
                 </Text>
               )}

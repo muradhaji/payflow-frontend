@@ -42,11 +42,11 @@ const InstallmentCard = ({
         </Text>
         {remainingAmount === 0 ? (
           <Badge color='teal' variant='light'>
-            {t('installments.card.badge.paid')}
+            {t('components.installments.card.badge.paid')}
           </Badge>
         ) : (
           <Badge color='blue' variant='light'>
-            {t('installments.card.badge.active')}
+            {t('components.installments.card.badge.active')}
           </Badge>
         )}
       </Group>

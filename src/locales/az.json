@@ -1,139 +1,68 @@
 {
-  "home": {
-    "buttons": {
-      "login": "DAXİL OL",
-      "getStarted": "İNDİ BAŞLA",
-      "otherProjects": "DİGƏR LAYİHƏLƏRƏ BAX"
-    },
-    "intro": {
-      "heading": "Ödənişlərinizi İzləyin, <1 /> Büdcənizi Tam Nəzarətdə Saxlayın",
-      "paragraph": "PayFlow şəxsi ödənişlərinizi izləmək üçün sadə və effektiv bir platformadır. <1 /> Ödənişlərinizi asanlıqla qeyd edin, indiyə qədər etdiyiniz ödənişləri izləyin və qalan məbləğləri daim nəzarətdə saxlayın."
-    }
-  },
-  "auth": {
-    "login": {
-      "header": {
-        "buttons": {
-          "signup": "QEYDİYYAT"
-        }
-      },
-      "form": {
-        "title": "<1>Pay</1><2>Flow</2>-a daxil olun",
-        "fields": {
-          "username": {
-            "label": "İstifadəçi adı",
-            "placeholder": "İstifadəçi adınızı daxil edin"
-          },
-          "password": {
-            "label": "Şifrə",
-            "placeholder": "Şifrənizi daxil edin"
-          }
-        },
-        "buttons": {
-          "submit": {
-            "label": "DAXİL OL",
-            "loadingLabel": "DAXİL OLUNUR..."
-          }
-        }
-      },
-      "errors": {
-        "form": {
-          "usernameMin": "Ən azı 6 simvol olmalıdır.",
-          "usernameRequired": "İstifadəçi adı mütləqdir.",
-          "passwordMin": "Ən azı 8 simvol olmalıdır.",
-          "passwordRequired": "Şifrə mütləqdir."
-        },
-        "api": {
-          "usernameNotFound": "İstifadəçi adı mövcud deyil.",
-          "incorrectPassword": "Şifrə düzgün deyil.",
-          "default": "Naməlum bir xəta baş verdi. Daha sonra yenidən cəhd edin."
-        }
+  "components": {
+    "home": {
+      "intro": {
+        "title": "Ödənişlərinizi İzləyin, <1 /> Büdcənizi Tam Nəzarətdə Saxlayın",
+        "description": "PayFlow şəxsi ödənişlərinizi izləmək üçün sadə və effektiv bir platformadır. <1 /> Ödənişlərinizi asanlıqla qeyd edin, indiyə qədər etdiyiniz ödənişləri izləyin və qalan məbləğləri daim nəzarətdə saxlayın."
       }
     },
-    "signup": {
-      "header": {
-        "buttons": {
-          "login": "DAXİL OL"
-        }
-      },
-      "form": {
-        "title": "<1>Pay</1><2>Flow</2> üçün qeydiyyat",
-        "fields": {
-          "username": {
-            "label": "İstifadəçi adı",
-            "placeholder": "İstifadəçi adınızı daxil edin"
-          },
-          "password": {
-            "label": "Şifrə",
-            "placeholder": "Şifrənizi daxil edin"
-          },
-          "confirmPassword": {
-            "label": "Şifrə təsdiqi",
-            "placeholder": "Şifrənizi təsdiqləyin"
-          }
-        },
-        "buttons": {
-          "submit": {
-            "label": "QEYDİYYATDAN KEÇ",
-            "loadingLabel": "QEYDİYYAT APARILIR..."
-          }
-        }
-      },
-      "errors": {
-        "form": {
-          "usernameMin": "Ən azı 6 simvol olmalıdır.",
-          "usernameRequired": "İstifadəçi adı mütləqdir.",
-          "passwordMin": "Ən azı 8 simvol olmalıdır.",
-          "passwordRequired": "Şifrə mütləqdir.",
-          "confirmPasswordMatch": "Şifrələr uyğun gəlmir.",
-          "confirmPasswordRequired": "Təsdiq şifrəsi mütləqdir."
-        },
-        "api": {
-          "usernameAlreadyExists": "Bu istifadəçi adı artıq mövcuddur.",
-          "default": "Naməlum bir xəta baş verdi. Daha sonra yenidən cəhd edin."
-        }
-      }
-    }
-  },
-  "common": {
     "emptyState": {
       "default": {
         "title": "Məlumat yoxdur",
         "description": "Burada göstəriləcək məlumat yoxdur."
       }
     },
-    "breadcrumbs": {
-      "dashboard": "İdarə Paneli",
-      "allPayments": "Bütün Ödənişlər",
-      "filterCurrent": "Cari",
-      "filterRemaining": "Qalan",
-      "filterPaid": "Ödənilmiş",
-      "details": "Təfərrüatlar",
-      "addPayment": "Redaktə Et"
-    },
-    "buttons": {
-      "logout": {
-        "label": "ÇIXIŞ ET"
+    "installments": {
+      "all": {
+        "pageTitle": "Bütün Ödənişlər",
+        "empty": {
+          "title": "Ödəniş tapılmadı",
+          "description": "Hələ heç bir ödəniş əlavə etməmisiniz."
+        }
       },
-      "dashboard": {
-        "label": "İDARƏ PANELİ"
-      }
-    }
-  },
-  "dashboard": {
-    "buttons": {
-      "addPayment": {
-        "label": "ƏLAVƏ ET",
-        "tooltip": "Yeni ödəniş əlavə et"
+      "add": {
+        "pageTitle": "Ödəniş Əlavə Et"
+      },
+      "edit": {
+        "pageTitle": "Ödənişi Redaktə Et"
+      },
+      "card": {
+        "badge": {
+          "paid": "Ödənilib",
+          "active": "Aktiv"
+        }
+      },
+      "details": {
+        "pageTitle": "Ödəniş Təfərrüatları",
+        "label": {
+          "amount": "Məbləğ",
+          "startDate": "Başlama tarixi",
+          "createdAt": "Yaradılma tarixi",
+          "updatedAt": "Yenilənmə tarixi"
+        }
       }
     },
-    "cards": {
-      "current": "Bu Ayın Ödənişləri",
-      "remaining": "Qalan Ödənişlər",
-      "paid": "Ödənilmiş Məbləğ",
-      "all": "Bütün Ödənişlər"
+    "paymentsCard": {
+      "paid": {
+        "cardTitle": "Tamamlanmış",
+        "empty": {
+          "title": "Hələ ödəmə edilməyib"
+        }
+      },
+      "unpaid": {
+        "cardTitle": "Tamamlanmamış",
+        "empty": {
+          "title": "Bütün ödənişlər tamamlanıb"
+        }
+      }
     },
     "filters": {
+      "cards": {
+        "current": "Cari Ödənişlər",
+        "remaining": "Qalan Ödənişlər",
+        "paid": "Ümumi Ödənilmiş",
+        "all": "Bütün Ödənişlər"
+      },
       "current": {
         "pageTitle": "Cari Ödənişlər",
         "totalLabel": "{{month}} üçün ümumi:",
@@ -156,137 +85,102 @@
         "empty": {
           "title": "Hələ ödəmə edilməyib",
           "description": "Heç bir ödəniş tamamlanmayıb."
-        },
-        "buttons": {
-          "cancel": {
-            "tooltip": "Ləğv etmək üçün ödənişi seç",
-            "label": "LƏĞV ET"
-          }
-        }
-      },
-      "card": {
-        "totalLabel": "Ümumi məbləğ",
-        "paidLabel": "Ödənilib: {{date}}"
-      },
-      "common": {
-        "buttons": {
-          "pay": {
-            "label": "ÖDƏ",
-            "tooltip": "Ödəmək üçün ödənişi seçin"
-          },
-          "monthSelector": {
-            "tooltip": "Ödənişləri görmək üçün ay və ili seçin."
-          }
-        }
-      }
-    }
-  },
-  "installments": {
-    "all": {
-      "pageTitle": "Bütün Ödənişlər",
-      "empty": {
-        "title": "Ödəniş tapılmadı",
-        "description": "Hələ heç bir ödəniş əlavə etməmisiniz."
-      },
-      "buttons": {
-        "addPayment": {
-          "label": "ƏLAVƏ ET",
-          "tooltip": "Yeni ödəniş əlavə et"
         }
       }
     },
-    "add": {
-      "buttons": {
-        "addInstallment": "ƏLAVƏ ET"
-      },
-      "form": {
-        "fields": {
-          "name": {
-            "label": "Ad",
-            "placeholder": "Ödəniş adını daxil edin"
-          },
-          "amount": {
-            "label": "Məbləğ",
-            "placeholder": "Ödəniş məbləğini daxil edin"
-          },
-          "startDate": {
-            "label": "Başlama tarixi",
-            "placeholder": "Başlama tarixini seçin"
-          },
-          "monthCount": {
-            "label": "Ayların sayı",
-            "placeholder": "Ayların sayını daxil edin"
-          },
-          "monthlyPayments": {
-            "commonLabel": "Aylıq bölgü",
-            "empty": {
-              "title": "Aylıq ödənişlər forma doldurulduqdan sonra görsənəcək."
-            },
-            "date": {
-              "placeholder": "Tarix seçin"
-            },
-            "amount": {
-              "placeholder": "Məbləği daxil edin"
-            }
-          }
+    "filteredPaymentsCard": {
+      "totalLabel": "Ümumi Məbləğ"
+    },
+    "paymentItem": {
+      "paidLabel": "Ödənilib: {{date}}"
+    }
+  },
+  "forms": {
+    "login": {
+      "title": "<1>Pay</1><2>Flow</2>-a daxil olun",
+      "fields": {
+        "username": {
+          "label": "İstifadəçi adı",
+          "placeholder": "İstifadəçi adınızı daxil edin"
+        },
+        "password": {
+          "label": "Şifrə",
+          "placeholder": "Şifrənizi daxil edin"
         }
       },
       "errors": {
         "form": {
-          "nameRequired": "Ad mütləqdir.",
-          "amountPositive": "Məbləğ müsbət olmalıdır.",
-          "amountRequired": "Məbləğ mütləqdir.",
-          "startDateFormat": "Tarix formatı yanlışdır.",
-          "startDateRequired": "Başlama tarixi mütləqdir.",
-          "monthCountMin": "Ən azı 1 ay olmalıdır.",
-          "monthCountRequired": "Ayların sayı mütləqdir.",
-          "monthlyPaymentDateRequired": "Tarix mütləqdir.",
-          "monthlyPaymentAmountPositive": "Məbləğ müsbət olmalıdır.",
-          "monthlyPaymentAmountRequired": "Məbləğ mütləqdir.",
-          "sumMismatch": "Aylıq ödənişlərin cəmi ({{sum}} ₼) ümumi məbləğə ({{amount}} ₼) bərabər olmalıdır."
+          "usernameMin": "Ən azı 6 simvol olmalıdır.",
+          "usernameRequired": "İstifadəçi adı mütləqdir.",
+          "passwordMin": "Ən azı 8 simvol olmalıdır.",
+          "passwordRequired": "Şifrə mütləqdir."
+        },
+        "api": {
+          "usernameNotFound": "İstifadəçi adı mövcud deyil.",
+          "incorrectPassword": "Şifrə düzgün deyil.",
+          "default": "Naməlum bir xəta baş verdi. Daha sonra yenidən cəhd edin."
+        }
+      }
+    },
+    "signup": {
+      "title": "<1>Pay</1><2>Flow</2> üçün qeydiyyat",
+      "fields": {
+        "username": {
+          "label": "İstifadəçi adı",
+          "placeholder": "İstifadəçi adınızı daxil edin"
+        },
+        "password": {
+          "label": "Şifrə",
+          "placeholder": "Şifrənizi daxil edin"
+        },
+        "confirmPassword": {
+          "label": "Şifrə təsdiqi",
+          "placeholder": "Şifrənizi təsdiqləyin"
         }
       },
-      "notifications": {
-        "successTitle": "Ödəniş əlavə olundu",
-        "successMessage": "Ödəniş uğurla yaradıldı.",
-        "errorTitle": "Xəta",
-        "errorMessage": "Ödəniş əlavə edilərkən xəta baş verdi."
-      },
-      "pageTitle": "Ödəniş Əlavə Et"
+      "errors": {
+        "form": {
+          "usernameMin": "Ən azı 6 simvol olmalıdır.",
+          "usernameRequired": "İstifadəçi adı mütləqdir.",
+          "passwordMin": "Ən azı 8 simvol olmalıdır.",
+          "passwordRequired": "Şifrə mütləqdir.",
+          "confirmPasswordMatch": "Şifrələr uyğun gəlmir.",
+          "confirmPasswordRequired": "Təsdiq şifrəsi mütləqdir."
+        },
+        "api": {
+          "usernameAlreadyExists": "Bu istifadəçi adı artıq mövcuddur.",
+          "default": "Naməlum bir xəta baş verdi. Daha sonra yenidən cəhd edin."
+        }
+      }
     },
-    "edit": {
-      "buttons": {
-        "save": "YADDA SAXLA"
-      },
-      "form": {
-        "fields": {
-          "name": {
-            "label": "Ad",
-            "placeholder": "Ödəniş adını daxil edin"
+    "installment": {
+      "fields": {
+        "name": {
+          "label": "Ad",
+          "placeholder": "Ödəniş adını daxil edin"
+        },
+        "amount": {
+          "label": "Məbləğ",
+          "placeholder": "Ödəniş məbləğini daxil edin"
+        },
+        "startDate": {
+          "label": "Başlama tarixi",
+          "placeholder": "Başlama tarixini seçin"
+        },
+        "monthCount": {
+          "label": "Ayların sayı",
+          "placeholder": "Ayların sayını daxil edin"
+        },
+        "monthlyPayments": {
+          "label": "Aylıq bölgü",
+          "empty": {
+            "title": "Aylıq ödənişlər forma doldurulduqdan sonra görsənəcək."
+          },
+          "date": {
+            "placeholder": "Tarix seçin"
           },
           "amount": {
-            "label": "Məbləğ",
-            "placeholder": "Ödəniş məbləğini daxil edin"
-          },
-          "startDate": {
-            "label": "Başlama tarixi",
-            "placeholder": "Başlama tarixini seçin"
-          },
-          "monthCount": {
-            "label": "Ayların sayı",
-            "placeholder": "Ayların sayını daxil edin"
-          },
-          "monthlyPayments": {
-            "commonLabel": "Aylıq bölgü",
-            "empty": {
-              "title": "Aylıq ödənişlər forma doldurulduqdan sonra görsənəcək."
-            },
-            "date": {
-              "placeholder": "Tarix seçin"
-            },
-            "amount": {
-              "placeholder": "Məbləği daxil edin"
-            }
+            "placeholder": "Məbləği daxil edin"
           }
         }
       },
@@ -304,105 +198,66 @@
           "monthlyPaymentAmountRequired": "Məbləğ mütləqdir.",
           "sumMismatch": "Aylıq ödənişlərin cəmi ({{sum}} ₼) ümumi məbləğə ({{amount}} ₼) bərabər olmalıdır."
         }
-      },
-      "notifications": {
-        "successTitle": "Ödəniş yeniləndi",
-        "successMessage": "Ödənişiniz uğurla yeniləndi.",
-        "errorTitle": "Xəta baş verdi",
-        "errorMessage": "Ödəniş yenilənərkən xəta baş verdi."
-      },
-      "pageTitle": "Ödənişi Redaktə Et"
-    },
-    "card": {
-      "badge": {
-        "paid": "Ödənilib",
-        "active": "Aktiv"
-      }
-    },
-    "details": {
-      "pageTitle": "Ödəniş Təfərrüatları",
-      "buttons": {
-        "edit": {
-          "label": "REDAKTƏ ET"
-        },
-        "delete": {
-          "label": "SİL"
-        }
-      },
-      "fields": {
-        "amount": "Məbləğ",
-        "startDate": "Başlama tarixi",
-        "createdAt": "Yaradılma tarixi",
-        "updatedAt": "Yenilənmə tarixi"
-      },
-      "payments": {
-        "unpaid": {
-          "cardTitle": "Tamamlanmamış",
-          "buttons": {
-            "pay": {
-              "label": "TAMAMLA",
-              "tooltip": "Tamamlamaq üçün ödənişi seçin"
-            }
-          },
-          "empty": {
-            "title": "Tamamlanmış ödəniş yoxdur"
-          },
-          "notifications": {
-            "error": {
-              "title": "Ödəniş uğursuz oldu",
-              "message": "Ödənişlərin tamamlanması zamanı xəta baş verdi."
-            },
-            "success": {
-              "message": "Seçilmiş ödənişlər uğurla tamamlandı.",
-              "title": "Ödənişlər tamamlandı"
-            }
-          }
-        },
-        "paid": {
-          "cardTitle": "Tamamlanmış",
-          "buttons": {
-            "cancel": {
-              "label": "LƏĞV ET",
-              "tooltip": "Ləğv etmək üçün ödənişi seçin"
-            }
-          },
-          "empty": {
-            "title": "Tamamlanmış ödəniş yoxdur"
-          },
-          "notifications": {
-            "success": {
-              "title": "Ödənişlər ləğv edildi",
-              "message": "Seçilmiş ödənişlər uğurla ləğv edildi."
-            },
-            "error": {
-              "title": "Ləğv etmə alınmadı",
-              "message": "Ödənişlərin ləğvi zamanı xəta baş verdi."
-            }
-          }
-        }
-      },
-      "notifications": {
-        "delete": {
-          "success": {
-            "title": "Silindi",
-            "message": "Ödəniş uğurla silindi."
-          },
-          "error": {
-            "title": "Xəta baş verdi",
-            "message": "Ödənişi silinərkən xəta baş verdi."
-          }
-        }
       }
     }
   },
   "buttons": {
-    "filters": {
-      "card": {
-        "details": {
-          "tooltip": "Ətraflı"
-        }
+    "login": {
+      "label": "DAXİL OL"
+    },
+    "logout": {
+      "label": "ÇIXIŞ ET"
+    },
+    "signup": {
+      "label": "QEYDİYYATDAN KEÇ"
+    },
+    "dashboard": {
+      "label": "İDARƏ PANELİ"
+    },
+    "getStarted": {
+      "label": "İNDİ BAŞLA"
+    },
+    "otherProjects": {
+      "label": "DİGƏR LAYİHƏLƏRƏ BAX"
+    },
+    "installment": {
+      "add": {
+        "label": "ƏLAVƏ ET",
+        "tooltip": "Yeni ödəniş əlavə et"
+      },
+      "save": {
+        "label": "YADDA SAXLA"
+      },
+      "edit": {
+        "label": "REDAKTƏ ET"
+      },
+      "delete": {
+        "label": "SİL"
+      }
+    },
+    "payments": {
+      "cancel": {
+        "label": "LƏĞV ET",
+        "tooltip": "Ləğv etmək üçün ödənişi seç"
+      },
+      "complete": {
+        "label": "TAMAMLA",
+        "tooltip": "Tamamlamaq üçün ödənişi seçin"
       }
     }
+  },
+  "breadcrumbs": {
+    "dashboard": "İdarə Paneli",
+    "allPayments": "Bütün Ödənişlər",
+    "filterCurrent": "Cari",
+    "filterRemaining": "Qalan",
+    "filterPaid": "Ödənilmiş",
+    "details": "Təfərrüatlar",
+    "addPayment": "Redaktə Et"
+  },
+  "tooltips": {
+    "details": "Təfərrüatlar",
+    "monthSelector": "Ödənişləri görmək üçün ay və ili seçin."
   },
   "notifications": {
     "api": {
@@ -419,11 +274,43 @@
       "cancelPayments": {
         "success": {
           "title": "Ödənişlər ləğv edildi",
-          "message": "Seçilmiş ödənişlər uğurla ləğv edildi."
+          "message": "Seçilmiş ödənişlər uğurla ləğv edildi"
         },
         "error": {
           "title": "Ləğv etmə alınmadı",
           "message": "Ödənişlərin ləğvi zamanı xəta baş verdi."
+        }
+      },
+      "installment": {
+        "add": {
+          "success": {
+            "title": "Ödəniş əlavə olundu",
+            "message": "Ödəniş uğurla yaradıldı."
+          },
+          "error": {
+            "title": "Xəta",
+            "message": "Ödəniş əlavə edilərkən xəta baş verdi."
+          }
+        },
+        "edit": {
+          "success": {
+            "title": "Ödəniş yeniləndi",
+            "message": "Ödənişiniz uğurla yeniləndi."
+          },
+          "error": {
+            "title": "Xəta",
+            "message": "Ödəniş yenilənərkən xəta baş verdi."
+          }
+        },
+        "delete": {
+          "success": {
+            "title": "Silindi",
+            "message": "Ödəniş uğurla silindi."
+          },
+          "error": {
+            "title": "Xəta baş verdi",
+            "message": "Ödənişi silinərkən xəta baş verdi."
+          }
         }
       }
     }

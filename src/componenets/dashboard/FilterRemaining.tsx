@@ -1,9 +1,9 @@
-import FilterCard from './FilterCard/FilterCard';
-import EmptyState from '../../common/EmptyState/EmptyState';
-import PageHeader from '../../common/PageHeader/PageHeader';
-
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useTranslation } from 'react-i18next';
+
+import FilteredPaymentsCard from './FilteredPaymentsCard/FilteredPaymentsCard';
+import PageHeader from '../common/PageHeader/PageHeader';
+import EmptyState from '../common/EmptyState/EmptyState';
 
 import {
   Badge,
@@ -15,31 +15,31 @@ import {
   Tooltip,
 } from '@mantine/core';
 
-import { sumByKeyDecimal } from '../../../utils/math';
+import { sumByKeyDecimal } from '../../utils/math';
+import { useSelectedPayments } from '../../hooks/useSelectedPayments';
 import FilterHeader from './FilterHeader/FilterHeader';
-import { useFilteredInstallments } from '../../../hooks/useFilteredInstallments';
-import { useSelectedPayments } from '../../../hooks/useSelectedPayments';
 import {
-  cancelPayments,
+  completePayments,
   updateInstallments,
-} from '../../../features/installments/installmentsSlice';
+} from '../../features/installments/installmentsSlice';
 import { showNotification } from '@mantine/notifications';
 import { Check, X } from 'lucide-react';
-import utilStyles from '../../../styles/utils.module.css';
+import utilStyles from '../../styles/utils.module.css';
+import { useFilteredInstallments } from '../../hooks/useFilteredInstallments';
 
-const FilterPaid = () => {
+const FilterRemaining = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   const {
     installments,
     fetchInstallments: { loading: fetchInstallmentsLoading },
-    cancelPayments: { loading: cancelPaymentsLoading },
+    completePayments: { loading: completePaymentsLoading },
   } = useAppSelector((state) => state.installments);
 
   const filteredInstallments = useFilteredInstallments(
     installments,
-    (p) => p.paid
+    (p) => !p.paid
   );
 
   const {
@@ -52,12 +52,12 @@ const FilterPaid = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await dispatch(cancelPayments(selectedPayments));
+      const response = await dispatch(completePayments(selectedPayments));
 
-      if (cancelPayments.fulfilled.match(response)) {
+      if (completePayments.fulfilled.match(response)) {
         showNotification({
-          title: t('notifications.api.cancelPayments.success.title'),
-          message: t('notifications.api.cancelPayments.success.message'),
+          title: t('notifications.api.completePayments.success.title'),
+          message: t('notifications.api.completePayments.success.message'),
           color: 'green',
           icon: <Check />,
         });
@@ -65,8 +65,8 @@ const FilterPaid = () => {
         dispatch(updateInstallments(response.payload.installments));
       } else {
         showNotification({
-          title: t('notifications.api.cancelPayments.error.title'),
-          message: t('notifications.api.cancelPayments.error.message'),
+          title: t('notifications.api.completePayments.error.title'),
+          message: t('notifications.api.completePayments.error.message'),
           color: 'red',
           icon: <X />,
         });
@@ -74,8 +74,8 @@ const FilterPaid = () => {
       }
     } catch (err) {
       showNotification({
-        title: t('notifications.api.cancelPayments.error.title'),
-        message: t('notifications.api.cancelPayments.error.message'),
+        title: t('notifications.api.completePayments.error.title'),
+        message: t('notifications.api.completePayments.error.message'),
         color: 'red',
         icon: <X />,
       });
@@ -86,36 +86,35 @@ const FilterPaid = () => {
   return (
     <>
       <PageHeader
-        title={t('dashboard.filters.paid.pageTitle')}
+        title={t('components.filters.remaining.pageTitle')}
         breadcrumbs={[
-          { label: t('common.breadcrumbs.dashboard'), to: '/dashboard' },
+          { label: t('breadcrumbs.dashboard'), to: '/dashboard' },
           {
-            label: t('common.breadcrumbs.filterPaid'),
-            to: '/dashboard/paid',
+            label: t('breadcrumbs.filterRemaining'),
+            to: '/dashboard/remaining',
             active: true,
           },
         ]}
         actions={
-          <Tooltip label={t('dashboard.filters.paid.buttons.cancel.tooltip')}>
+          <Tooltip label={t('buttons.payments.complete.tooltip')}>
             <Button
               variant='filled'
-              color='red'
               size='xs'
               onClick={handleSubmit}
               disabled={!(selectedPaymentsAmount > 0)}
               rightSection={
                 selectedPaymentsAmount > 0 && (
-                  <Badge variant='white' color='red'>
+                  <Badge variant='white' color='blue'>
                     {` ${selectedPaymentsAmount} ₼`}
                   </Badge>
                 )
               }
-              loading={cancelPaymentsLoading}
+              loading={completePaymentsLoading}
               loaderProps={{
                 children: <Loader size='sm' type='dots' color='white' />,
               }}
             >
-              {t('dashboard.filters.paid.buttons.cancel.label')}
+              {t('buttons.payments.complete.label')}
             </Button>
           </Tooltip>
         }
@@ -125,27 +124,31 @@ const FilterPaid = () => {
         {filteredInstallments.length > 0 ? (
           <>
             <FilterHeader
-              title={t('dashboard.filters.paid.totalLabel')}
+              title={t('components.filters.remaining.totalLabel')}
               amount={sumByKeyDecimal(
                 filteredInstallments.flatMap((i) => i.monthlyPayments),
                 'amount'
               )}
-              type='paid'
+              type='remaining'
             />
 
-            <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing='md'>
+            <SimpleGrid
+              cols={{ base: 1, sm: 2, md: 3 }}
+              spacing='md'
+              className='relative'
+            >
               <LoadingOverlay
                 loaderProps={{ children: <></> }}
-                visible={cancelPaymentsLoading}
+                visible={completePaymentsLoading}
                 className={utilStyles.radiusSm}
               />
               {filteredInstallments.map((installment) => (
-                <FilterCard
+                <FilteredPaymentsCard
                   key={installment._id}
                   {...installment}
                   togglePayment={togglePayment}
                   isSelected={isSelected}
-                  type='paid'
+                  type='remaining'
                 />
               ))}
             </SimpleGrid>
@@ -153,8 +156,8 @@ const FilterPaid = () => {
         ) : (
           <EmptyState
             icon
-            title={t('dashboard.filters.paid.empty.title')}
-            description={t('dashboard.filters.paid.empty.description')}
+            title={t('components.filters.remaining.empty.title')}
+            description={t('components.filters.remaining.empty.description')}
           />
         )}
       </Skeleton>
@@ -162,4 +165,4 @@ const FilterPaid = () => {
   );
 };
 
-export default FilterPaid;
+export default FilterRemaining;
