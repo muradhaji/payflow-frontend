@@ -1,5 +1,5 @@
 import { Menu, Button, Stack } from '@mantine/core';
-import { LayoutDashboard, UserRound } from 'lucide-react';
+import { UserRound, ChartPie } from 'lucide-react';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import { useAuth } from '../../../hooks/useAuth';
 import { Link } from 'react-router-dom';
@@ -25,12 +25,12 @@ const UserMenu = () => {
         <Stack gap='0'>
           <Button
             component={Link}
-            to='/dashboard'
-            leftSection={<LayoutDashboard size={14} />}
+            to='/payments'
+            leftSection={<ChartPie size={14} />}
             variant='subtle'
             size='xs'
           >
-            {t('common.buttons.dashboard.label')}
+            {t('buttons.payments.label')}
           </Button>
           <Menu.Divider />
           <Menu.Target>

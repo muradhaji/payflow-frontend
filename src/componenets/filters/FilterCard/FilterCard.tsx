@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const DashboardCard = ({
+const FilterCard = ({
   title,
   amount,
   icon,
@@ -30,4 +30,4 @@ const DashboardCard = ({
   );
 };
 
-export default DashboardCard;
+export default FilterCard;

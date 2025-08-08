@@ -1,139 +1,69 @@
 {
-  "home": {
-    "buttons": {
-      "login": "LOG IN",
-      "getStarted": "GET STARTED",
-      "otherProjects": "VIEW OTHER PROJECTS"
-    },
-    "intro": {
-      "heading": "Track Your Payments, <1 /> Stay on Top of Your Budget",
-      "paragraph": "PayFlow is a simple and efficient platform for tracking your personal payments. <1 /> Easily record your monthly obligations, monitor how much you've paid so far, and keep an eye on your remaining balances."
-    }
-  },
-  "auth": {
-    "login": {
-      "header": {
-        "buttons": {
-          "signup": "SIGN UP"
-        }
-      },
-      "form": {
-        "title": "Log in to <1>Pay</1><2>Flow</2>",
-        "fields": {
-          "username": {
-            "label": "Username",
-            "placeholder": "Enter your username"
-          },
-          "password": {
-            "label": "Password",
-            "placeholder": "Enter your password"
-          }
-        },
-        "buttons": {
-          "submit": {
-            "label": "LOG IN",
-            "loadingLabel": "LOGGING IN..."
-          }
-        }
-      },
-      "errors": {
-        "form": {
-          "usernameMin": "Must be at least 6 characters.",
-          "usernameRequired": "Username is required.",
-          "passwordMin": "Must be at least 8 characters.",
-          "passwordRequired": "Password is required."
-        },
-        "api": {
-          "usernameNotFound": "Username not found.",
-          "incorrectPassword": "Incorrect password.",
-          "default": "An unknown error occurred. Try again later."
-        }
+  "components": {
+    "home": {
+      "intro": {
+        "title": "Track Your Payments, <1 /> Stay on Top of Your Budget",
+        "description": "PayFlow is a simple and efficient platform for tracking your personal payments. <1 /> Easily record your monthly obligations, monitor how much you've paid so far, and keep an eye on your remaining balances."
       }
     },
-    "signup": {
-      "header": {
-        "buttons": {
-          "login": "LOG IN"
-        }
-      },
-      "form": {
-        "title": "Sign up to <1>Pay</1><2>Flow</2>",
-        "fields": {
-          "username": {
-            "label": "Username",
-            "placeholder": "Enter your username"
-          },
-          "password": {
-            "label": "Password",
-            "placeholder": "Enter your password"
-          },
-          "confirmPassword": {
-            "label": "Confirm Password",
-            "placeholder": "Confirm your password"
-          }
-        },
-        "buttons": {
-          "submit": {
-            "label": "SIGN UP",
-            "loadingLabel": "SIGNING UP..."
-          }
-        }
-      },
-      "errors": {
-        "form": {
-          "usernameMin": "Must be at least 6 characters.",
-          "usernameRequired": "Username is required.",
-          "passwordMin": "Must be at least 8 characters.",
-          "passwordRequired": "Password is required.",
-          "confirmPasswordMatch": "Passwords must match.",
-          "confirmPasswordRequired": "Confirm password is required."
-        },
-        "api": {
-          "usernameAlreadyExists": "Username already exists.",
-          "default": "An unknown error occurred. Please try again later."
-        }
-      }
-    }
-  },
-  "common": {
     "emptyState": {
       "default": {
         "title": "No data available",
         "description": "There is no data to display here."
       }
     },
-    "breadcrumbs": {
-      "dashboard": "Dashboard",
-      "allPayments": "All Payments",
-      "filterCurrent": "Current",
-      "filterRemaining": "Remaining",
-      "filterPaid": "Paid",
-      "details": "Details",
-      "addPayment": "Edit"
-    },
-    "buttons": {
-      "logout": {
-        "label": "LOG OUT"
+    "installments": {
+      "all": {
+        "pageTitle": "All Payments",
+        "empty": {
+          "title": "No payments found",
+          "description": "You have not added any payments yet."
+        }
       },
-      "dashboard": {
-        "label": "DASHBOARD"
-      }
-    }
-  },
-  "dashboard": {
-    "buttons": {
-      "addPayment": {
-        "label": "ADD",
-        "tooltip": "Add new payment"
+      "add": {
+        "pageTitle": "Add Payment"
+      },
+      "edit": {
+        "pageTitle": "Edit Payment"
+      },
+      "card": {
+        "badge": {
+          "paid": "Paid",
+          "active": "Active"
+        }
+      },
+      "details": {
+        "pageTitle": "Payment Details",
+        "label": {
+          "amount": "Amount",
+          "startDate": "Start date",
+          "createdAt": "Created at",
+          "updatedAt": "Updated at"
+        }
       }
     },
-    "cards": {
-      "current": "This Month's debts",
-      "remaining": "Remaining debts",
-      "paid": "Total paid",
-      "all": "All Payments"
+    "paymentsCard": {
+      "paid": {
+        "cardTitle": "Completed",
+        "empty": {
+          "title": "No payments completed"
+        }
+      },
+      "unpaid": {
+        "cardTitle": "Not completed",
+        "empty": {
+          "title": "All payments are completed"
+        }
+      }
     },
     "filters": {
+      "pageTitle": "Payments",
+      "cards": {
+        "current": "This Month's debts",
+        "remaining": "Remaining debts",
+        "paid": "Total paid",
+        "all": "All Payments"
+      },
       "current": {
         "pageTitle": "Current Payments",
         "totalLabel": "Total for {{month}}:",
@@ -156,137 +86,102 @@
         "empty": {
           "title": "No payments completed",
           "description": "You haven't completed any payments yet."
-        },
-        "buttons": {
-          "cancel": {
-            "tooltip": "Select payment to cancel",
-            "label": "CANCEL"
-          }
-        }
-      },
-      "card": {
-        "totalLabel": "Total Amount",
-        "paidLabel": "Paid: {{date}}"
-      },
-      "common": {
-        "buttons": {
-          "pay": {
-            "label": "PAY",
-            "tooltip": "Select payment to pay"
-          },
-          "monthSelector": {
-            "tooltip": "Select the month and year to view payments."
-          }
-        }
-      }
-    }
-  },
-  "installments": {
-    "all": {
-      "pageTitle": "All Payments",
-      "empty": {
-        "title": "No payments found",
-        "description": "You have not added any payments yet."
-      },
-      "buttons": {
-        "addPayment": {
-          "label": "ADD",
-          "tooltip": "Add new payment"
         }
       }
     },
-    "add": {
-      "buttons": {
-        "addInstallment": "ADD"
-      },
-      "form": {
-        "fields": {
-          "name": {
-            "label": "Name",
-            "placeholder": "Enter payment name"
-          },
-          "amount": {
-            "label": "Amount",
-            "placeholder": "Enter payment amount"
-          },
-          "startDate": {
-            "label": "Start Date",
-            "placeholder": "Select start date"
-          },
-          "monthCount": {
-            "label": "Number of Months",
-            "placeholder": "Enter number of months"
-          },
-          "monthlyPayments": {
-            "label": "Monthly Breakdown",
-            "empty": {
-              "title": "Monthly payments will appear once the form is filled."
-            },
-            "date": {
-              "placeholder": "Pick a date"
-            },
-            "amount": {
-              "placeholder": "Enter amount"
-            }
-          }
+    "filteredPaymentsCard": {
+      "totalLabel": "Total Amount"
+    },
+    "paymentItem": {
+      "paidLabel": "Paid: {{date}}"
+    }
+  },
+  "forms": {
+    "login": {
+      "title": "Log in to <1>Pay</1><2>Flow</2>",
+      "fields": {
+        "username": {
+          "label": "Username",
+          "placeholder": "Enter your username"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter your password"
         }
       },
       "errors": {
         "form": {
-          "nameRequired": "Name is required.",
-          "amountPositive": "Amount must be positive.",
-          "amountRequired": "Amount is required.",
-          "startDateRequired": "Start date is required.",
-          "startDateFormat": "Invalid date format.",
-          "monthCountMin": "At least 1 month.",
-          "monthCountRequired": "Month count required.",
-          "monthlyPaymentDateRequired": "Date is required.",
-          "monthlyPaymentAmountPositive": "Amount must be positive.",
-          "monthlyPaymentAmountRequired": "Amount is required.",
-          "sumMismatch": "Sum of monthly payments ({{sum}} ₼) must equal total amount ({{amount}} ₼)."
+          "usernameMin": "Must be at least 6 characters.",
+          "usernameRequired": "Username is required.",
+          "passwordMin": "Must be at least 8 characters.",
+          "passwordRequired": "Password is required."
+        },
+        "api": {
+          "usernameNotFound": "Username not found.",
+          "incorrectPassword": "Incorrect password.",
+          "default": "An unknown error occurred. Try again later."
+        }
+      }
+    },
+    "signup": {
+      "title": "Sign up to <1>Pay</1><2>Flow</2>",
+      "fields": {
+        "username": {
+          "label": "Username",
+          "placeholder": "Enter your username"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter your password"
+        },
+        "confirmPassword": {
+          "label": "Confirm Password",
+          "placeholder": "Confirm your password"
         }
       },
-      "notifications": {
-        "successTitle": "Payment added",
-        "successMessage": "Your payment has been successfully created.",
-        "errorTitle": "Error",
-        "errorMessage": "Something went wrong while adding the payment."
-      },
-      "pageTitle": "Add Payment"
+      "errors": {
+        "form": {
+          "usernameMin": "Must be at least 6 characters.",
+          "usernameRequired": "Username is required.",
+          "passwordMin": "Must be at least 8 characters.",
+          "passwordRequired": "Password is required.",
+          "confirmPasswordMatch": "Passwords must match.",
+          "confirmPasswordRequired": "Confirm password is required."
+        },
+        "api": {
+          "usernameAlreadyExists": "Username already exists.",
+          "default": "An unknown error occurred. Please try again later."
+        }
+      }
     },
-    "edit": {
-      "buttons": {
-        "save": "SAVE"
-      },
-      "form": {
-        "fields": {
-          "name": {
-            "label": "Name",
-            "placeholder": "Enter payment name"
+    "installment": {
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter payment name"
+        },
+        "amount": {
+          "label": "Amount",
+          "placeholder": "Enter payment amount"
+        },
+        "startDate": {
+          "label": "Start Date",
+          "placeholder": "Select start date"
+        },
+        "monthCount": {
+          "label": "Number of Months",
+          "placeholder": "Enter number of months"
+        },
+        "monthlyPayments": {
+          "label": "Monthly Breakdown",
+          "empty": {
+            "title": "Monthly payments will appear once the form is filled."
+          },
+          "date": {
+            "placeholder": "Pick a date"
           },
           "amount": {
-            "label": "Amount",
-            "placeholder": "Enter Payment Amount"
-          },
-          "startDate": {
-            "label": "Start Date",
-            "placeholder": "Select Start Date"
-          },
-          "monthCount": {
-            "label": "Number of Months",
-            "placeholder": "Enter Number of Months"
-          },
-          "monthlyPayments": {
-            "commonLabel": "Monthly Breakdown",
-            "empty": {
-              "title": "Monthly payments will appear once the form is filled."
-            },
-            "date": {
-              "placeholder": "Pick a date"
-            },
-            "amount": {
-              "placeholder": "Enter amount"
-            }
+            "placeholder": "Enter amount"
           }
         }
       },
@@ -304,105 +199,64 @@
           "monthlyPaymentAmountRequired": "Amount is required.",
           "sumMismatch": "Sum of monthly payments ({{sum}} ₼) must equal total amount ({{amount}} ₼)."
         }
-      },
-      "notifications": {
-        "successTitle": "Payment updated",
-        "successMessage": "Your payment has been successfully updated.",
-        "errorTitle": "Error",
-        "errorMessage": "Something went wrong while updating the payment."
-      },
-      "pageTitle": "Edit Payment"
-    },
-    "card": {
-      "badge": {
-        "paid": "Paid",
-        "active": "Active"
-      }
-    },
-    "details": {
-      "pageTitle": "Payment Details",
-      "buttons": {
-        "edit": {
-          "label": "EDIT"
-        },
-        "delete": {
-          "label": "DELETE"
-        }
-      },
-      "fields": {
-        "amount": "Amount",
-        "startDate": "Start date",
-        "createdAt": "Created at",
-        "updatedAt": "Updated at"
-      },
-      "payments": {
-        "unpaid": {
-          "cardTitle": "Not completed",
-          "buttons": {
-            "pay": {
-              "label": "COMPLETE",
-              "tooltip": "Select payment to complete"
-            }
-          },
-          "empty": {
-            "title": "All payments are completed"
-          },
-          "notifications": {
-            "success": {
-              "title": "Payments completed",
-              "message": "Selected payments were successfully marked as paid."
-            },
-            "error": {
-              "title": "Payment failed",
-              "message": "An error occurred while completing the payments."
-            }
-          }
-        },
-        "paid": {
-          "cardTitle": "Completed",
-          "buttons": {
-            "cancel": {
-              "label": "CANCEL",
-              "tooltip": "Select payment to cancel"
-            }
-          },
-          "empty": {
-            "title": "No payments completed"
-          },
-          "notifications": {
-            "success": {
-              "title": "Payments cancelled",
-              "message": "Selected payments were successfully cancelled."
-            },
-            "error": {
-              "title": "Cancellation failed",
-              "message": "An error occurred while cancelling the payments."
-            }
-          }
-        }
-      },
-      "notifications": {
-        "delete": {
-          "error": {
-            "message": "An error occurred while deleting the payment.",
-            "title": "Error occurred"
-          },
-          "success": {
-            "message": "Payment was deleted successfully.",
-            "title": "Deleted"
-          }
-        }
       }
     }
   },
   "buttons": {
-    "filters": {
-      "card": {
-        "details": {
-          "tooltip": "Details"
-        }
+    "login": {
+      "label": "LOG IN"
+    },
+    "logout": {
+      "label": "LOG OUT"
+    },
+    "signup": {
+      "label": "SIGN UP"
+    },
+    "getStarted": {
+      "label": "GET STARTED"
+    },
+    "otherProjects": {
+      "label": "VIEW OTHER PROJECTS"
+    },
+    "installment": {
+      "add": {
+        "label": "ADD",
+        "tooltip": "Add new payment"
+      },
+      "save": {
+        "label": "SAVE"
+      },
+      "edit": {
+        "label": "EDIT"
+      },
+      "delete": {
+        "label": "DELETE"
       }
+    },
+    "payments": {
+      "label": "PAYMENTS"
+    },
+    "completePayments": {
+      "label": "COMPLETE",
+      "tooltip": "Select payments to complete"
+    },
+    "cancelPayments": {
+      "label": "CANCEL",
+      "tooltip": "Select payments to cancel"
     }
+  },
+  "breadcrumbs": {
+    "payments": "Payments",
+    "allPayments": "All Payments",
+    "filterCurrent": "Current",
+    "filterRemaining": "Remaining",
+    "filterPaid": "Paid",
+    "details": "Details",
+    "addPayment": "Edit"
+  },
+  "tooltips": {
+    "details": "Details",
+    "monthSelector": "Select the month and year to view payments."
   },
   "notifications": {
     "api": {
@@ -424,6 +278,38 @@
         "error": {
           "title": "Cancellation failed",
           "message": "An error occurred while cancelling the payments."
+        }
+      },
+      "installment": {
+        "add": {
+          "success": {
+            "title": "Payment added",
+            "message": "Your payment has been successfully created."
+          },
+          "error": {
+            "title": "Error",
+            "message": "Something went wrong while adding the payment."
+          }
+        },
+        "edit": {
+          "success": {
+            "title": "Payment updated",
+            "message": "Your payment has been successfully updated."
+          },
+          "error": {
+            "title": "Error",
+            "message": "Something went wrong while updating the payment."
+          }
+        },
+        "delete": {
+          "success": {
+            "title": "Deleted",
+            "message": "Payment was deleted successfully."
+          },
+          "error": {
+            "title": "Error occurred",
+            "message": "An error occurred while deleting the payment."
+          }
         }
       }
     }

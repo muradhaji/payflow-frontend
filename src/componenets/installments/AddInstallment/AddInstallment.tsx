@@ -40,25 +40,28 @@ const AddInstallment = () => {
       yup.object({
         title: yup
           .string()
-          .required(t('installments.add.errors.form.nameRequired')),
+          .required(t('forms.installment.errors.form.nameRequired')),
         amount: yup
           .number()
-          .positive(t('installments.add.errors.form.amountPositive'))
-          .required(t('installments.add.errors.form.amountRequired'))
+          .positive(t('forms.installment.errors.form.amountPositive'))
+          .required(t('forms.installment.errors.form.amountRequired'))
           .transform((value, originalValue) => {
             return originalValue === '' ? undefined : value;
           }),
         startDate: yup
           .string()
-          .required(t('installments.add.errors.form.startDateRequired'))
+          .required(t('forms.installment.errors.form.startDateRequired'))
           .matches(
             /^\d{4}-\d{2}-\d{2}$/,
-            t('installments.add.errors.form.startDateFormat')
+            t('forms.installment.errors.form.startDateFormat')
           ),
         monthCount: yup
           .number()
-          .min(1, t('installments.add.errors.form.monthCountMin'))
-          .required(t('installments.add.errors.form.monthCountRequired'))
+          .min(
+            1,
+            t('forms.installment.errors.form.monthCountMin', { paidCount: 1 })
+          )
+          .required(t('forms.installment.errors.form.monthCountRequired'))
           .transform((value, originalValue) => {
             return originalValue === '' ? undefined : value;
           }),
@@ -69,15 +72,19 @@ const AddInstallment = () => {
               date: yup
                 .string()
                 .required(
-                  t('installments.add.errors.form.monthlyPaymentDateRequired')
+                  t('forms.installment.errors.form.monthlyPaymentDateRequired')
                 ),
               amount: yup
                 .number()
                 .positive(
-                  t('installments.add.errors.form.monthlyPaymentAmountPositive')
+                  t(
+                    'forms.installment.errors.form.monthlyPaymentAmountPositive'
+                  )
                 )
                 .required(
-                  t('installments.add.errors.form.monthlyPaymentAmountRequired')
+                  t(
+                    'forms.installment.errors.form.monthlyPaymentAmountRequired'
+                  )
                 )
                 .transform((value, originalValue) => {
                   return originalValue === '' ? undefined : value;
@@ -91,10 +98,13 @@ const AddInstallment = () => {
 
             const sum = sumByKeyDecimal(monthlyPayments, 'amount');
 
-            const errorMessage = t('installments.add.errors.form.sumMismatch', {
-              sum: sum.toFixed(2),
-              amount: amount.toFixed(2),
-            });
+            const errorMessage = t(
+              'forms.installment.errors.form.sumMismatch',
+              {
+                sum: sum.toFixed(2),
+                amount: amount.toFixed(2),
+              }
+            );
 
             return (
               sum.toFixed(2) === amount.toFixed(2) ||
@@ -170,16 +180,16 @@ const AddInstallment = () => {
 
       if (addInstallment.fulfilled.match(resultAction)) {
         showNotification({
-          title: t('installments.add.notifications.successTitle'),
-          message: t('installments.add.notifications.successMessage'),
+          title: t('notifications.api.installment.add.success.title'),
+          message: t('notifications.api.installment.add.success.message'),
           color: 'green',
           icon: <Check />,
         });
         navigate(`/payments/details/${resultAction.payload._id}`);
       } else {
         showNotification({
-          title: t('installments.add.notifications.errorTitle'),
-          message: t('installments.add.notifications.errorMessage'),
+          title: t('notifications.api.installment.add.error.title'),
+          message: t('notifications.api.installment.add.error.message'),
           color: 'red',
           icon: <X />,
         });
@@ -187,8 +197,8 @@ const AddInstallment = () => {
       }
     } catch (error) {
       showNotification({
-        title: t('installments.add.notifications.errorTitle'),
-        message: t('installments.add.notifications.errorMessage'),
+        title: t('notifications.api.installment.add.error.title'),
+        message: t('notifications.api.installment.add.error.message'),
         color: 'red',
         icon: <X />,
       });
@@ -199,11 +209,11 @@ const AddInstallment = () => {
   return (
     <div className='flex flex-col gap-4'>
       <PageHeader
-        title={t('installments.add.pageTitle')}
+        title={t('components.installments.add.pageTitle')}
         breadcrumbs={[
-          { label: t('common.breadcrumbs.dashboard'), to: '/dashboard' },
+          { label: t('breadcrumbs.payments'), to: '/payments' },
           {
-            label: t('common.breadcrumbs.addPayment'),
+            label: t('breadcrumbs.addPayment'),
             to: '/payments/add',
             active: true,
           },
@@ -219,7 +229,7 @@ const AddInstallment = () => {
               children: <Loader size='sm' type='dots' color='white' />,
             }}
           >
-            {t('installments.add.buttons.addInstallment')}
+            {t('buttons.installment.add.label')}
           </Button>
         }
       />
@@ -242,11 +252,11 @@ const AddInstallment = () => {
                 htmlFor='name'
                 className='block text-md font-medium text-gray-700 mb-1'
               >
-                {t('installments.add.form.fields.name.label')}
+                {t('forms.installment.fields.name.label')}
               </label>
               <TextInput
                 id='name'
-                placeholder={t('installments.add.form.fields.name.placeholder')}
+                placeholder={t('forms.installment.fields.name.placeholder')}
                 {...register('title')}
                 size='md'
               />
@@ -260,7 +270,7 @@ const AddInstallment = () => {
                 htmlFor='totalAmount'
                 className='block text-md font-medium text-gray-700 mb-1'
               >
-                {t('installments.add.form.fields.amount.label')}
+                {t('forms.installment.fields.amount.label')}
               </label>
 
               <Controller
@@ -270,7 +280,7 @@ const AddInstallment = () => {
                   <NumberInput
                     id='totalAmount'
                     placeholder={t(
-                      'installments.add.form.fields.amount.placeholder'
+                      'forms.installment.fields.amount.placeholder'
                     )}
                     value={field.value}
                     onChange={field.onChange}
@@ -293,7 +303,7 @@ const AddInstallment = () => {
                 htmlFor='startDate'
                 className='block text-md font-medium text-gray-700 mb-1'
               >
-                {t('installments.add.form.fields.startDate.label')}
+                {t('forms.installment.fields.startDate.label')}
               </label>
               <Controller
                 control={control}
@@ -312,7 +322,7 @@ const AddInstallment = () => {
                     }
                     valueFormat='DD-MM-YYYY'
                     placeholder={t(
-                      'installments.add.form.fields.startDate.placeholder'
+                      'forms.installment.fields.startDate.placeholder'
                     )}
                     id='startDate'
                     size='md'
@@ -332,7 +342,7 @@ const AddInstallment = () => {
                 htmlFor='monthCount'
                 className='block text-md font-medium text-gray-700 mb-1'
               >
-                {t('installments.add.form.fields.monthCount.label')}
+                {t('forms.installment.fields.monthCount.label')}
               </label>
               <Controller
                 control={control}
@@ -341,7 +351,7 @@ const AddInstallment = () => {
                   <NumberInput
                     id='monthCount'
                     placeholder={t(
-                      'installments.add.form.fields.monthCount.placeholder'
+                      'forms.installment.fields.monthCount.placeholder'
                     )}
                     value={field.value}
                     onChange={field.onChange}
@@ -361,9 +371,7 @@ const AddInstallment = () => {
             {fields.length > 0 ? (
               <div className='bg-gray-100 p-4 rounded-md'>
                 <p className='font-semibold mb-2'>
-                  {t(
-                    'installments.add.form.fields.monthlyPayments.commonLabel'
-                  )}
+                  {t('forms.installment.fields.monthlyPayments.label')}
                 </p>
                 {fields.map((field, index) => (
                   <div key={field.id} className='flex gap-2 mb-2'>
@@ -373,7 +381,7 @@ const AddInstallment = () => {
                       render={({ field }) => (
                         <DatePickerInput
                           placeholder={t(
-                            'installments.add.form.fields.monthlyPayments.date.placeholder'
+                            'forms.installment.fields.monthlyPayments.date.placeholder'
                           )}
                           value={
                             field.value
@@ -403,7 +411,7 @@ const AddInstallment = () => {
                           onChange={field.onChange}
                           onBlur={field.onBlur}
                           placeholder={t(
-                            'installments.add.form.fields.monthlyPayments.amount.placeholder'
+                            'forms.installment.fields.monthlyPayments.amount.placeholder'
                           )}
                           suffix=' ₼'
                           allowDecimal
@@ -429,7 +437,7 @@ const AddInstallment = () => {
               </div>
             ) : (
               <p className='text-gray-500 text-sm italic text-center'>
-                {t('installments.add.form.fields.monthlyPayments.empty.title')}
+                {t('forms.installment.fields.monthlyPayments.empty.title')}
               </p>
             )}
           </div>

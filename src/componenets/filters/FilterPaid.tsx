@@ -1,8 +1,8 @@
-import FilterCard from './FilterCard/FilterCard';
-import EmptyState from '../../common/EmptyState/EmptyState';
-import PageHeader from '../../common/PageHeader/PageHeader';
+import FilteredPaymentsCard from './FilteredPaymentsCard/FilteredPaymentsCard';
+import EmptyState from '../common/EmptyState/EmptyState';
+import PageHeader from '../common/PageHeader/PageHeader';
 
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -15,17 +15,17 @@ import {
   Tooltip,
 } from '@mantine/core';
 
-import { sumByKeyDecimal } from '../../../utils/math';
+import { sumByKeyDecimal } from '../../utils/math';
 import FilterHeader from './FilterHeader/FilterHeader';
-import { useFilteredInstallments } from '../../../hooks/useFilteredInstallments';
-import { useSelectedPayments } from '../../../hooks/useSelectedPayments';
+import { useFilteredInstallments } from '../../hooks/useFilteredInstallments';
+import { useSelectedPayments } from '../../hooks/useSelectedPayments';
 import {
   cancelPayments,
   updateInstallments,
-} from '../../../features/installments/installmentsSlice';
+} from '../../features/installments/installmentsSlice';
 import { showNotification } from '@mantine/notifications';
 import { Check, X } from 'lucide-react';
-import utilStyles from '../../../styles/utils.module.css';
+import utilStyles from '../../styles/utils.module.css';
 
 const FilterPaid = () => {
   const dispatch = useAppDispatch();
@@ -86,17 +86,17 @@ const FilterPaid = () => {
   return (
     <>
       <PageHeader
-        title={t('dashboard.filters.paid.pageTitle')}
+        title={t('components.filters.paid.pageTitle')}
         breadcrumbs={[
-          { label: t('common.breadcrumbs.dashboard'), to: '/dashboard' },
+          { label: t('breadcrumbs.payments'), to: '/payments' },
           {
-            label: t('common.breadcrumbs.filterPaid'),
-            to: '/dashboard/paid',
+            label: t('breadcrumbs.filterPaid'),
+            to: '/payments/paid',
             active: true,
           },
         ]}
         actions={
-          <Tooltip label={t('dashboard.filters.paid.buttons.cancel.tooltip')}>
+          <Tooltip label={t('buttons.cancelPayments.tooltip')}>
             <Button
               variant='filled'
               color='red'
@@ -115,7 +115,7 @@ const FilterPaid = () => {
                 children: <Loader size='sm' type='dots' color='white' />,
               }}
             >
-              {t('dashboard.filters.paid.buttons.cancel.label')}
+              {t('buttons.cancelPayments.label')}
             </Button>
           </Tooltip>
         }
@@ -125,7 +125,7 @@ const FilterPaid = () => {
         {filteredInstallments.length > 0 ? (
           <>
             <FilterHeader
-              title={t('dashboard.filters.paid.totalLabel')}
+              title={t('components.filters.paid.totalLabel')}
               amount={sumByKeyDecimal(
                 filteredInstallments.flatMap((i) => i.monthlyPayments),
                 'amount'
@@ -140,7 +140,7 @@ const FilterPaid = () => {
                 className={utilStyles.radiusSm}
               />
               {filteredInstallments.map((installment) => (
-                <FilterCard
+                <FilteredPaymentsCard
                   key={installment._id}
                   {...installment}
                   togglePayment={togglePayment}
@@ -153,8 +153,8 @@ const FilterPaid = () => {
         ) : (
           <EmptyState
             icon
-            title={t('dashboard.filters.paid.empty.title')}
-            description={t('dashboard.filters.paid.empty.description')}
+            title={t('components.filters.paid.empty.title')}
+            description={t('components.filters.paid.empty.description')}
           />
         )}
       </Skeleton>

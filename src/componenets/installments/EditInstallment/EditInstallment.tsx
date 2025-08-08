@@ -46,24 +46,24 @@ const EditInstallment = () => {
       yup.object({
         title: yup
           .string()
-          .required(t('installments.edit.errors.form.nameRequired')),
+          .required(t('forms.installment.errors.form.nameRequired')),
         amount: yup
           .number()
-          .positive(t('installments.edit.errors.form.amountPositive'))
-          .required(t('installments.edit.errors.form.amountRequired'))
+          .positive(t('forms.installment.errors.form.amountPositive'))
+          .required(t('forms.installment.errors.form.amountRequired'))
           .transform((value, originalValue) => {
             return originalValue === '' ? undefined : value;
           }),
         startDate: yup
           .string()
-          .required(t('installments.edit.errors.form.startDateRequired'))
+          .required(t('forms.installment.errors.form.startDateRequired'))
           .matches(
             /^\d{4}-\d{2}-\d{2}$/,
-            t('installments.edit.errors.form.startDateFormat')
+            t('forms.installment.errors.form.startDateFormat')
           ),
         monthCount: yup
           .number()
-          .required(t('installments.edit.errors.form.monthCountRequired'))
+          .required(t('forms.installment.errors.form.monthCountRequired'))
           .transform((value, originalValue) => {
             return originalValue === '' ? undefined : value;
           })
@@ -74,7 +74,7 @@ const EditInstallment = () => {
                 .length || 0;
 
             const errorMessage = t(
-              'installments.edit.errors.form.monthCountMin',
+              'forms.installment.errors.form.monthCountMin',
               {
                 paidCount,
               }
@@ -91,18 +91,18 @@ const EditInstallment = () => {
               date: yup
                 .string()
                 .required(
-                  t('installments.edit.errors.form.monthlyPaymentDateRequired')
+                  t('forms.installment.errors.form.monthlyPaymentDateRequired')
                 ),
               amount: yup
                 .number()
                 .positive(
                   t(
-                    'installments.edit.errors.form.monthlyPaymentAmountPositive'
+                    'forms.installment.errors.form.monthlyPaymentAmountPositive'
                   )
                 )
                 .required(
                   t(
-                    'installments.edit.errors.form.monthlyPaymentAmountRequired'
+                    'forms.installment.errors.form.monthlyPaymentAmountRequired'
                   )
                 )
                 .transform((value, originalValue) => {
@@ -119,7 +119,7 @@ const EditInstallment = () => {
             const sum = sumByKeyDecimal(monthlyPayments, 'amount');
 
             const errorMessage = t(
-              'installments.edit.errors.form.sumMismatch',
+              'forms.installment.errors.form.sumMismatch',
               {
                 sum: sum.toFixed(2),
                 amount: amount.toFixed(2),
@@ -159,7 +159,7 @@ const EditInstallment = () => {
 
   useEffect(() => {
     if (!id) {
-      navigate('/dashboard');
+      navigate('/payments');
       return;
     }
 
@@ -243,16 +243,16 @@ const EditInstallment = () => {
 
       if (updateInstallment.fulfilled.match(resultAction)) {
         showNotification({
-          title: t('installments.edit.notifications.successTitle'),
-          message: t('installments.edit.notifications.successMessage'),
+          title: t('notifications.api.installment.edit.success.title'),
+          message: t('notifications.api.installment.edit.success.message'),
           color: 'green',
           icon: <Check />,
         });
         navigate(`/payments/details/${id}`);
       } else {
         showNotification({
-          title: t('installments.edit.notifications.errorTitle'),
-          message: t('installments.edit.notifications.errorMessage'),
+          title: t('notifications.api.installment.edit.error.title'),
+          message: t('notifications.api.installment.edit.error.message'),
           color: 'red',
           icon: <X />,
         });
@@ -260,8 +260,8 @@ const EditInstallment = () => {
       }
     } catch (error) {
       showNotification({
-        title: t('installments.edit.notifications.errorTitle'),
-        message: t('installments.edit.notifications.errorMessage'),
+        title: t('notifications.api.installment.edit.error.title'),
+        message: t('notifications.api.installment.edit.error.message'),
         color: 'red',
         icon: <X />,
       });
@@ -272,11 +272,11 @@ const EditInstallment = () => {
   return (
     <div className='flex flex-col gap-4'>
       <PageHeader
-        title={t('installments.edit.pageTitle')}
+        title={t('components.installments.edit.pageTitle')}
         breadcrumbs={[
-          { label: t('common.breadcrumbs.dashboard'), to: '/dashboard' },
+          { label: t('breadcrumbs.payments'), to: '/payments' },
           {
-            label: t('common.breadcrumbs.addPayment'),
+            label: t('breadcrumbs.addPayment'),
             to: '/payments/edit',
             active: true,
           },
@@ -292,7 +292,7 @@ const EditInstallment = () => {
               children: <Loader size='sm' type='dots' color='white' />,
             }}
           >
-            {t('installments.edit.buttons.save')}
+            {t('buttons.installment.save.label')}
           </Button>
         }
       />
@@ -321,13 +321,11 @@ const EditInstallment = () => {
                 htmlFor='name'
                 className='block text-md font-medium text-gray-700 mb-1'
               >
-                {t('installments.edit.form.fields.name.label')}
+                {t('forms.installment.fields.name.label')}
               </label>
               <TextInput
                 id='name'
-                placeholder={t(
-                  'installments.edit.form.fields.name.placeholder'
-                )}
+                placeholder={t('forms.installment.fields.name.placeholder')}
                 {...register('title')}
                 size='md'
               />
@@ -341,7 +339,7 @@ const EditInstallment = () => {
                 htmlFor='totalAmount'
                 className='block text-md font-medium text-gray-700 mb-1'
               >
-                {t('installments.edit.form.fields.amount.label')}
+                {t('forms.installment.fields.amount.label')}
               </label>
               <Controller
                 control={control}
@@ -350,7 +348,7 @@ const EditInstallment = () => {
                   <NumberInput
                     id='totalAmount'
                     placeholder={t(
-                      'installments.edit.form.fields.amount.placeholder'
+                      'forms.installment.fields.amount.placeholder'
                     )}
                     value={field.value}
                     onChange={field.onChange}
@@ -373,7 +371,7 @@ const EditInstallment = () => {
                 htmlFor='startDate'
                 className='block text-md font-medium text-gray-700 mb-1'
               >
-                {t('installments.edit.form.fields.startDate.label')}
+                {t('forms.installment.fields.startDate.label')}
               </label>
               <Controller
                 control={control}
@@ -389,7 +387,7 @@ const EditInstallment = () => {
                     }
                     valueFormat='DD-MM-YYYY'
                     placeholder={t(
-                      'installments.edit.form.fields.startDate.placeholder'
+                      'forms.installment.fields.startDate.placeholder'
                     )}
                     id='startDate'
                     size='md'
@@ -408,7 +406,7 @@ const EditInstallment = () => {
                 htmlFor='monthCount'
                 className='block text-md font-medium text-gray-700 mb-1'
               >
-                {t('installments.edit.form.fields.monthCount.label')}
+                {t('forms.installment.fields.monthCount.label')}
               </label>
               <Controller
                 control={control}
@@ -417,7 +415,7 @@ const EditInstallment = () => {
                   <NumberInput
                     id='monthCount'
                     placeholder={t(
-                      'installments.edit.form.fields.monthCount.placeholder'
+                      'forms.installment.fields.monthCount.placeholder'
                     )}
                     value={field.value}
                     onChange={field.onChange}
@@ -437,9 +435,7 @@ const EditInstallment = () => {
             {fields.length > 0 ? (
               <div className='bg-gray-100 p-4 rounded-md'>
                 <p className='font-semibold mb-2'>
-                  {t(
-                    'installments.edit.form.fields.monthlyPayments.commonLabel'
-                  )}
+                  {t('forms.installment.fields.monthlyPayments.label')}
                 </p>
                 {fields.map((field, index) => (
                   <div key={field.id} className='flex gap-2 mb-2'>
@@ -450,7 +446,7 @@ const EditInstallment = () => {
                         <DatePickerInput
                           disabled={fields[index].paid}
                           placeholder={t(
-                            'installments.edit.form.fields.monthlyPayments.date.placeholder'
+                            'forms.installment.fields.monthlyPayments.date.placeholder'
                           )}
                           value={
                             field.value ? dayjs(field.value).toDate() : null
@@ -479,7 +475,7 @@ const EditInstallment = () => {
                           onChange={field.onChange}
                           onBlur={field.onBlur}
                           placeholder={t(
-                            'installments.edit.form.fields.monthlyPayments.amount.placeholder'
+                            'forms.installment.fields.monthlyPayments.amount.placeholder'
                           )}
                           suffix=' ₼'
                           allowDecimal
@@ -505,7 +501,7 @@ const EditInstallment = () => {
               </div>
             ) : (
               <p className='text-gray-500 text-sm italic text-center'>
-                {t('installments.edit.form.fields.monthlyPayments.empty.title')}
+                {t('forms.installment.fields.monthlyPayments.empty.title')}
               </p>
             )}
           </div>

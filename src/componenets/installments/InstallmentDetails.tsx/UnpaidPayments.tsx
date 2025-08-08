@@ -12,36 +12,28 @@ const UnpaidPayments = () => {
 
   const notificationMessages = {
     success: {
-      title: t(
-        'installments.details.payments.unpaid.notifications.success.title'
-      ),
-      message: t(
-        'installments.details.payments.unpaid.notifications.success.message'
-      ),
+      title: t('notifications.api.completePayments.success.title'),
+      message: t('notifications.api.completePayments.success.message'),
     },
     error: {
-      title: t(
-        'installments.details.payments.unpaid.notifications.error.title'
-      ),
-      message: t(
-        'installments.details.payments.unpaid.notifications.error.message'
-      ),
+      title: t('notifications.api.completePayments.error.title'),
+      message: t('notifications.api.completePayments.error.message'),
     },
   };
 
   const buttonProps = {
-    label: t('installments.details.payments.unpaid.buttons.pay.label'),
-    tooltip: t('installments.details.payments.unpaid.buttons.pay.tooltip'),
+    label: t('buttons.completePayments.label'),
+    tooltip: t('buttons.completePayments.tooltip'),
     color: 'blue',
   };
 
   const emptyProps = {
-    title: t('installments.details.payments.unpaid.empty.title'),
+    title: t('components.paymentsCard.unpaid.empty.title'),
   };
 
   return (
     <PaymentsCard
-      title={t('installments.details.payments.unpaid.cardTitle')}
+      title={t('components.paymentsCard.unpaid.cardTitle')}
       button={buttonProps}
       empty={emptyProps}
       notificationMessages={notificationMessages}

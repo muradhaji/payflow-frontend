@@ -29,7 +29,6 @@ const MonthSelector = ({
     <Tooltip label={tooltip} disabled={!tooltip}>
       <div>
         <MonthPickerInput
-          placeholder={'Select Month'}
           value={dayjs(value, 'YYYY-MM').toDate()}
           onChange={handleChange}
           disabled={disabled}

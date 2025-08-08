@@ -1,4 +1,4 @@
-import DashboardCard from './DashboardCard/DashboardCard';
+import FilterCard from './FilterCard/FilterCard';
 import PageHeader from '../common/PageHeader/PageHeader';
 
 import { useMemo } from 'react';
@@ -17,7 +17,7 @@ import {
 
 import dayjs from 'dayjs';
 
-const Dashboard = () => {
+const Filters = () => {
   const {
     installments,
     fetchInstallments: { loading: fetchInstallmentsLoading },
@@ -54,9 +54,9 @@ const Dashboard = () => {
   return (
     <>
       <PageHeader
-        title='Dashboard'
+        title={t('components.filters.pageTitle')}
         actions={
-          <Tooltip label={t('dashboard.buttons.addPayment.tooltip')}>
+          <Tooltip label={t('buttons.installment.add.tooltip')}>
             <Button
               leftSection={<Plus size={18} />}
               component={Link}
@@ -64,7 +64,7 @@ const Dashboard = () => {
               variant='filled'
               size='xs'
             >
-              <span>{t('dashboard.buttons.addPayment.label')}</span>
+              <span>{t('buttons.installment.add.label')}</span>
             </Button>
           </Tooltip>
         }
@@ -72,29 +72,29 @@ const Dashboard = () => {
 
       <Skeleton visible={fetchInstallmentsLoading}>
         <SimpleGrid cols={{ base: 1, sm: 2 }} spacing='md' mt='md'>
-          <DashboardCard
-            title={t('dashboard.cards.current')}
+          <FilterCard
+            title={t('components.filters.cards.current')}
             amount={totalCurrent}
-            routeUrl='/dashboard/current'
+            routeUrl='/payments/current'
             icon={<CalendarCheck2 className='text-red-600' />}
             color='border-red-500'
           />
-          <DashboardCard
-            title={t('dashboard.cards.remaining')}
+          <FilterCard
+            title={t('components.filters.cards.remaining')}
             amount={totalRemaining}
-            routeUrl='/dashboard/remaining'
+            routeUrl='/payments/remaining'
             icon={<Wallet className='text-yellow-600' />}
             color='border-yellow-500'
           />
-          <DashboardCard
-            title={t('dashboard.cards.paid')}
+          <FilterCard
+            title={t('components.filters.cards.paid')}
             amount={totalPaid}
-            routeUrl='/dashboard/paid'
+            routeUrl='/payments/paid'
             icon={<CircleDollarSign className='text-green-600' />}
             color='border-green-500'
           />
-          <DashboardCard
-            title={t('dashboard.cards.all')}
+          <FilterCard
+            title={t('components.filters.cards.all')}
             amount={sumDecimal([totalPaid, totalRemaining])}
             routeUrl='/payments/all'
             icon={<Layers className='text-gray-600' />}
@@ -106,4 +106,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Filters;

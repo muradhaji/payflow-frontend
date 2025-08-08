@@ -1,10 +1,12 @@
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { sumByKeyDecimal } from '../../utils/math';
 
-import FilterCard from './FilterCard/FilterCard';
-import PageHeader from '../../common/PageHeader/PageHeader';
-import EmptyState from '../../common/EmptyState/EmptyState';
-
+import FilteredPaymentsCard from './FilteredPaymentsCard/FilteredPaymentsCard';
+import MonthSelector from '../common/MonthSelector/MonthSelector';
+import PageHeader from '../common/PageHeader/PageHeader';
+import EmptyState from '../common/EmptyState/EmptyState';
 import {
   Badge,
   Button,
@@ -15,20 +17,23 @@ import {
   Tooltip,
 } from '@mantine/core';
 
-import { sumByKeyDecimal } from '../../../utils/math';
-import { useSelectedPayments } from '../../../hooks/useSelectedPayments';
+import dayjs from 'dayjs';
+import utilStyles from '../../styles/utils.module.css';
+
 import FilterHeader from './FilterHeader/FilterHeader';
 import {
   completePayments,
   updateInstallments,
-} from '../../../features/installments/installmentsSlice';
+} from '../../features/installments/installmentsSlice';
 import { showNotification } from '@mantine/notifications';
 import { Check, X } from 'lucide-react';
-import utilStyles from '../../../styles/utils.module.css';
-import { useFilteredInstallments } from '../../../hooks/useFilteredInstallments';
+import { useInstallmenstsDateRange } from '../../hooks/useInstallmentsDateRange';
+import { useSelectedPayments } from '../../hooks/useSelectedPayments';
+import { useFilteredInstallments } from '../../hooks/useFilteredInstallments';
 
-const FilterRemaining = () => {
+const FilterCurrent = () => {
   const dispatch = useAppDispatch();
+
   const { t } = useTranslation();
 
   const {
@@ -37,18 +42,29 @@ const FilterRemaining = () => {
     completePayments: { loading: completePaymentsLoading },
   } = useAppSelector((state) => state.installments);
 
+  const [currentMonth, setCurrentMonth] = useState<string>(
+    dayjs().format('YYYY-MM')
+  );
+
+  const [minDate, maxDate] = useInstallmenstsDateRange(installments);
+
   const filteredInstallments = useFilteredInstallments(
     installments,
-    (p) => !p.paid
+    (p) => !p.paid && dayjs(p.date).isSame(dayjs(currentMonth), 'month')
   );
 
   const {
     selectedPayments,
     selectedPaymentsAmount,
     togglePayment,
-    isSelected,
     resetAll,
+    isSelected,
   } = useSelectedPayments();
+
+  const handleMonthChange = (newMonth: string) => {
+    setCurrentMonth(newMonth);
+    resetAll();
+  };
 
   const handleSubmit = async () => {
     try {
@@ -86,17 +102,24 @@ const FilterRemaining = () => {
   return (
     <>
       <PageHeader
-        title={t('dashboard.filters.remaining.pageTitle')}
+        title={t('components.filters.current.pageTitle')}
         breadcrumbs={[
-          { label: t('common.breadcrumbs.dashboard'), to: '/dashboard' },
+          { label: t('breadcrumbs.payments'), to: '/payments' },
           {
-            label: t('common.breadcrumbs.filterRemaining'),
-            to: '/dashboard/remaining',
+            label: t('breadcrumbs.filterCurrent'),
+            to: '/payments/current',
             active: true,
           },
         ]}
-        actions={
-          <Tooltip label={t('dashboard.filters.common.buttons.pay.tooltip')}>
+        actions={[
+          <MonthSelector
+            value={currentMonth}
+            onChange={handleMonthChange}
+            minDate={minDate}
+            maxDate={maxDate}
+            tooltip={t('tooltips.monthSelector')}
+          />,
+          <Tooltip label={t('buttons.completePayments.tooltip')}>
             <Button
               variant='filled'
               size='xs'
@@ -114,22 +137,24 @@ const FilterRemaining = () => {
                 children: <Loader size='sm' type='dots' color='white' />,
               }}
             >
-              {t('dashboard.filters.common.buttons.pay.label')}
+              {t('buttons.completePayments.label')}
             </Button>
-          </Tooltip>
-        }
+          </Tooltip>,
+        ]}
       />
 
       <Skeleton visible={fetchInstallmentsLoading}>
         {filteredInstallments.length > 0 ? (
           <>
             <FilterHeader
-              title={t('dashboard.filters.remaining.totalLabel')}
+              title={t('components.filters.current.totalLabel', {
+                month: dayjs(currentMonth).format('MMMM'),
+              })}
               amount={sumByKeyDecimal(
                 filteredInstallments.flatMap((i) => i.monthlyPayments),
                 'amount'
               )}
-              type='remaining'
+              type='current'
             />
 
             <SimpleGrid
@@ -143,12 +168,12 @@ const FilterRemaining = () => {
                 className={utilStyles.radiusSm}
               />
               {filteredInstallments.map((installment) => (
-                <FilterCard
+                <FilteredPaymentsCard
                   key={installment._id}
                   {...installment}
                   togglePayment={togglePayment}
                   isSelected={isSelected}
-                  type='remaining'
+                  type='current'
                 />
               ))}
             </SimpleGrid>
@@ -156,8 +181,8 @@ const FilterRemaining = () => {
         ) : (
           <EmptyState
             icon
-            title={t('dashboard.filters.remaining.empty.title')}
-            description={t('dashboard.filters.remaining.empty.description')}
+            title={t('components.filters.current.empty.title')}
+            description={t('components.filters.current.empty.description')}
           />
         )}
       </Skeleton>
@@ -165,4 +190,4 @@ const FilterRemaining = () => {
   );
 };
 
-export default FilterRemaining;
+export default FilterCurrent;

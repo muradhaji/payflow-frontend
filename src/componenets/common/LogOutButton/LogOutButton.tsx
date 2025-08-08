@@ -23,7 +23,7 @@ function LogOutButton() {
       color='red'
       size='xs'
     >
-      {t('common.buttons.logout.label')}
+      {t('buttons.logout.label')}
     </Button>
   );
 }

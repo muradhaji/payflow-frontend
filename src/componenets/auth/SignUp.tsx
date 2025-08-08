@@ -51,7 +51,7 @@ const SignUp = () => {
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
       await dispatch(register(data)).unwrap();
-      navigate('/dashboard', { replace: true });
+      navigate('/payments', { replace: true });
     } catch (err) {
       console.error(err);
     }
@@ -71,7 +71,7 @@ const SignUp = () => {
         <Stack gap='xl'>
           <Title order={2} size='h2' fw={700} ta='center'>
             <Trans
-              i18nKey='auth.signup.form.title'
+              i18nKey='forms.signup.title'
               components={{
                 1: <Text span c='blue.6' inherit />,
                 2: <Text span c='gray.9' inherit />,
@@ -82,14 +82,14 @@ const SignUp = () => {
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <Stack gap='md'>
               <TextInput
-                label={t('auth.signup.form.fields.username.label')}
+                label={t('forms.signup.fields.username.label')}
                 labelProps={{ mb: 'xs' }}
-                placeholder={t('auth.signup.form.fields.username.placeholder')}
+                placeholder={t('forms.signup.fields.username.placeholder')}
                 {...formRegister('username')}
                 error={
                   formErrors.username
                     ? t(
-                        `auth.signup.errors.form.${formErrors.username.message}`
+                        `forms.signup.errors.form.${formErrors.username.message}`
                       )
                     : null
                 }
@@ -99,14 +99,14 @@ const SignUp = () => {
               />
 
               <PasswordInput
-                label={t('auth.signup.form.fields.password.label')}
+                label={t('forms.signup.fields.password.label')}
                 labelProps={{ mb: 'xs' }}
-                placeholder={t('auth.signup.form.fields.password.placeholder')}
+                placeholder={t('forms.signup.fields.password.placeholder')}
                 {...formRegister('password')}
                 error={
                   formErrors.password
                     ? t(
-                        `auth.signup.errors.form.${formErrors.password.message}`
+                        `forms.signup.errors.form.${formErrors.password.message}`
                       )
                     : null
                 }
@@ -116,16 +116,16 @@ const SignUp = () => {
               />
 
               <PasswordInput
-                label={t('auth.signup.form.fields.confirmPassword.label')}
+                label={t('forms.signup.fields.confirmPassword.label')}
                 labelProps={{ mb: 'xs' }}
                 placeholder={t(
-                  'auth.signup.form.fields.confirmPassword.placeholder'
+                  'forms.signup.fields.confirmPassword.placeholder'
                 )}
                 {...formRegister('confirmPassword')}
                 error={
                   formErrors.confirmPassword
                     ? t(
-                        `auth.signup.errors.form.${formErrors.confirmPassword.message}`
+                        `forms.signup.errors.form.${formErrors.confirmPassword.message}`
                       )
                     : null
                 }
@@ -145,13 +145,13 @@ const SignUp = () => {
                 color='blue'
                 radius='sm'
               >
-                {t(`auth.signup.form.buttons.submit.label`)}
+                {t(`buttons.signup.label`)}
               </Button>
 
               {apiError && (
                 <Text c='red' size='sm'>
-                  {t(`auth.signup.errors.api.${apiError}`, {
-                    defaultValue: t('auth.signup.errors.api.default'),
+                  {t(`forms.signup.errors.api.${apiError}`, {
+                    defaultValue: t('forms.signup.errors.api.default'),
                   })}
                 </Text>
               )}

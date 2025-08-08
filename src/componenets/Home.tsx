@@ -17,15 +17,21 @@ export default function Home() {
     >
       <Flex py='lg' direction='column' gap='lg' justify='center' align='center'>
         <Title order={1} size='h1' ta='center' c='gray.9' fw={700}>
-          <Trans i18nKey='home.intro.heading' components={{ 1: <br /> }} />
+          <Trans
+            i18nKey='components.home.intro.title'
+            components={{ 1: <br /> }}
+          />
         </Title>
         <Text size='md' ta='center' c='gray.7' fw={700}>
-          <Trans i18nKey='home.intro.paragraph' components={{ 1: <br /> }} />
+          <Trans
+            i18nKey='components.home.intro.description'
+            components={{ 1: <br /> }}
+          />
         </Text>
 
         <Flex justify='center' align='center' gap='md'>
           <Button component={Link} to='/register'>
-            {t('home.buttons.getStarted')}
+            {t('buttons.getStarted.label')}
           </Button>
           <Button
             component='a'
@@ -34,7 +40,7 @@ export default function Home() {
             variant='subtle'
             rightSection={<ArrowRight size={14} />}
           >
-            {t('home.buttons.otherProjects')}
+            {t('buttons.otherProjects.label')}
           </Button>
         </Flex>
       </Flex>
