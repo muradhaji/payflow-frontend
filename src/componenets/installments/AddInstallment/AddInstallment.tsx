@@ -14,7 +14,7 @@ import {
   TextInput,
 } from '@mantine/core';
 
-import { Check, X } from 'lucide-react';
+import { IconCheck, IconX } from '@tabler/icons-react';
 
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
@@ -191,7 +191,7 @@ const AddInstallment = () => {
           title: t('notifications.api.installment.add.success.title'),
           message: t('notifications.api.installment.add.success.message'),
           color: 'green',
-          icon: <Check />,
+          icon: <IconCheck />,
         });
         navigate(`/payments/details/${resultAction.payload._id}`);
       } else {
@@ -199,7 +199,7 @@ const AddInstallment = () => {
           title: t('notifications.api.installment.add.error.title'),
           message: t('notifications.api.installment.add.error.message'),
           color: 'red',
-          icon: <X />,
+          icon: <IconX />,
         });
         console.error(resultAction.payload);
       }
@@ -208,7 +208,7 @@ const AddInstallment = () => {
         title: t('notifications.api.installment.add.error.title'),
         message: t('notifications.api.installment.add.error.message'),
         color: 'red',
-        icon: <X />,
+        icon: <IconX />,
       });
       console.error(error);
     }

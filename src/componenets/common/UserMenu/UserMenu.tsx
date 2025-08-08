@@ -1,5 +1,5 @@
 import { Menu, Button, Stack } from '@mantine/core';
-import { UserRound, ChartPie } from 'lucide-react';
+import { IconUser, IconWallet } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -13,11 +13,7 @@ const UserMenu = () => {
   return (
     <Menu shadow='md' position='bottom-end'>
       <Menu.Target>
-        <Button
-          variant='filled'
-          leftSection={<UserRound size={18} />}
-          size='xs'
-        >
+        <Button variant='filled' leftSection={<IconUser size={18} />} size='xs'>
           {isAuthenticated && user ? user.username.toUpperCase() : 'Profile'}
         </Button>
       </Menu.Target>
@@ -27,7 +23,7 @@ const UserMenu = () => {
           <Button
             component={Link}
             to='/payments'
-            leftSection={<ChartPie size={14} />}
+            leftSection={<IconWallet size={14} />}
             variant='subtle'
             size='xs'
           >

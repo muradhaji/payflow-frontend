@@ -1,5 +1,5 @@
 import { Menu, Button } from '@mantine/core';
-import { Globe } from 'lucide-react';
+import { IconWorld } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 
 const LanguageSwitcher = () => {
@@ -12,7 +12,7 @@ const LanguageSwitcher = () => {
   return (
     <Menu shadow='md' position='bottom-end'>
       <Menu.Target>
-        <Button variant='light' leftSection={<Globe size={18} />} size='xs'>
+        <Button variant='light' leftSection={<IconWorld size={18} />} size='xs'>
           {i18n.language.toUpperCase()}
         </Button>
       </Menu.Target>
