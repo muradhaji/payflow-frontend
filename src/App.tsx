@@ -4,7 +4,6 @@ import Login from './componenets/auth/Login';
 import SignUp from './componenets/auth/SignUp';
 import PrivateRoute from './componenets/auth/PrivateRoute';
 
-import FiltersLayout from './componenets/filters/FiltersLayout/FiltersLayout';
 import Filters from './componenets/filters/Filters';
 import FilterCurrent from './componenets/filters/FilterCurrent';
 import FilterRemaining from './componenets/filters/FilterRemaining';
