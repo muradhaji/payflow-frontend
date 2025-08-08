@@ -1,10 +1,9 @@
-import FilterCard from './FilterCard/FilterCard';
-import PageHeader from '../common/PageHeader/PageHeader';
-
 import { useMemo } from 'react';
+import dayjs from 'dayjs';
+
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../app/hooks';
-import { sumByKeyDecimal, sumDecimal } from '../../utils/math';
+
 import { Button, SimpleGrid, Skeleton, Tooltip } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import {
@@ -15,7 +14,10 @@ import {
   Wallet,
 } from 'lucide-react';
 
-import dayjs from 'dayjs';
+import { sumByKeyDecimal, sumDecimal } from '../../utils/math';
+
+import FilterCard from './FilterCard/FilterCard';
+import PageHeader from '../common/PageHeader/PageHeader';
 
 const Filters = () => {
   const {

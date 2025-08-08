@@ -1,4 +1,6 @@
 import { useEffect, useMemo } from 'react';
+import dayjs from 'dayjs';
+
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -13,9 +15,11 @@ import {
   Text,
 } from '@mantine/core';
 
-import dayjs from 'dayjs';
+import { Check, X } from 'lucide-react';
+import { showNotification } from '@mantine/notifications';
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+
 import {
   deleteInstallment,
   fetchInstallments,
@@ -29,8 +33,6 @@ import PaidPayments from './PaidPayments';
 import UnpaidPayments from './UnpaidPayments';
 
 import utilStyles from '../../../styles/utils.module.css';
-import { showNotification } from '@mantine/notifications';
-import { Check, X } from 'lucide-react';
 
 const InstallmentDetails = () => {
   const dispatch = useAppDispatch();

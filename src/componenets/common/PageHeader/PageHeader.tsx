@@ -1,6 +1,8 @@
-import type { ReactNode } from 'react';
 import { Title, Breadcrumbs, Box, Flex, Anchor } from '@mantine/core';
 import { Link } from 'react-router-dom';
+
+import type { ReactNode } from 'react';
+
 import utilStyles from '../../../styles/utils.module.css';
 
 type BreadcrumbItem = {

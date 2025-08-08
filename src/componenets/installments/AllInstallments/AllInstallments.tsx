@@ -1,10 +1,12 @@
-import InstallmentCard from '../InstallmentCard/InstallmentCard';
-import PageHeader from '../../common/PageHeader/PageHeader';
-import { useAppSelector } from '../../../app/hooks';
 import { Grid, Button, Tooltip, Skeleton } from '@mantine/core';
-import { useTranslation } from 'react-i18next';
 import { Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
+import { useAppSelector } from '../../../app/hooks';
+
+import InstallmentCard from '../InstallmentCard/InstallmentCard';
+import PageHeader from '../../common/PageHeader/PageHeader';
 import EmptyState from '../../common/EmptyState/EmptyState';
 
 const AllInstallments = () => {

@@ -1,7 +1,8 @@
 import { Box, Stack, Text } from '@mantine/core';
-import type { ReactNode } from 'react';
 import { FolderX } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+
+import type { ReactNode } from 'react';
 
 type EmptyStateProps = {
   icon?: ReactNode | boolean;

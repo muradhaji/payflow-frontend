@@ -1,8 +1,8 @@
-import type { IMonthlyPayment } from '../../../types/installment';
-
 import { Checkbox, Group, Text } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
+
+import type { IMonthlyPayment } from '../../../types/installment';
 
 import classes from './PaymentItem.module.css';
 import utilStyles from '../../../styles/utils.module.css';

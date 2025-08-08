@@ -1,10 +1,3 @@
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { useTranslation } from 'react-i18next';
-
-import FilteredPaymentsCard from './FilteredPaymentsCard/FilteredPaymentsCard';
-import PageHeader from '../common/PageHeader/PageHeader';
-import EmptyState from '../common/EmptyState/EmptyState';
-
 import {
   Badge,
   Button,
@@ -15,17 +8,27 @@ import {
   Tooltip,
 } from '@mantine/core';
 
+import { Check, X } from 'lucide-react';
+import { showNotification } from '@mantine/notifications';
+
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useTranslation } from 'react-i18next';
+
 import { sumByKeyDecimal } from '../../utils/math';
-import { useSelectedPayments } from '../../hooks/useSelectedPayments';
+import utilStyles from '../../styles/utils.module.css';
+
+import FilteredPaymentsCard from './FilteredPaymentsCard/FilteredPaymentsCard';
+import PageHeader from '../common/PageHeader/PageHeader';
+import EmptyState from '../common/EmptyState/EmptyState';
 import FilterHeader from './FilterHeader/FilterHeader';
+
+import { useSelectedPayments } from '../../hooks/useSelectedPayments';
+import { useFilteredInstallments } from '../../hooks/useFilteredInstallments';
+
 import {
   completePayments,
   updateInstallments,
 } from '../../features/installments/installmentsSlice';
-import { showNotification } from '@mantine/notifications';
-import { Check, X } from 'lucide-react';
-import utilStyles from '../../styles/utils.module.css';
-import { useFilteredInstallments } from '../../hooks/useFilteredInstallments';
 
 const FilterRemaining = () => {
   const dispatch = useAppDispatch();

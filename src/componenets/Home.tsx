@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
+
 import { Button, Flex, Text, Title } from '@mantine/core';
-import ResponsiveContainer from './common/ResponsiveContainer/ResponsiveContainer';
-import utilStyles from '../styles/utils.module.css';
 import { ArrowRight } from 'lucide-react';
+
+import ResponsiveContainer from './common/ResponsiveContainer/ResponsiveContainer';
+
+import utilStyles from '../styles/utils.module.css';
 
 export default function Home() {
   const { t } = useTranslation();

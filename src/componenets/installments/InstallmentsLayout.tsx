@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
-import { useAppDispatch } from '../../app/hooks';
+
 import { Outlet } from 'react-router-dom';
+
+import { useAppDispatch } from '../../app/hooks';
 import { fetchInstallments } from '../../features/installments/installmentsSlice';
+
 import ResponsiveContainer from '../common/ResponsiveContainer/ResponsiveContainer';
 
 const InstallmentsLayout = () => {

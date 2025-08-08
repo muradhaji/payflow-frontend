@@ -1,12 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { AxiosError } from 'axios';
+
 import type {
   IInstallment,
   InstallmentCreate,
   InstallmentEdit,
   IPaymentUpdate,
 } from '../../types/installment';
+
 import api from '../../api';
-import { AxiosError } from 'axios';
 
 interface InstallmentsState {
   installments: IInstallment[];
