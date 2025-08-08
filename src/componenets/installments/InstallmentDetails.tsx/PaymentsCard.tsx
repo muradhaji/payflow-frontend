@@ -10,20 +10,25 @@ import {
   Title,
   Tooltip,
 } from '@mantine/core';
-import PaymentItem from '../PaymentItem/PaymentItem';
-import EmptyState from '../../common/EmptyState/EmptyState';
+
+import { Check, X } from 'lucide-react';
+
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { setSelectedInstallment } from '../../../features/installments/installmentsSlice';
+import { showNotification } from '@mantine/notifications';
+
+import type { AsyncThunk } from '@reduxjs/toolkit';
 import type {
   IPaymentUpdate,
   IMonthlyPayment,
   IInstallment,
 } from '../../../types/installment';
-import { showNotification } from '@mantine/notifications';
-import { Check, X } from 'lucide-react';
-import type { AsyncThunk } from '@reduxjs/toolkit';
-import utilStyles from '../../../styles/utils.module.css';
+
+import PaymentItem from '../PaymentItem/PaymentItem';
+import EmptyState from '../../common/EmptyState/EmptyState';
+import { setSelectedInstallment } from '../../../features/installments/installmentsSlice';
 import { useSelectedPayments } from '../../../hooks/useSelectedPayments';
+
+import utilStyles from '../../../styles/utils.module.css';
 
 interface PaymentsCardProps {
   title: string;

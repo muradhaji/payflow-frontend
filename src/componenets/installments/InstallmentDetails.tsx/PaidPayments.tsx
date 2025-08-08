@@ -1,7 +1,10 @@
-import PaymentsCard from './PaymentsCard';
 import { useTranslation } from 'react-i18next';
-import { cancelPayments } from '../../../features/installments/installmentsSlice';
+
 import { useAppSelector } from '../../../app/hooks';
+
+import PaymentsCard from './PaymentsCard';
+
+import { cancelPayments } from '../../../features/installments/installmentsSlice';
 
 const PaidPayments = () => {
   const { loading } = useAppSelector(

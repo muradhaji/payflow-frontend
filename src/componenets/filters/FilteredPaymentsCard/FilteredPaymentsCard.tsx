@@ -1,11 +1,12 @@
-import type { IInstallment, IPaymentUpdate } from '../../../types/installment';
-
 import { useTranslation } from 'react-i18next';
-import { sumByKeyDecimal } from '../../../utils/math';
 
 import { Link } from 'react-router-dom';
 import { Ellipsis } from 'lucide-react';
 import { Card, Group, Text, Stack, ActionIcon, Tooltip } from '@mantine/core';
+
+import type { IInstallment, IPaymentUpdate } from '../../../types/installment';
+
+import { sumByKeyDecimal } from '../../../utils/math';
 
 import classes from './FilteredPaymentsCard.module.css';
 import PaymentItem from '../../installments/PaymentItem/PaymentItem';

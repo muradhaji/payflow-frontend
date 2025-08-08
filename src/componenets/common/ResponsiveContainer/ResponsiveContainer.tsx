@@ -1,6 +1,7 @@
 import React from 'react';
-import styles from './ResponsiveContainer.module.css';
 import { Flex, type FlexProps } from '@mantine/core';
+
+import styles from './ResponsiveContainer.module.css';
 
 type ResponsiveContainerProps = {
   children: React.ReactNode;

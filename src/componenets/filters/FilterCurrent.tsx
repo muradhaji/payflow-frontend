@@ -1,12 +1,10 @@
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { sumByKeyDecimal } from '../../utils/math';
 
-import FilteredPaymentsCard from './FilteredPaymentsCard/FilteredPaymentsCard';
-import MonthSelector from '../common/MonthSelector/MonthSelector';
-import PageHeader from '../common/PageHeader/PageHeader';
-import EmptyState from '../common/EmptyState/EmptyState';
+import dayjs from 'dayjs';
+
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useTranslation } from 'react-i18next';
+
 import {
   Badge,
   Button,
@@ -17,16 +15,24 @@ import {
   Tooltip,
 } from '@mantine/core';
 
-import dayjs from 'dayjs';
+import { Check, X } from 'lucide-react';
+import { showNotification } from '@mantine/notifications';
+
+import { sumByKeyDecimal } from '../../utils/math';
 import utilStyles from '../../styles/utils.module.css';
 
+import FilteredPaymentsCard from './FilteredPaymentsCard/FilteredPaymentsCard';
+import MonthSelector from '../common/MonthSelector/MonthSelector';
+import PageHeader from '../common/PageHeader/PageHeader';
+import EmptyState from '../common/EmptyState/EmptyState';
+
 import FilterHeader from './FilterHeader/FilterHeader';
+
 import {
   completePayments,
   updateInstallments,
 } from '../../features/installments/installmentsSlice';
-import { showNotification } from '@mantine/notifications';
-import { Check, X } from 'lucide-react';
+
 import { useInstallmenstsDateRange } from '../../hooks/useInstallmentsDateRange';
 import { useSelectedPayments } from '../../hooks/useSelectedPayments';
 import { useFilteredInstallments } from '../../hooks/useFilteredInstallments';

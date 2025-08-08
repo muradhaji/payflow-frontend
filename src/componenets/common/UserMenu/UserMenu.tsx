@@ -1,9 +1,10 @@
 import { Menu, Button, Stack } from '@mantine/core';
 import { UserRound, ChartPie } from 'lucide-react';
-import LogOutButton from '../LogOutButton/LogOutButton';
-import { useAuth } from '../../../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+
+import LogOutButton from '../LogOutButton/LogOutButton';
+import { useAuth } from '../../../hooks/useAuth';
 
 const UserMenu = () => {
   const { isAuthenticated, user } = useAuth();

@@ -1,7 +1,9 @@
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import { Flex, Stack } from '@mantine/core';
 import { Outlet } from 'react-router-dom';
+
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+
 import utilStyles from '../../../styles/utils.module.css';
 
 export default function Layout() {

@@ -1,13 +1,15 @@
-import type { IInstallment } from '../../../types/installment';
 import { Card, Text, Group, Badge, Flex, Slider } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Check } from 'lucide-react';
+
+import type { IInstallment } from '../../../types/installment';
+
 import {
   getMostFrequentAmount,
   roundToTwoDecimals,
   sumByKeyDecimal,
 } from '../../../utils/math';
-import { Check } from 'lucide-react';
 
 import styles from './InstallmentCard.module.css';
 import utilStyles from '../../../styles/utils.module.css';

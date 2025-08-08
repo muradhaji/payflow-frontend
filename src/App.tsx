@@ -1,4 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
+
+import { createTheme, MantineProvider } from '@mantine/core';
+import { DatesProvider } from '@mantine/dates';
+import { Notifications } from '@mantine/notifications';
+import { useTranslation } from 'react-i18next';
+
 import Home from './componenets/Home';
 import Login from './componenets/auth/Login';
 import SignUp from './componenets/auth/SignUp';
@@ -13,18 +19,14 @@ import InstallmentsLayout from './componenets/installments/InstallmentsLayout';
 import AllInstallments from './componenets/installments/AllInstallments/AllInstallments';
 import AddInstallment from './componenets/installments/AddInstallment/AddInstallment';
 import EditInstallment from './componenets/installments/EditInstallment/EditInstallment';
+import InstallmentDetails from './componenets/installments/InstallmentDetails.tsx/InstallmentDetails';
 
-import { createTheme, MantineProvider } from '@mantine/core';
-import { DatesProvider } from '@mantine/dates';
-import { Notifications } from '@mantine/notifications';
-import { useTranslation } from 'react-i18next';
+import Layout from './componenets/common/Layout/Layout';
 
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import './App.css';
-import InstallmentDetails from './componenets/installments/InstallmentDetails.tsx/InstallmentDetails';
-import Layout from './componenets/common/Layout/Layout';
 
 const theme = createTheme({
   breakpoints: {

@@ -1,8 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { register } from '../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 
@@ -17,6 +15,9 @@ import {
   TextInput,
   Title,
 } from '@mantine/core';
+
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { register } from '../../features/auth/authSlice';
 
 const RegisterSchema = yup.object().shape({
   username: yup.string().min(6, 'usernameMin').required('usernameRequired'),

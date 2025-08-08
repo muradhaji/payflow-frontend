@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '../../../app/hooks';
-import { logout } from '../../../features/auth/authSlice';
 import { Button } from '@mantine/core';
 import { LogOut } from 'lucide-react';
+
+import { useAppDispatch } from '../../../app/hooks';
+import { logout } from '../../../features/auth/authSlice';
 import { persistor } from '../../../app/store';
 
 function LogOutButton() {

@@ -1,10 +1,10 @@
-import type {
-  InstallmentCreate,
-  MonthlyPaymentCreate,
-} from '../../../types/installment';
 import { useEffect, useMemo } from 'react';
+import dayjs from 'dayjs';
+
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
 import { DatePickerInput } from '@mantine/dates';
 import {
   Button,
@@ -13,17 +13,25 @@ import {
   NumberInput,
   TextInput,
 } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
+
 import { Check, X } from 'lucide-react';
+
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { useTranslation } from 'react-i18next';
+
 import { addInstallment } from '../../../features/installments/installmentsSlice';
 import { showNotification } from '@mantine/notifications';
-import { useTranslation } from 'react-i18next';
+
 import { sumByKeyDecimal } from '../../../utils/math';
-import * as yup from 'yup';
-import dayjs from 'dayjs';
-import PageHeader from '../../common/PageHeader/PageHeader';
 import utilStyles from '../../../styles/utils.module.css';
+
+import type {
+  InstallmentCreate,
+  MonthlyPaymentCreate,
+} from '../../../types/installment';
+
+import PageHeader from '../../common/PageHeader/PageHeader';
 
 const AddInstallment = () => {
   const dispatch = useAppDispatch();

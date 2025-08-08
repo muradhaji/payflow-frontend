@@ -1,10 +1,13 @@
 import { Link, useLocation } from 'react-router-dom';
-import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
-import { useAuth } from '../../../hooks/useAuth';
-import UserMenu from '../UserMenu/UserMenu';
+
 import { Button, Card, Flex, Text, Title } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
+
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
+import UserMenu from '../UserMenu/UserMenu';
 import ResponsiveContainer from '../ResponsiveContainer/ResponsiveContainer';
+
+import { useAuth } from '../../../hooks/useAuth';
 
 function Header() {
   const { isAuthenticated } = useAuth();

@@ -1,4 +1,5 @@
 import { Box, Text } from '@mantine/core';
+
 import ResponsiveContainer from '../ResponsiveContainer/ResponsiveContainer';
 
 function Footer() {

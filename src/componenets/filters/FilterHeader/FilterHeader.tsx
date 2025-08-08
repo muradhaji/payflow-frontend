@@ -1,4 +1,5 @@
 import { Card, Group, Text } from '@mantine/core';
+
 import utilStyles from '../../../styles/utils.module.css';
 
 const colorMap: Record<string, string> = {

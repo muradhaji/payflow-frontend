@@ -1,6 +1,8 @@
-import type { IPaymentUpdate } from '../types/installment';
 import { useState, useMemo, useCallback } from 'react';
+
 import { sumByKeyDecimal } from '../utils/math';
+
+import type { IPaymentUpdate } from '../types/installment';
 
 export const useSelectedPayments = () => {
   const [selectedPayments, setSelectedPayments] = useState<IPaymentUpdate[]>(

@@ -1,6 +1,7 @@
-import type { IInstallment } from '../types/installment';
 import { useMemo } from 'react';
 import dayjs from 'dayjs';
+
+import type { IInstallment } from '../types/installment';
 
 export const useInstallmenstsDateRange = (
   installments: IInstallment[]

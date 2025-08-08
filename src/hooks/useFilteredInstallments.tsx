@@ -1,5 +1,6 @@
-import type { IInstallment, IMonthlyPayment } from '../types/installment';
 import { useMemo } from 'react';
+
+import type { IInstallment, IMonthlyPayment } from '../types/installment';
 
 type PaymentFilterFn = (payment: IMonthlyPayment) => boolean;
 
