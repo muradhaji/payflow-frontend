@@ -15,7 +15,7 @@ import {
   Tooltip,
 } from '@mantine/core';
 
-import { IconCheck, IconX } from '@tabler/icons-react';
+import { IconCheck, IconFolderCheck, IconX } from '@tabler/icons-react';
 import { showNotification } from '@mantine/notifications';
 
 import { sumByKeyDecimal } from '../../utils/math';
@@ -183,7 +183,7 @@ const FilterCurrent = () => {
           </>
         ) : (
           <EmptyState
-            icon
+            icon={<IconFolderCheck size={48} color='gray' />}
             title={t('components.filters.current.empty.title')}
             description={t('components.filters.current.empty.description')}
           />

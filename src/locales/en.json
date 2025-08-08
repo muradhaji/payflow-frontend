@@ -77,24 +77,24 @@
         "pageTitle": "This Month's Debts",
         "totalLabel": "Total for {{month}}:",
         "empty": {
-          "title": "Nothing to pay",
-          "description": "No unpaid payments found for the selected month."
+          "title": "All caught up!",
+          "description": "You have no unpaid payments for the selected month."
         }
       },
       "remaining": {
         "pageTitle": "Unpaid Debts",
         "totalLabel": "Total Remaining:",
         "empty": {
-          "title": "No remaining payments",
-          "description": "All future payments have already been completed."
+          "title": "No pending payments",
+          "description": "All upcoming payments have been completed."
         }
       },
       "paid": {
         "pageTitle": "Paid Debts",
         "totalLabel": "Total Paid:",
         "empty": {
-          "title": "No payments completed",
-          "description": "You haven't completed any payments yet."
+          "title": "No payments made yet",
+          "description": "You haven't completed any payments so far."
         }
       }
     },

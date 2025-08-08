@@ -77,24 +77,24 @@
         "pageTitle": "Bu Ayın Borcları",
         "totalLabel": "{{month}} üçün ümumi:",
         "empty": {
-          "title": "Ödəməyə heç nə yoxdur",
-          "description": "Seçilmiş ay üçün ödənilməmiş ödəniş tapılmadı."
+          "title": "Hamısı tamamlandı!",
+          "description": "Seçilmiş ay üçün ödənilməmiş borc yoxdur."
         }
       },
       "remaining": {
         "pageTitle": "Qalan Borclar",
         "totalLabel": "Qalan ümumi:",
         "empty": {
-          "title": "Qalan ödəmə yoxdur",
-          "description": "Gələcək bütün ödənişlər artıq tamamlanıb."
+          "title": "Qalıq ödəniş yoxdur",
+          "description": "Bütün gələcək ödənişlər artıq tamamlanıb."
         }
       },
       "paid": {
         "pageTitle": "Ödənmiş Borclar",
         "totalLabel": "Ümumi ödənilib:",
         "empty": {
-          "title": "Hələ ödəmə edilməyib",
-          "description": "Heç bir ödəniş tamamlanmayıb."
+          "title": "Hələ ödəniş yoxdur",
+          "description": "İndiyədək heç bir ödəniş tamamlanmayıb."
         }
       }
     },

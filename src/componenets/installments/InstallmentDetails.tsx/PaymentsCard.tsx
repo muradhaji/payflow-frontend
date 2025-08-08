@@ -16,6 +16,7 @@ import { IconCheck, IconX } from '@tabler/icons-react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { showNotification } from '@mantine/notifications';
 
+import type { ReactNode } from 'react';
 import type { AsyncThunk } from '@reduxjs/toolkit';
 import type {
   IPaymentUpdate,
@@ -38,6 +39,7 @@ interface PaymentsCardProps {
     color: string;
   };
   empty: {
+    icon?: ReactNode;
     title: string;
   };
   notificationMessages: {
@@ -161,7 +163,7 @@ const PaymentsCard = ({
           ))}
         </Grid>
       ) : (
-        <EmptyState icon title={empty.title} my='0' />
+        <EmptyState icon={empty.icon} title={empty.title} my='0' />
       )}
     </Card>
   );

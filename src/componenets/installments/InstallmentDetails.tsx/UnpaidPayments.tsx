@@ -5,6 +5,7 @@ import { useAppSelector } from '../../../app/hooks';
 import PaymentsCard from './PaymentsCard';
 
 import { completePayments } from '../../../features/installments/installmentsSlice';
+import { IconFolderCheck } from '@tabler/icons-react';
 
 const UnpaidPayments = () => {
   const { loading } = useAppSelector(
@@ -25,6 +26,7 @@ const UnpaidPayments = () => {
   };
 
   const emptyProps = {
+    icon: <IconFolderCheck size={32} color='gray' />,
     title: t('components.paymentsCard.unpaid.empty.title'),
   };
 

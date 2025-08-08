@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from '@mantine/core';
 
-import { IconCheck, IconX } from '@tabler/icons-react';
+import { IconCheck, IconFolderCheck, IconX } from '@tabler/icons-react';
 import { showNotification } from '@mantine/notifications';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -155,7 +155,7 @@ const FilterRemaining = () => {
           </>
         ) : (
           <EmptyState
-            icon
+            icon={<IconFolderCheck size={48} color='gray' />}
             title={t('components.filters.remaining.empty.title')}
             description={t('components.filters.remaining.empty.description')}
           />
