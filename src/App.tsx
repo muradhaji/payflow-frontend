@@ -9,8 +9,10 @@ import Home from './componenets/Home';
 import Login from './componenets/auth/Login';
 import SignUp from './componenets/auth/SignUp';
 import PrivateRoute from './componenets/auth/PrivateRoute';
+import NotFound from './componenets/common/NotFound/NotFound';
 
 import Filters from './componenets/filters/Filters';
+import FilterOverdue from './componenets/filters/FilterOverdue';
 import FilterCurrent from './componenets/filters/FilterCurrent';
 import FilterRemaining from './componenets/filters/FilterRemaining';
 import FilterPaid from './componenets/filters/FilterPaid';
@@ -27,7 +29,6 @@ import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import './App.css';
-import FilterOverdue from './componenets/filters/FilterOverdue';
 
 const theme = createTheme({
   breakpoints: {
@@ -77,7 +78,7 @@ function App() {
                 ></Route>
               </Route>
             </Route>
-            <Route path='*' element={<h1>Not Found</h1>} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </DatesProvider>
       </MantineProvider>

@@ -108,6 +108,11 @@
       "totalLabel": "Toplam borc",
       "paid": "ÖDƏNMİŞ",
       "remaining": "QALAN"
+    },
+    "notFound": {
+      "title": "Burada görünəcək heç nə yoxdur",
+      "description": "Açmağa çalışdığınız səhifə mövcud deyil. <1 /> Ünvanı səhv daxil etmiş ola bilərsiniz və ya səhifə başqa ünvana köçürülüb.",
+      "button": "Məni ana səhifəyə qaytar"
     }
   },
   "forms": {

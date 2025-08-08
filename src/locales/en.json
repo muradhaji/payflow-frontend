@@ -108,6 +108,11 @@
       "totalLabel": "Total debt",
       "paid": "PAID",
       "remaining": "REMAINING"
+    },
+    "notFound": {
+      "title": "Nothing to see here",
+      "description": "The page you are trying to open does not exist. <1 /> You may have mistyped the address, or the page has been moved to another URL.",
+      "button": "Take me back to home page"
     }
   },
   "forms": {
