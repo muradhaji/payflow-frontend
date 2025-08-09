@@ -3,7 +3,10 @@ import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 
 import type { IMonthlyPayment } from '../../../types/installment';
-import { IconSquareRoundedChevronDown } from '@tabler/icons-react';
+import {
+  IconSquareRoundedChevronDown,
+  IconCalendarDollar,
+} from '@tabler/icons-react';
 
 interface PaymentListTableProps {
   payments: IMonthlyPayment[];
@@ -64,12 +67,14 @@ const FilteredPaymentsTable = ({
   return (
     <Accordion
       variant='filled'
-      chevron={<IconSquareRoundedChevronDown />}
+      chevron={<IconSquareRoundedChevronDown color='gray' />}
       chevronSize={20}
     >
       <Accordion.Item value='payments'>
-        <Accordion.Control>
-          <Text>View Payments</Text>
+        <Accordion.Control icon={<IconCalendarDollar size={20} color='gray' />}>
+          <Text size='sm' fw={700} c='gray'>
+            SEE PAYMENTS
+          </Text>
         </Accordion.Control>
         <Accordion.Panel>
           <Table highlightOnHover>
