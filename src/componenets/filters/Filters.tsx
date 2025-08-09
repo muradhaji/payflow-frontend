@@ -120,8 +120,6 @@ const Filters = () => {
       .sort((a, b) => a.year - b.year);
   }, [installments, i18n.language]);
 
-  console.log(monthlyStats);
-
   return (
     <>
       <PageHeader

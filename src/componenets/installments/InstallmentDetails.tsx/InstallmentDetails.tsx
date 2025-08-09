@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 
 import { useParams, Link, useNavigate } from 'react-router-dom';
@@ -9,13 +9,12 @@ import {
   Card,
   Grid,
   Group,
-  Loader,
   Skeleton,
   Stack,
   Text,
 } from '@mantine/core';
 
-import { IconCheck, IconX } from '@tabler/icons-react';
+import { IconCheck, IconEdit, IconTrash, IconX } from '@tabler/icons-react';
 import { showNotification } from '@mantine/notifications';
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
@@ -31,12 +30,15 @@ import EmptyState from '../../common/EmptyState/EmptyState';
 import InstallmentCard from '../InstallmentCard/InstallmentCard';
 import PaidPayments from './PaidPayments';
 import UnpaidPayments from './UnpaidPayments';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 import utilStyles from '../../../styles/utils.module.css';
 
 const InstallmentDetails = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const [deleteModalOpened, setDeleteModalOpened] = useState(false);
 
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
@@ -85,6 +87,7 @@ const InstallmentDetails = () => {
         color: 'green',
         icon: <IconCheck />,
       });
+      setDeleteModalOpened(false);
       dispatch(fetchInstallments());
       navigate('/payments');
     } else {
@@ -115,23 +118,28 @@ const InstallmentDetails = () => {
             to={`/payments/edit/${id}`}
             variant='light'
             size='xs'
+            leftSection={<IconEdit size={16} />}
           >
             {t('buttons.installment.edit.label')}
           </Button>,
           <Button
-            key='edit'
+            key='delete'
             variant='light'
             color='red'
             size='xs'
-            onClick={handleDelete}
-            loading={deleteLoading}
-            loaderProps={{
-              children: <Loader size='sm' type='dots' color='white' />,
-            }}
+            onClick={() => setDeleteModalOpened(true)}
+            leftSection={<IconTrash size={16} />}
           >
             {t('buttons.installment.delete.label')}
           </Button>,
         ]}
+      />
+
+      <ConfirmDeleteModal
+        opened={deleteModalOpened}
+        onClose={() => setDeleteModalOpened(false)}
+        onConfirm={handleDelete}
+        confirmLoading={deleteLoading}
       />
 
       <Skeleton visible={getByIdLoading}>

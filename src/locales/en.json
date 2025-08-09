@@ -278,6 +278,12 @@
     "selectAll": {
       "label": "ALL",
       "tooltip": "Select all payments"
+    },
+    "confirm": {
+      "label": "CONFIRM"
+    },
+    "cancel": {
+      "label": "CANCEL"
     }
   },
   "breadcrumbs": {
@@ -319,6 +325,14 @@
           "success": "Payment deleted successfully.",
           "error": "Failed to delete the payment."
         }
+      }
+    }
+  },
+  "modals": {
+    "installment": {
+      "delete": {
+        "title": "Delete payment",
+        "message": "Are you sure you want to delete this payment? This action cannot be undone."
       }
     }
   }

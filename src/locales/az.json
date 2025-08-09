@@ -278,6 +278,12 @@
     "selectAll": {
       "label": "HAMISI",
       "tooltip": "Bütün ödənişləri seçin"
+    },
+    "confirm": {
+      "label": "TƏSDİQLƏ"
+    },
+    "cancel": {
+      "label": "LƏĞV ET"
     }
   },
   "breadcrumbs": {
@@ -319,6 +325,14 @@
           "success": "Ödəniş uğurla silindi.",
           "error": "Ödənişi silmək mümkün olmadı."
         }
+      }
+    }
+  },
+  "modals": {
+    "installment": {
+      "delete": {
+        "title": "Ödənişi sil",
+        "message": "Bu ödənişi silmək istədiyinizə əminsiniz? Bu əməliyyatı geri qaytarmaq mümkün deyil."
       }
     }
   }

@@ -29,6 +29,7 @@ import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import './App.css';
+import { ModalsProvider } from '@mantine/modals';
 
 const theme = createTheme({
   breakpoints: {
@@ -49,38 +50,40 @@ function App() {
       <MantineProvider defaultColorScheme='light' theme={theme}>
         <Notifications position='top-center' />
         <DatesProvider settings={{ locale: i18n.language }}>
-          <Routes>
-            <Route path='/' element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path='login' element={<Login />} />
-              <Route path='/register' element={<SignUp />} />
+          <ModalsProvider>
+            <Routes>
+              <Route path='/' element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path='login' element={<Login />} />
+                <Route path='/register' element={<SignUp />} />
 
-              <Route
-                path='/payments'
-                element={
-                  <PrivateRoute>
-                    <InstallmentsLayout />
-                  </PrivateRoute>
-                }
-              >
-                <Route index element={<Filters />} />
-
-                <Route path='overdue' element={<FilterOverdue />} />
-                <Route path='current' element={<FilterCurrent />} />
-                <Route path='remaining' element={<FilterRemaining />} />
-                <Route path='paid' element={<FilterPaid />} />
-
-                <Route path='all' element={<AllInstallments />} />
-                <Route path='add' element={<AddInstallment />}></Route>
-                <Route path='edit/:id' element={<EditInstallment />}></Route>
                 <Route
-                  path='details/:id'
-                  element={<InstallmentDetails />}
-                ></Route>
+                  path='/payments'
+                  element={
+                    <PrivateRoute>
+                      <InstallmentsLayout />
+                    </PrivateRoute>
+                  }
+                >
+                  <Route index element={<Filters />} />
+
+                  <Route path='overdue' element={<FilterOverdue />} />
+                  <Route path='current' element={<FilterCurrent />} />
+                  <Route path='remaining' element={<FilterRemaining />} />
+                  <Route path='paid' element={<FilterPaid />} />
+
+                  <Route path='all' element={<AllInstallments />} />
+                  <Route path='add' element={<AddInstallment />}></Route>
+                  <Route path='edit/:id' element={<EditInstallment />}></Route>
+                  <Route
+                    path='details/:id'
+                    element={<InstallmentDetails />}
+                  ></Route>
+                </Route>
               </Route>
-            </Route>
-            <Route path='*' element={<NotFound />} />
-          </Routes>
+              <Route path='*' element={<NotFound />} />
+            </Routes>
+          </ModalsProvider>
         </DatesProvider>
       </MantineProvider>
     </div>
