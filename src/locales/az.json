@@ -98,9 +98,6 @@
         }
       }
     },
-    "filteredPaymentsCard": {
-      "totalLabel": "Ümumi Məbləğ"
-    },
     "paymentItem": {
       "paidLabel": "Ödənilib: {{date}}"
     },
@@ -276,7 +273,8 @@
   },
   "tooltips": {
     "details": "Təfərrüatlar",
-    "monthSelector": "Ödənişləri görmək üçün ay və ili seçin."
+    "monthSelector": "Ödənişləri görmək üçün ay və ili seçin.",
+    "selectAll": "Hamısını seçin"
   },
   "notifications": {
     "api": {

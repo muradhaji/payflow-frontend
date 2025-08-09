@@ -98,9 +98,6 @@
         }
       }
     },
-    "filteredPaymentsCard": {
-      "totalLabel": "Total Amount"
-    },
     "paymentItem": {
       "paidLabel": "Paid: {{date}}"
     },
@@ -276,7 +273,8 @@
   },
   "tooltips": {
     "details": "Details",
-    "monthSelector": "Select the month and year to view payments."
+    "monthSelector": "Select the month and year to view payments.",
+    "selectAll": "Select all"
   },
   "notifications": {
     "api": {

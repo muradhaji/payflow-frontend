@@ -38,6 +38,7 @@ const theme = createTheme({
     lg: '1200px',
     xl: '1400px',
   },
+  cursorType: 'pointer',
 });
 
 function App() {

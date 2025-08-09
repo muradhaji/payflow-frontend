@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 
 import { sumByKeyDecimal } from '../utils/math';
 
-import type { IPaymentUpdate } from '../types/installment';
+import type { IMonthlyPayment, IPaymentUpdate } from '../types/installment';
 
 export const useSelectedPayments = () => {
   const [selectedPayments, setSelectedPayments] = useState<IPaymentUpdate[]>(
@@ -29,6 +29,30 @@ export const useSelectedPayments = () => {
     setSelectedPayments([]);
   }, []);
 
+  const togglePaymentsByInstallment = useCallback(
+    (installmentId: string, payments: IMonthlyPayment[]) => {
+      setSelectedPayments((prev) => {
+        const allSelected = payments.every((payment) =>
+          prev.some((p) => p.paymentId === payment._id)
+        );
+
+        if (allSelected) {
+          return prev.filter((p) => p.installmentId !== installmentId);
+        } else {
+          const paymentsToAdd = payments
+            .filter((p) => !prev.some((sel) => sel.paymentId === p._id))
+            .map((p) => ({
+              installmentId,
+              paymentId: p._id,
+              paymentAmount: p.amount,
+            }));
+          return [...prev, ...paymentsToAdd];
+        }
+      });
+    },
+    []
+  );
+
   const isSelected = useCallback(
     (paymentId: string) => {
       return selectedPayments.some((p) => p.paymentId === paymentId);
@@ -42,6 +66,7 @@ export const useSelectedPayments = () => {
     togglePayment,
     selectAll,
     resetAll,
+    togglePaymentsByInstallment,
     isSelected,
   };
 };
