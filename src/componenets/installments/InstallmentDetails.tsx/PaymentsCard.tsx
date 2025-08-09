@@ -194,7 +194,7 @@ const PaymentsCard = ({
           ))}
         </Grid>
       ) : (
-        <EmptyState icon={empty.icon} title={empty.title} my='0' />
+        <EmptyState icon={empty.icon} description={empty.title} my='0' />
       )}
     </Card>
   );

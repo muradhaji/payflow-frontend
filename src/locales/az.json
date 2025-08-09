@@ -44,13 +44,13 @@
     },
     "paymentsCard": {
       "paid": {
-        "cardTitle": "Tamamlanmış",
+        "cardTitle": "ÖDƏNİB",
         "empty": {
           "title": "Hələ ödəmə edilməyib"
         }
       },
       "unpaid": {
-        "cardTitle": "Tamamlanmamış",
+        "cardTitle": "QALIB",
         "empty": {
           "title": "Bütün ödənişlər tamamlanıb"
         }
