@@ -5,8 +5,8 @@ import utilStyles from '../../../styles/utils.module.css';
 const colorMap: Record<string, string> = {
   overdue: 'red.5',
   current: 'orange.5',
-  remaining: 'dark',
-  paid: 'tale.5',
+  remaining: 'dark.5',
+  paid: 'teal.5',
   default: 'indigo.5',
 };
 

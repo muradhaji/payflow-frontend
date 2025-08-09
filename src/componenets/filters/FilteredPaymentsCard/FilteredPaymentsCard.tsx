@@ -2,26 +2,33 @@ import { useTranslation } from 'react-i18next';
 
 import { Link } from 'react-router-dom';
 import { IconDots } from '@tabler/icons-react';
-import { Card, Group, Text, Stack, ActionIcon, Tooltip } from '@mantine/core';
+import { Card, Group, Text, ActionIcon, Tooltip, Badge } from '@mantine/core';
 
-import type { IInstallment, IPaymentUpdate } from '../../../types/installment';
+import FilteredPaymentsTable from '../FilteredPaymentsTable/FilteredPaymentsTable';
+
+import type {
+  IInstallment,
+  IMonthlyPayment,
+  IPaymentUpdate,
+} from '../../../types/installment';
 
 import { sumByKeyDecimal } from '../../../utils/math';
-
-import classes from './FilteredPaymentsCard.module.css';
-import PaymentItem from '../../installments/PaymentItem/PaymentItem';
 
 const colorMap: Record<string, string> = {
   overdue: 'red.5',
   current: 'orange.5',
-  remaining: 'dark',
-  paid: 'tale.5',
+  paid: 'teal.5',
+  remaining: 'dark.5',
   default: 'indigo.5',
 };
 
 interface FilteredPaymentsCardProps extends IInstallment {
-  togglePayment: (payment: IPaymentUpdate) => void;
   isSelected: (paymentId: string) => boolean;
+  togglePayment: (payment: IPaymentUpdate) => void;
+  toggleAllPayments: (
+    installmentId: string,
+    payments: IMonthlyPayment[]
+  ) => void;
   type: 'overdue' | 'current' | 'remaining' | 'paid' | 'all';
 }
 
@@ -29,12 +36,19 @@ const FilteredPaymentsCard = ({
   _id: installmentId,
   title,
   monthlyPayments,
-  togglePayment,
   isSelected,
+  togglePayment,
+  toggleAllPayments,
   type,
 }: FilteredPaymentsCardProps) => {
   const { t } = useTranslation();
   const color = colorMap[type] ?? colorMap.default;
+
+  const handleToggleAll = (): void => {
+    toggleAllPayments(installmentId, monthlyPayments);
+  };
+
+  console.log(color);
 
   return (
     <Card shadow='sm' radius='sm' padding='md' withBorder>
@@ -42,46 +56,36 @@ const FilteredPaymentsCard = ({
         <Text fw={600} size='lg' c='gray.8'>
           {title}
         </Text>
-        <Tooltip label={t('tooltips.details')}>
-          <ActionIcon
-            component={Link}
-            to={`/payments/details/${installmentId}`}
-            variant='subtle'
-            color='gray'
-            size='md'
-          >
-            <IconDots size={20} />
-          </ActionIcon>
-        </Tooltip>
+        <Group align='center' gap='xs'>
+          <Badge size='lg' variant='light' color={color}>
+            {sumByKeyDecimal(monthlyPayments, 'amount')} ₼
+          </Badge>
+          <Tooltip label={t('tooltips.details')}>
+            <ActionIcon
+              component={Link}
+              to={`/payments/details/${installmentId}`}
+              variant='subtle'
+              color='gray'
+              size='md'
+            >
+              <IconDots size={20} />
+            </ActionIcon>
+          </Tooltip>
+        </Group>
       </Group>
 
-      {monthlyPayments.length > 1 && (
-        <Group justify='space-between' className={classes.totalSummary}>
-          <Text size='sm' fw={500} c='blue.8'>
-            {t('components.filteredPaymentsCard.totalLabel')}
-          </Text>
-          <Text size='lg' fw={700} c={`${color}.6`}>
-            {sumByKeyDecimal(monthlyPayments, 'amount')} ₼
-          </Text>
-        </Group>
-      )}
-
-      <Stack gap='sm'>
-        {monthlyPayments.map((payment) => (
-          <PaymentItem
-            key={payment._id}
-            payment={payment}
-            isSelected={isSelected(payment._id)}
-            onToggle={(paymentId, paymentAmount) => {
-              togglePayment({
-                installmentId,
-                paymentId,
-                paymentAmount,
-              });
-            }}
-          />
-        ))}
-      </Stack>
+      <FilteredPaymentsTable
+        payments={monthlyPayments}
+        isSelected={isSelected}
+        onToggle={(paymentId, paymentAmount) => {
+          togglePayment({
+            installmentId,
+            paymentId,
+            paymentAmount,
+          });
+        }}
+        onToggleAll={handleToggleAll}
+      />
     </Card>
   );
 };

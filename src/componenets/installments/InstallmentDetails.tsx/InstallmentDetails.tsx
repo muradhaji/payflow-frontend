@@ -81,8 +81,7 @@ const InstallmentDetails = () => {
 
     if (deleteInstallment.fulfilled.match(result)) {
       showNotification({
-        title: t('notifications.api.installment.delete.success.title'),
-        message: t('notifications.api.installment.delete.success.message'),
+        message: t('notifications.api.installment.delete.success'),
         color: 'green',
         icon: <IconCheck />,
       });
@@ -90,8 +89,7 @@ const InstallmentDetails = () => {
       navigate('/payments');
     } else {
       showNotification({
-        title: t('notifications.api.installment.delete.error.title'),
-        message: t('notifications.api.installment.delete.error.message'),
+        message: t('notifications.api.installment.delete.error'),
         color: 'red',
         icon: <IconX />,
       });

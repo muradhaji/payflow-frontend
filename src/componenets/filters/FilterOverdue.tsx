@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next';
 import {
   Badge,
   Button,
+  Grid,
   Loader,
   LoadingOverlay,
-  SimpleGrid,
   Skeleton,
   Tooltip,
 } from '@mantine/core';
@@ -53,6 +53,7 @@ const FilterOverdue = () => {
     selectedPayments,
     selectedPaymentsAmount,
     togglePayment,
+    togglePaymentsByInstallment,
     resetAll,
     isSelected,
   } = useSelectedPayments();
@@ -63,8 +64,7 @@ const FilterOverdue = () => {
 
       if (completePayments.fulfilled.match(response)) {
         showNotification({
-          title: t('notifications.api.completePayments.success.title'),
-          message: t('notifications.api.completePayments.success.message'),
+          message: t('notifications.api.completePayments.success'),
           color: 'green',
           icon: <IconCheck />,
         });
@@ -72,8 +72,7 @@ const FilterOverdue = () => {
         dispatch(updateInstallments(response.payload.installments));
       } else {
         showNotification({
-          title: t('notifications.api.completePayments.error.title'),
-          message: t('notifications.api.completePayments.error.message'),
+          message: t('notifications.api.completePayments.error'),
           color: 'red',
           icon: <IconX />,
         });
@@ -81,8 +80,7 @@ const FilterOverdue = () => {
       }
     } catch (err) {
       showNotification({
-        title: t('notifications.api.completePayments.error.title'),
-        message: t('notifications.api.completePayments.error.message'),
+        message: t('notifications.api.completePayments.error'),
         color: 'red',
         icon: <IconX />,
       });
@@ -139,26 +137,25 @@ const FilterOverdue = () => {
               type='overdue'
             />
 
-            <SimpleGrid
-              cols={{ base: 1, sm: 2, md: 3 }}
-              spacing='md'
-              className='relative'
-            >
+            <Grid align='flex-start'>
               <LoadingOverlay
                 loaderProps={{ children: <></> }}
                 visible={completePaymentsLoading}
                 className={utilStyles.radiusSm}
               />
               {filteredInstallments.map((installment) => (
-                <FilteredPaymentsCard
-                  key={installment._id}
-                  {...installment}
-                  togglePayment={togglePayment}
-                  isSelected={isSelected}
-                  type='overdue'
-                />
+                <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
+                  <FilteredPaymentsCard
+                    key={installment._id}
+                    {...installment}
+                    togglePayment={togglePayment}
+                    toggleAllPayments={togglePaymentsByInstallment}
+                    isSelected={isSelected}
+                    type='overdue'
+                  />
+                </Grid.Col>
               ))}
-            </SimpleGrid>
+            </Grid>
           </>
         ) : (
           <EmptyState

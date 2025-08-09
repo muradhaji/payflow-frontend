@@ -252,16 +252,14 @@ const EditInstallment = () => {
 
       if (updateInstallment.fulfilled.match(resultAction)) {
         showNotification({
-          title: t('notifications.api.installment.edit.success.title'),
-          message: t('notifications.api.installment.edit.success.message'),
+          message: t('notifications.api.installment.edit.success'),
           color: 'green',
           icon: <IconCheck />,
         });
         navigate(`/payments/details/${id}`);
       } else {
         showNotification({
-          title: t('notifications.api.installment.edit.error.title'),
-          message: t('notifications.api.installment.edit.error.message'),
+          message: t('notifications.api.installment.edit.error'),
           color: 'red',
           icon: <IconX />,
         });
@@ -269,8 +267,7 @@ const EditInstallment = () => {
       }
     } catch (error) {
       showNotification({
-        title: t('notifications.api.installment.edit.error.title'),
-        message: t('notifications.api.installment.edit.error.message'),
+        message: t('notifications.api.installment.edit.error'),
         color: 'red',
         icon: <IconX />,
       });

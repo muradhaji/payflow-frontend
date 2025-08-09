@@ -77,29 +77,26 @@
         "pageTitle": "Bu Ayın Borcları",
         "totalLabel": "{{month}} üçün ümumi:",
         "empty": {
-          "title": "Ödəməyə heç nə yoxdur",
-          "description": "Seçilmiş ay üçün ödənilməmiş ödəniş tapılmadı."
+          "title": "Hamısı tamamlandı!",
+          "description": "Seçilmiş ay üçün ödənilməmiş borc yoxdur."
         }
       },
       "remaining": {
         "pageTitle": "Qalan Borclar",
         "totalLabel": "Qalan ümumi:",
         "empty": {
-          "title": "Qalan ödəmə yoxdur",
-          "description": "Gələcək bütün ödənişlər artıq tamamlanıb."
+          "title": "Qalıq ödəniş yoxdur",
+          "description": "Bütün gələcək ödənişlər artıq tamamlanıb."
         }
       },
       "paid": {
         "pageTitle": "Ödənmiş Borclar",
         "totalLabel": "Ümumi ödənilib:",
         "empty": {
-          "title": "Hələ ödəmə edilməyib",
-          "description": "Heç bir ödəniş tamamlanmayıb."
+          "title": "Hələ ödəniş yoxdur",
+          "description": "İndiyədək heç bir ödəniş tamamlanmayıb."
         }
       }
-    },
-    "filteredPaymentsCard": {
-      "totalLabel": "Ümumi Məbləğ"
     },
     "paymentItem": {
       "paidLabel": "Ödənilib: {{date}}"
@@ -108,6 +105,11 @@
       "totalLabel": "Toplam borc",
       "paid": "ÖDƏNMİŞ",
       "remaining": "QALAN"
+    },
+    "notFound": {
+      "title": "Burada görünəcək heç nə yoxdur",
+      "description": "Açmağa çalışdığınız səhifə mövcud deyil. <1 /> Ünvanı səhv daxil etmiş ola bilərsiniz və ya səhifə başqa ünvana köçürülüb.",
+      "button": "Məni ana səhifəyə qaytar"
     }
   },
   "forms": {
@@ -271,60 +273,31 @@
   },
   "tooltips": {
     "details": "Təfərrüatlar",
-    "monthSelector": "Ödənişləri görmək üçün ay və ili seçin."
+    "monthSelector": "Ödənişləri görmək üçün ay və ili seçin.",
+    "selectAll": "Hamısını seçin"
   },
   "notifications": {
     "api": {
       "completePayments": {
-        "success": {
-          "title": "Uğurlu Ödəniş",
-          "message": "Ödənişlər uğurla tamamlandı."
-        },
-        "error": {
-          "title": "Uğursuz Ödəniş",
-          "message": "Ödənişləri tamamlamaq mümkün olmadı."
-        }
+        "success": "Ödənişlər uğurla tamamlandı.",
+        "error": "Ödənişləri tamamlamaq mümkün olmadı."
       },
       "cancelPayments": {
-        "success": {
-          "title": "Ödənişlər ləğv edildi",
-          "message": "Seçilmiş ödənişlər uğurla ləğv edildi"
-        },
-        "error": {
-          "title": "Ləğv etmə alınmadı",
-          "message": "Ödənişlərin ləğvi zamanı xəta baş verdi."
-        }
+        "success": "Ödənişlər uğurla ləğv edildi.",
+        "error": "Ödənişləri ləğv etmək mümkün olmadı."
       },
       "installment": {
         "add": {
-          "success": {
-            "title": "Ödəniş əlavə olundu",
-            "message": "Ödəniş uğurla yaradıldı."
-          },
-          "error": {
-            "title": "Xəta",
-            "message": "Ödəniş əlavə edilərkən xəta baş verdi."
-          }
+          "success": "Ödəniş uğurla yaradıldı.",
+          "error": "Ödənişi yaratmaq mümkün olmadı."
         },
         "edit": {
-          "success": {
-            "title": "Ödəniş yeniləndi",
-            "message": "Ödənişiniz uğurla yeniləndi."
-          },
-          "error": {
-            "title": "Xəta",
-            "message": "Ödəniş yenilənərkən xəta baş verdi."
-          }
+          "success": "Ödəniş uğurla yeniləndi.",
+          "error": "Ödənişi yeniləmək mümkün olmadı."
         },
         "delete": {
-          "success": {
-            "title": "Silindi",
-            "message": "Ödəniş uğurla silindi."
-          },
-          "error": {
-            "title": "Xəta baş verdi",
-            "message": "Ödənişi silinərkən xəta baş verdi."
-          }
+          "success": "Ödəniş uğurla silindi.",
+          "error": "Ödənişi silmək mümkün olmadı."
         }
       }
     }

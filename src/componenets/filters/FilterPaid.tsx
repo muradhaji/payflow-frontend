@@ -1,9 +1,9 @@
 import {
   Badge,
   Button,
+  Grid,
   Loader,
   LoadingOverlay,
-  SimpleGrid,
   Skeleton,
   Tooltip,
 } from '@mantine/core';
@@ -49,6 +49,7 @@ const FilterPaid = () => {
     selectedPayments,
     selectedPaymentsAmount,
     togglePayment,
+    togglePaymentsByInstallment,
     isSelected,
     resetAll,
   } = useSelectedPayments();
@@ -59,8 +60,7 @@ const FilterPaid = () => {
 
       if (cancelPayments.fulfilled.match(response)) {
         showNotification({
-          title: t('notifications.api.cancelPayments.success.title'),
-          message: t('notifications.api.cancelPayments.success.message'),
+          message: t('notifications.api.cancelPayments.success'),
           color: 'green',
           icon: <IconCheck />,
         });
@@ -68,8 +68,7 @@ const FilterPaid = () => {
         dispatch(updateInstallments(response.payload.installments));
       } else {
         showNotification({
-          title: t('notifications.api.cancelPayments.error.title'),
-          message: t('notifications.api.cancelPayments.error.message'),
+          message: t('notifications.api.cancelPayments.error'),
           color: 'red',
           icon: <IconX />,
         });
@@ -77,8 +76,7 @@ const FilterPaid = () => {
       }
     } catch (err) {
       showNotification({
-        title: t('notifications.api.cancelPayments.error.title'),
-        message: t('notifications.api.cancelPayments.error.message'),
+        message: t('notifications.api.cancelPayments.error'),
         color: 'red',
         icon: <IconX />,
       });
@@ -136,22 +134,25 @@ const FilterPaid = () => {
               type='paid'
             />
 
-            <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing='md'>
+            <Grid align='flex-start'>
               <LoadingOverlay
                 loaderProps={{ children: <></> }}
                 visible={cancelPaymentsLoading}
                 className={utilStyles.radiusSm}
               />
               {filteredInstallments.map((installment) => (
-                <FilteredPaymentsCard
-                  key={installment._id}
-                  {...installment}
-                  togglePayment={togglePayment}
-                  isSelected={isSelected}
-                  type='paid'
-                />
+                <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
+                  <FilteredPaymentsCard
+                    key={installment._id}
+                    {...installment}
+                    togglePayment={togglePayment}
+                    toggleAllPayments={togglePaymentsByInstallment}
+                    isSelected={isSelected}
+                    type='paid'
+                  />
+                </Grid.Col>
               ))}
-            </SimpleGrid>
+            </Grid>
           </>
         ) : (
           <EmptyState

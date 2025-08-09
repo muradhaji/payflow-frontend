@@ -16,6 +16,7 @@ import { IconCheck, IconX } from '@tabler/icons-react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { showNotification } from '@mantine/notifications';
 
+import type { ReactNode } from 'react';
 import type { AsyncThunk } from '@reduxjs/toolkit';
 import type {
   IPaymentUpdate,
@@ -38,17 +39,12 @@ interface PaymentsCardProps {
     color: string;
   };
   empty: {
+    icon?: ReactNode;
     title: string;
   };
   notificationMessages: {
-    success: {
-      title: string;
-      message: string;
-    };
-    error: {
-      title: string;
-      message: string;
-    };
+    success: string;
+    error: string;
   };
   filterCondition: (payment: IMonthlyPayment) => boolean;
   onSubmitThunk: AsyncThunk<
@@ -88,8 +84,7 @@ const PaymentsCard = ({
 
       if (onSubmitThunk.fulfilled.match(response)) {
         showNotification({
-          title: notificationMessages.success.title,
-          message: notificationMessages.success.message,
+          message: notificationMessages.success,
           color: 'green',
           icon: <IconCheck />,
         });
@@ -97,8 +92,7 @@ const PaymentsCard = ({
         dispatch(setSelectedInstallment(response.payload.installments[0]));
       } else {
         showNotification({
-          title: notificationMessages.error.title,
-          message: notificationMessages.error.message,
+          message: notificationMessages.error,
           color: 'red',
           icon: <IconX />,
         });
@@ -106,8 +100,7 @@ const PaymentsCard = ({
       }
     } catch (err) {
       showNotification({
-        title: notificationMessages.error.title,
-        message: notificationMessages.error.message,
+        message: notificationMessages.error,
         color: 'red',
         icon: <IconX />,
       });
@@ -170,7 +163,7 @@ const PaymentsCard = ({
           ))}
         </Grid>
       ) : (
-        <EmptyState icon title={empty.title} my='0' />
+        <EmptyState icon={empty.icon} title={empty.title} my='0' />
       )}
     </Card>
   );

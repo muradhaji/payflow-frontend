@@ -5,6 +5,7 @@ import { useAppSelector } from '../../../app/hooks';
 import PaymentsCard from './PaymentsCard';
 
 import { cancelPayments } from '../../../features/installments/installmentsSlice';
+import { IconFolderCheck } from '@tabler/icons-react';
 
 const PaidPayments = () => {
   const { loading } = useAppSelector(
@@ -20,18 +21,13 @@ const PaidPayments = () => {
   };
 
   const emptyProps = {
+    icon: <IconFolderCheck size={32} color='gray' />,
     title: t('components.paymentsCard.paid.empty.title'),
   };
 
   const notificationMessages = {
-    success: {
-      title: t('notifications.api.cancelPayments.success.title'),
-      message: t('notifications.api.cancelPayments.success.message'),
-    },
-    error: {
-      title: t('notifications.api.cancelPayments.error.title'),
-      message: t('notifications.api.cancelPayments.error.message'),
-    },
+    success: t('notifications.api.cancelPayments.success'),
+    error: t('notifications.api.cancelPayments.error'),
   };
 
   return (

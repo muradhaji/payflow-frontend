@@ -1,14 +1,14 @@
 import {
   Badge,
   Button,
+  Grid,
   Loader,
   LoadingOverlay,
-  SimpleGrid,
   Skeleton,
   Tooltip,
 } from '@mantine/core';
 
-import { IconCheck, IconX } from '@tabler/icons-react';
+import { IconCheck, IconFolderCheck, IconX } from '@tabler/icons-react';
 import { showNotification } from '@mantine/notifications';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -49,6 +49,7 @@ const FilterRemaining = () => {
     selectedPayments,
     selectedPaymentsAmount,
     togglePayment,
+    togglePaymentsByInstallment,
     isSelected,
     resetAll,
   } = useSelectedPayments();
@@ -59,8 +60,7 @@ const FilterRemaining = () => {
 
       if (completePayments.fulfilled.match(response)) {
         showNotification({
-          title: t('notifications.api.completePayments.success.title'),
-          message: t('notifications.api.completePayments.success.message'),
+          message: t('notifications.api.completePayments.success'),
           color: 'green',
           icon: <IconCheck />,
         });
@@ -68,8 +68,7 @@ const FilterRemaining = () => {
         dispatch(updateInstallments(response.payload.installments));
       } else {
         showNotification({
-          title: t('notifications.api.completePayments.error.title'),
-          message: t('notifications.api.completePayments.error.message'),
+          message: t('notifications.api.completePayments.error'),
           color: 'red',
           icon: <IconX />,
         });
@@ -77,8 +76,7 @@ const FilterRemaining = () => {
       }
     } catch (err) {
       showNotification({
-        title: t('notifications.api.completePayments.error.title'),
-        message: t('notifications.api.completePayments.error.message'),
+        message: t('notifications.api.completePayments.error'),
         color: 'red',
         icon: <IconX />,
       });
@@ -135,30 +133,29 @@ const FilterRemaining = () => {
               type='remaining'
             />
 
-            <SimpleGrid
-              cols={{ base: 1, sm: 2, md: 3 }}
-              spacing='md'
-              className='relative'
-            >
+            <Grid align='flex-start'>
               <LoadingOverlay
                 loaderProps={{ children: <></> }}
                 visible={completePaymentsLoading}
                 className={utilStyles.radiusSm}
               />
               {filteredInstallments.map((installment) => (
-                <FilteredPaymentsCard
-                  key={installment._id}
-                  {...installment}
-                  togglePayment={togglePayment}
-                  isSelected={isSelected}
-                  type='remaining'
-                />
+                <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
+                  <FilteredPaymentsCard
+                    key={installment._id}
+                    {...installment}
+                    togglePayment={togglePayment}
+                    isSelected={isSelected}
+                    type='remaining'
+                    toggleAllPayments={togglePaymentsByInstallment}
+                  />
+                </Grid.Col>
               ))}
-            </SimpleGrid>
+            </Grid>
           </>
         ) : (
           <EmptyState
-            icon
+            icon={<IconFolderCheck size={48} color='gray' />}
             title={t('components.filters.remaining.empty.title')}
             description={t('components.filters.remaining.empty.description')}
           />

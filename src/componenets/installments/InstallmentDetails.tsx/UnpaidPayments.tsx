@@ -5,6 +5,7 @@ import { useAppSelector } from '../../../app/hooks';
 import PaymentsCard from './PaymentsCard';
 
 import { completePayments } from '../../../features/installments/installmentsSlice';
+import { IconFolderCheck } from '@tabler/icons-react';
 
 const UnpaidPayments = () => {
   const { loading } = useAppSelector(
@@ -14,14 +15,8 @@ const UnpaidPayments = () => {
   const { t } = useTranslation();
 
   const notificationMessages = {
-    success: {
-      title: t('notifications.api.completePayments.success.title'),
-      message: t('notifications.api.completePayments.success.message'),
-    },
-    error: {
-      title: t('notifications.api.completePayments.error.title'),
-      message: t('notifications.api.completePayments.error.message'),
-    },
+    success: t('notifications.api.completePayments.success'),
+    error: t('notifications.api.completePayments.error'),
   };
 
   const buttonProps = {
@@ -31,6 +26,7 @@ const UnpaidPayments = () => {
   };
 
   const emptyProps = {
+    icon: <IconFolderCheck size={32} color='gray' />,
     title: t('components.paymentsCard.unpaid.empty.title'),
   };
 

@@ -77,29 +77,26 @@
         "pageTitle": "This Month's Debts",
         "totalLabel": "Total for {{month}}:",
         "empty": {
-          "title": "Nothing to pay",
-          "description": "No unpaid payments found for the selected month."
+          "title": "All caught up!",
+          "description": "You have no unpaid payments for the selected month."
         }
       },
       "remaining": {
         "pageTitle": "Unpaid Debts",
         "totalLabel": "Total Remaining:",
         "empty": {
-          "title": "No remaining payments",
-          "description": "All future payments have already been completed."
+          "title": "No pending payments",
+          "description": "All upcoming payments have been completed."
         }
       },
       "paid": {
         "pageTitle": "Paid Debts",
         "totalLabel": "Total Paid:",
         "empty": {
-          "title": "No payments completed",
-          "description": "You haven't completed any payments yet."
+          "title": "No payments made yet",
+          "description": "You haven't completed any payments so far."
         }
       }
-    },
-    "filteredPaymentsCard": {
-      "totalLabel": "Total Amount"
     },
     "paymentItem": {
       "paidLabel": "Paid: {{date}}"
@@ -108,6 +105,11 @@
       "totalLabel": "Total debt",
       "paid": "PAID",
       "remaining": "REMAINING"
+    },
+    "notFound": {
+      "title": "Nothing to see here",
+      "description": "The page you are trying to open does not exist. <1 /> You may have mistyped the address, or the page has been moved to another URL.",
+      "button": "Take me back to home page"
     }
   },
   "forms": {
@@ -271,60 +273,31 @@
   },
   "tooltips": {
     "details": "Details",
-    "monthSelector": "Select the month and year to view payments."
+    "monthSelector": "Select the month and year to view payments.",
+    "selectAll": "Select all"
   },
   "notifications": {
     "api": {
       "completePayments": {
-        "success": {
-          "title": "Payment Successful",
-          "message": "Payments completed successfully."
-        },
-        "error": {
-          "title": "Payment Failed",
-          "message": "Failed to complete payments."
-        }
+        "success": "Payments completed successfully.",
+        "error": "Failed to complete payments."
       },
       "cancelPayments": {
-        "success": {
-          "title": "Payments cancelled",
-          "message": "Selected payments were successfully cancelled"
-        },
-        "error": {
-          "title": "Cancellation failed",
-          "message": "An error occurred while cancelling the payments."
-        }
+        "success": "Payments cancelled successfully.",
+        "error": "Failed to cancel payments."
       },
       "installment": {
         "add": {
-          "success": {
-            "title": "Payment added",
-            "message": "Your payment has been successfully created."
-          },
-          "error": {
-            "title": "Error",
-            "message": "Something went wrong while adding the payment."
-          }
+          "success": "Payment created successfully.",
+          "error": "Failed to create the payment."
         },
         "edit": {
-          "success": {
-            "title": "Payment updated",
-            "message": "Your payment has been successfully updated."
-          },
-          "error": {
-            "title": "Error",
-            "message": "Something went wrong while updating the payment."
-          }
+          "success": "Payment updated successfully.",
+          "error": "Failed to update the payment."
         },
         "delete": {
-          "success": {
-            "title": "Deleted",
-            "message": "Payment was deleted successfully."
-          },
-          "error": {
-            "title": "Error occurred",
-            "message": "An error occurred while deleting the payment."
-          }
+          "success": "Payment deleted successfully.",
+          "error": "Failed to delete the payment."
         }
       }
     }
