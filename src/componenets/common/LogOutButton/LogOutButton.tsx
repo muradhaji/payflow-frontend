@@ -23,7 +23,7 @@ function LogOutButton() {
       leftSection={<IconLogout size={16} color='red' />}
       color='red'
       size='xs'
-      justify='space-between'
+      justify='flex-start'
     >
       {t('buttons.logout.label')}
     </Button>
