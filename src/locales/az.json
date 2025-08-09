@@ -59,11 +59,11 @@
     "filters": {
       "pageTitle": "Ödənişlər",
       "cards": {
-        "overdue": "GECİKMİŞ BORCLAR",
-        "current": "BU AYIN BORCLARI",
-        "remaining": "QALAN BORCLAR",
-        "paid": "ÖDƏNMİŞ BORCLAR",
-        "all": "BÜTÜN BORCLAR"
+        "overdue": "GECİKMİŞ",
+        "current": "BU AY",
+        "remaining": "QALAN",
+        "paid": "ÖDƏNMİŞ",
+        "all": "HAMISI"
       },
       "overdue": {
         "pageTitle": "Gecikmiş Borclar",
@@ -279,11 +279,11 @@
   },
   "breadcrumbs": {
     "payments": "Ödənişlər",
-    "filterOverdue": "Gecikmiş Borclar",
-    "filterCurrent": "Bu Ayın Borcları",
-    "filterPaid": "Ödənmiş Borclar",
-    "filterRemaining": "Qalan Borclar",
-    "allPayments": "Bütün Borclar",
+    "filterOverdue": "Gecikmiş",
+    "filterCurrent": "Bu Ay",
+    "filterPaid": "Ödənmiş",
+    "filterRemaining": "Qalan",
+    "allPayments": "Hamısı",
     "details": "Təfərrüatlar",
     "addPayment": "Redaktə Et"
   },

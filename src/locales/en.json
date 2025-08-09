@@ -59,11 +59,11 @@
     "filters": {
       "pageTitle": "Payments",
       "cards": {
-        "overdue": "OVERDUE DEBTS",
-        "current": "THIS MONTH'S DEBTS",
-        "remaining": "UNPAID DEBTS",
-        "paid": "PAID DEBTS",
-        "all": "ALL DEBTS"
+        "overdue": "OVERDUE",
+        "current": "THIS MONTH",
+        "remaining": "UNPAID",
+        "paid": "PAID",
+        "all": "ALL"
       },
       "overdue": {
         "pageTitle": "Overdue Debts",
@@ -279,11 +279,11 @@
   },
   "breadcrumbs": {
     "payments": "Payments",
-    "filterOverdue": "Overdue Debts",
-    "filterCurrent": "This Month's Debts",
-    "filterPaid": "Paid Debts",
-    "filterRemaining": "Unpaid Debts",
-    "allPayments": "All Debts",
+    "filterOverdue": "Overdue",
+    "filterCurrent": "This Month",
+    "filterPaid": "Paid",
+    "filterRemaining": "Unpaid",
+    "allPayments": "All",
     "details": "Details",
     "addPayment": "Edit"
   },
