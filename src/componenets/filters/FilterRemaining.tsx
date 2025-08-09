@@ -8,7 +8,13 @@ import {
   Tooltip,
 } from '@mantine/core';
 
-import { IconCheck, IconFolderCheck, IconX } from '@tabler/icons-react';
+import {
+  IconCheck,
+  IconFolderCheck,
+  IconSquareCheck,
+  IconSquareCheckFilled,
+  IconX,
+} from '@tabler/icons-react';
 import { showNotification } from '@mantine/notifications';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -46,13 +52,15 @@ const FilterRemaining = () => {
   );
 
   const {
+    isSelected,
+    isAllSelected,
     selectedPayments,
     selectedPaymentsAmount,
     togglePayment,
     togglePaymentsByInstallment,
-    isSelected,
-    resetAll,
-  } = useSelectedPayments();
+    toggleAll,
+    clearAll,
+  } = useSelectedPayments({ installments: filteredInstallments });
 
   const handleSubmit = async () => {
     try {
@@ -64,7 +72,7 @@ const FilterRemaining = () => {
           color: 'green',
           icon: <IconCheck />,
         });
-        resetAll();
+        clearAll();
         dispatch(updateInstallments(response.payload.installments));
       } else {
         showNotification({
@@ -96,7 +104,19 @@ const FilterRemaining = () => {
             active: true,
           },
         ]}
-        actions={
+        actions={[
+          <Tooltip label={t('buttons.selectAll.tooltip')}>
+            <Button
+              variant='light'
+              size='xs'
+              onClick={toggleAll}
+              leftSection={
+                isAllSelected ? <IconSquareCheckFilled /> : <IconSquareCheck />
+              }
+            >
+              {t('buttons.selectAll.label')}
+            </Button>
+          </Tooltip>,
           <Tooltip label={t('buttons.completePayments.tooltip')}>
             <Button
               variant='filled'
@@ -117,8 +137,8 @@ const FilterRemaining = () => {
             >
               {t('buttons.completePayments.label')}
             </Button>
-          </Tooltip>
-        }
+          </Tooltip>,
+        ]}
       />
 
       <Skeleton visible={fetchInstallmentsLoading}>
@@ -140,9 +160,11 @@ const FilterRemaining = () => {
                 className={utilStyles.radiusSm}
               />
               {filteredInstallments.map((installment) => (
-                <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
+                <Grid.Col
+                  key={installment._id}
+                  span={{ base: 12, sm: 6, md: 4 }}
+                >
                   <FilteredPaymentsCard
-                    key={installment._id}
                     {...installment}
                     togglePayment={togglePayment}
                     isSelected={isSelected}

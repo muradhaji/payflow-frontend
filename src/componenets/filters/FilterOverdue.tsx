@@ -13,7 +13,12 @@ import {
   Tooltip,
 } from '@mantine/core';
 
-import { IconCheck, IconX } from '@tabler/icons-react';
+import {
+  IconCheck,
+  IconSquareCheck,
+  IconSquareCheckFilled,
+  IconX,
+} from '@tabler/icons-react';
 import { showNotification } from '@mantine/notifications';
 
 import { sumByKeyDecimal } from '../../utils/math';
@@ -50,13 +55,15 @@ const FilterOverdue = () => {
   });
 
   const {
+    isSelected,
+    isAllSelected,
     selectedPayments,
     selectedPaymentsAmount,
     togglePayment,
     togglePaymentsByInstallment,
-    resetAll,
-    isSelected,
-  } = useSelectedPayments();
+    toggleAll,
+    clearAll,
+  } = useSelectedPayments({ installments: filteredInstallments });
 
   const handleSubmit = async () => {
     try {
@@ -68,7 +75,7 @@ const FilterOverdue = () => {
           color: 'green',
           icon: <IconCheck />,
         });
-        resetAll();
+        clearAll();
         dispatch(updateInstallments(response.payload.installments));
       } else {
         showNotification({
@@ -101,6 +108,18 @@ const FilterOverdue = () => {
           },
         ]}
         actions={[
+          <Tooltip label={t('buttons.selectAll.tooltip')}>
+            <Button
+              variant='light'
+              size='xs'
+              onClick={toggleAll}
+              leftSection={
+                isAllSelected ? <IconSquareCheckFilled /> : <IconSquareCheck />
+              }
+            >
+              {t('buttons.selectAll.label')}
+            </Button>
+          </Tooltip>,
           <Tooltip label={t('buttons.completePayments.tooltip')}>
             <Button
               variant='filled'
@@ -144,9 +163,11 @@ const FilterOverdue = () => {
                 className={utilStyles.radiusSm}
               />
               {filteredInstallments.map((installment) => (
-                <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
+                <Grid.Col
+                  key={installment._id}
+                  span={{ base: 12, sm: 6, md: 4 }}
+                >
                   <FilteredPaymentsCard
-                    key={installment._id}
                     {...installment}
                     togglePayment={togglePayment}
                     toggleAllPayments={togglePaymentsByInstallment}

@@ -44,13 +44,13 @@
     },
     "paymentsCard": {
       "paid": {
-        "cardTitle": "Completed",
+        "cardTitle": "PAID",
         "empty": {
           "title": "No payments completed"
         }
       },
       "unpaid": {
-        "cardTitle": "Not completed",
+        "cardTitle": "REMAINING",
         "empty": {
           "title": "All payments are completed"
         }
@@ -98,6 +98,13 @@
         }
       }
     },
+    "filteredPaymentsTable": {
+      "accordionLabel": "SEE PAYMENTS",
+      "tableHeader": {
+        "date": "Date",
+        "amount": "Amount"
+      }
+    },
     "paymentItem": {
       "paidLabel": "Paid: {{date}}"
     },
@@ -105,6 +112,11 @@
       "totalLabel": "Total debt",
       "paid": "PAID",
       "remaining": "REMAINING"
+    },
+    "monthlyStats": {
+      "empty": {
+        "description": "No debts recorded for the year {{year}}."
+      }
     },
     "notFound": {
       "title": "Nothing to see here",
@@ -259,6 +271,10 @@
     "cancelPayments": {
       "label": "CANCEL",
       "tooltip": "Select payments to cancel"
+    },
+    "selectAll": {
+      "label": "ALL",
+      "tooltip": "Select all payments"
     }
   },
   "breadcrumbs": {

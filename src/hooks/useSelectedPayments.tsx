@@ -1,12 +1,61 @@
 import { useState, useMemo, useCallback } from 'react';
-
 import { sumByKeyDecimal } from '../utils/math';
+import type {
+  IInstallment,
+  IMonthlyPayment,
+  IPaymentUpdate,
+} from '../types/installment';
 
-import type { IMonthlyPayment, IPaymentUpdate } from '../types/installment';
+interface UseSelectedPaymentsProps {
+  installments: IInstallment[];
+}
 
-export const useSelectedPayments = () => {
+export const useSelectedPayments = ({
+  installments,
+}: UseSelectedPaymentsProps) => {
   const [selectedPayments, setSelectedPayments] = useState<IPaymentUpdate[]>(
     []
+  );
+
+  const allPayments = useMemo(
+    () => installments.flatMap((i) => i.monthlyPayments),
+    [installments]
+  );
+
+  const isSelected = useCallback(
+    (paymentId: string) =>
+      selectedPayments.some((p) => p.paymentId === paymentId),
+    [selectedPayments]
+  );
+
+  const isAllSelected = useMemo(() => {
+    if (allPayments.length === 0) return false;
+    return allPayments.every((payment) =>
+      selectedPayments.some(
+        (selectedPayment) => selectedPayment.paymentId === payment._id
+      )
+    );
+  }, [allPayments, selectedPayments]);
+
+  const getUnselectedPayments = useCallback(
+    (installmentId: string) => {
+      const installment = installments.find((i) => i._id === installmentId);
+
+      if (!installment) {
+        return [];
+      }
+
+      const payments: IMonthlyPayment[] = installment.monthlyPayments;
+
+      return payments
+        .filter((p) => !selectedPayments.some((sel) => sel.paymentId === p._id))
+        .map((p) => ({
+          installmentId,
+          paymentId: p._id,
+          paymentAmount: p.amount,
+        }));
+    },
+    [installments, selectedPayments]
   );
 
   const selectedPaymentsAmount = useMemo(() => {
@@ -21,52 +70,53 @@ export const useSelectedPayments = () => {
     );
   }, []);
 
-  const selectAll = useCallback((payments: IPaymentUpdate[]) => {
-    setSelectedPayments(payments);
-  }, []);
+  const toggleAll = useCallback(() => {
+    setSelectedPayments((prev) => {
+      if (isAllSelected) {
+        return [];
+      }
 
-  const resetAll = useCallback(() => {
-    setSelectedPayments([]);
-  }, []);
+      const paymentsToAdd = installments.flatMap((installment) =>
+        getUnselectedPayments(installment._id)
+      );
+
+      return [...prev, ...paymentsToAdd];
+    });
+  }, [installments, isAllSelected, getUnselectedPayments]);
 
   const togglePaymentsByInstallment = useCallback(
-    (installmentId: string, payments: IMonthlyPayment[]) => {
+    (installmentId: string) => {
       setSelectedPayments((prev) => {
-        const allSelected = payments.every((payment) =>
-          prev.some((p) => p.paymentId === payment._id)
-        );
+        const installment = installments.find((i) => i._id === installmentId);
 
-        if (allSelected) {
-          return prev.filter((p) => p.installmentId !== installmentId);
-        } else {
-          const paymentsToAdd = payments
-            .filter((p) => !prev.some((sel) => sel.paymentId === p._id))
-            .map((p) => ({
-              installmentId,
-              paymentId: p._id,
-              paymentAmount: p.amount,
-            }));
-          return [...prev, ...paymentsToAdd];
+        if (!installment) {
+          return prev;
         }
+
+        if (isAllSelected) {
+          return prev.filter((p) => p.installmentId !== installmentId);
+        }
+
+        const paymentsToAdd = getUnselectedPayments(installmentId);
+
+        return [...prev, ...paymentsToAdd];
       });
     },
-    []
+    [installments, isAllSelected, getUnselectedPayments]
   );
 
-  const isSelected = useCallback(
-    (paymentId: string) => {
-      return selectedPayments.some((p) => p.paymentId === paymentId);
-    },
-    [selectedPayments]
-  );
+  const clearAll = useCallback(() => {
+    setSelectedPayments([]);
+  }, []);
 
   return {
     selectedPayments,
     selectedPaymentsAmount,
-    togglePayment,
-    selectAll,
-    resetAll,
-    togglePaymentsByInstallment,
     isSelected,
+    isAllSelected,
+    togglePayment,
+    togglePaymentsByInstallment,
+    toggleAll,
+    clearAll,
   };
 };

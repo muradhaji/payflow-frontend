@@ -3,7 +3,10 @@ import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 
 import type { IMonthlyPayment } from '../../../types/installment';
-import { IconSquareRoundedChevronDown } from '@tabler/icons-react';
+import {
+  IconSquareRoundedChevronDown,
+  IconCalendarDollar,
+} from '@tabler/icons-react';
 
 interface PaymentListTableProps {
   payments: IMonthlyPayment[];
@@ -64,31 +67,39 @@ const FilteredPaymentsTable = ({
   return (
     <Accordion
       variant='filled'
-      chevron={<IconSquareRoundedChevronDown />}
+      chevron={<IconSquareRoundedChevronDown color='gray' />}
       chevronSize={20}
     >
       <Accordion.Item value='payments'>
-        <Accordion.Control>
-          <Text>View Payments</Text>
+        <Accordion.Control icon={<IconCalendarDollar size={20} color='gray' />}>
+          <Text size='sm' fw={600} c='gray'>
+            {t('components.filteredPaymentsTable.accordionLabel')}
+          </Text>
         </Accordion.Control>
         <Accordion.Panel>
           <Table highlightOnHover>
             <Table.Thead>
               <Table.Tr>
                 <Table.Th>
-                  <Tooltip label={t('tooltips.selectAll')}>
-                    <Checkbox
-                      checked={isAllSelected}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onToggleAll();
-                      }}
-                      readOnly
-                    />
-                  </Tooltip>
+                  {payments.length > 1 && (
+                    <Tooltip label={t('tooltips.selectAll')}>
+                      <Checkbox
+                        checked={isAllSelected}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onToggleAll();
+                        }}
+                        readOnly
+                      />
+                    </Tooltip>
+                  )}
                 </Table.Th>
-                <Table.Th>Date</Table.Th>
-                <Table.Th>Amount</Table.Th>
+                <Table.Th>
+                  {t('components.filteredPaymentsTable.tableHeader.date')}
+                </Table.Th>
+                <Table.Th>
+                  {t('components.filteredPaymentsTable.tableHeader.amount')}
+                </Table.Th>
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>{rows}</Table.Tbody>
