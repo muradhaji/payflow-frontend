@@ -98,6 +98,13 @@
         }
       }
     },
+    "filteredPaymentsTable": {
+      "accordionLabel": "ÖDƏNİŞLƏRƏ BAX",
+      "tableHeader": {
+        "date": "Tarix",
+        "amount": "Məbləğ"
+      }
+    },
     "paymentItem": {
       "paidLabel": "Ödənilib: {{date}}"
     },
