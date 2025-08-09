@@ -282,7 +282,7 @@ const EditInstallment = () => {
         breadcrumbs={[
           { label: t('breadcrumbs.payments'), to: '/payments' },
           {
-            label: t('breadcrumbs.addPayment'),
+            label: t('breadcrumbs.editPayment'),
             to: '/payments/edit',
             active: true,
           },

@@ -288,7 +288,8 @@
     "filterRemaining": "Unpaid",
     "allPayments": "All",
     "details": "Details",
-    "addPayment": "Edit"
+    "addPayment": "Add",
+    "editPayment": "Edit"
   },
   "tooltips": {
     "details": "Details",

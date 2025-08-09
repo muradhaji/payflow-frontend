@@ -288,7 +288,8 @@
     "filterRemaining": "Qalan",
     "allPayments": "Hamısı",
     "details": "Təfərrüatlar",
-    "addPayment": "Redaktə Et"
+    "addPayment": "Əlavə Et",
+    "editPayment": "Redaktə Et"
   },
   "tooltips": {
     "details": "Təfərrüatlar",
