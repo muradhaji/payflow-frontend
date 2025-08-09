@@ -2,8 +2,8 @@ import {
   Badge,
   Button,
   Card,
+  Flex,
   Grid,
-  Group,
   Loader,
   LoadingOverlay,
   Stack,
@@ -11,12 +11,17 @@ import {
   Tooltip,
 } from '@mantine/core';
 
-import { IconCheck, IconX } from '@tabler/icons-react';
+import {
+  IconCheck,
+  IconSquareCheck,
+  IconSquareCheckFilled,
+  IconX,
+} from '@tabler/icons-react';
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { showNotification } from '@mantine/notifications';
 
-import type { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import type { AsyncThunk } from '@reduxjs/toolkit';
 import type {
   IPaymentUpdate,
@@ -30,6 +35,7 @@ import { setSelectedInstallment } from '../../../features/installments/installme
 import { useSelectedPayments } from '../../../hooks/useSelectedPayments';
 
 import utilStyles from '../../../styles/utils.module.css';
+import { useTranslation } from 'react-i18next';
 
 interface PaymentsCardProps {
   title: string;
@@ -65,16 +71,21 @@ const PaymentsCard = ({
   loading,
 }: PaymentsCardProps) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+
+  const { selectedInstallment } = useAppSelector((state) => state.installments);
 
   const {
+    isSelected,
+    isAllSelected,
     selectedPayments,
     selectedPaymentsAmount,
     togglePayment,
-    resetAll,
-    isSelected,
-  } = useSelectedPayments();
-
-  const { selectedInstallment } = useAppSelector((state) => state.installments);
+    toggleAll,
+    clearAll,
+  } = useSelectedPayments({
+    installments: selectedInstallment ? [selectedInstallment] : [],
+  });
 
   if (!selectedInstallment) return null;
 
@@ -88,7 +99,7 @@ const PaymentsCard = ({
           color: 'green',
           icon: <IconCheck />,
         });
-        resetAll();
+        clearAll();
         dispatch(setSelectedInstallment(response.payload.installments[0]));
       } else {
         showNotification({
@@ -113,32 +124,52 @@ const PaymentsCard = ({
 
   return (
     <Card component={Stack} withBorder radius='sm' shadow='sm' gap='sm' p='lg'>
-      <Group justify='space-between'>
+      <Flex justify='space-between' align='center' wrap='wrap' gap='xs'>
         <Title size='md'>{title}</Title>
-        <Tooltip label={button.tooltip}>
-          <Button
-            loading={loading}
-            loaderProps={{
-              children: <Loader size='sm' type='dots' color='white' />,
-            }}
-            key='pay'
-            variant='filled'
-            size='xs'
-            color={button.color}
-            disabled={!(selectedPaymentsAmount > 0)}
-            onClick={handleSubmit}
-            rightSection={
-              selectedPaymentsAmount > 0 && (
-                <Badge variant='white' color={button.color}>
-                  {` ${selectedPaymentsAmount} ₼`}
-                </Badge>
-              )
-            }
-          >
-            {button.label}
-          </Button>
-        </Tooltip>
-      </Group>
+        <Flex flex={1} justify='flex-end' align='center' gap='xs' wrap='nowrap'>
+          {filteredPayments.length > 1 && (
+            <Tooltip label={t('buttons.selectAll.tooltip')}>
+              <Button
+                variant='light'
+                size='xs'
+                onClick={toggleAll}
+                leftSection={
+                  isAllSelected ? (
+                    <IconSquareCheckFilled />
+                  ) : (
+                    <IconSquareCheck />
+                  )
+                }
+              >
+                {t('buttons.selectAll.label')}
+              </Button>
+            </Tooltip>
+          )}
+          <Tooltip label={button.tooltip}>
+            <Button
+              loading={loading}
+              loaderProps={{
+                children: <Loader size='sm' type='dots' color='white' />,
+              }}
+              key='pay'
+              variant='filled'
+              size='xs'
+              color={button.color}
+              disabled={!(selectedPaymentsAmount > 0)}
+              onClick={handleSubmit}
+              rightSection={
+                selectedPaymentsAmount > 0 && (
+                  <Badge variant='white' color={button.color}>
+                    {` ${selectedPaymentsAmount} ₼`}
+                  </Badge>
+                )
+              }
+            >
+              {button.label}
+            </Button>
+          </Tooltip>
+        </Flex>
+      </Flex>
       {filteredPayments.length > 0 ? (
         <Grid gutter='sm' className='relative'>
           <LoadingOverlay
