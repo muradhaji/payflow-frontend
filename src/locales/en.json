@@ -37,8 +37,8 @@
         "label": {
           "amount": "Amount",
           "startDate": "Start date",
-          "createdAt": "Created at",
-          "updatedAt": "Updated at"
+          "createdAt": "Created",
+          "updatedAt": "Updated"
         }
       }
     },

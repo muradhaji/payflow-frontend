@@ -28,7 +28,7 @@
       },
       "card": {
         "badge": {
-          "paid": "Ödənilib",
+          "paid": "Ödənib",
           "active": "Aktiv"
         }
       },
@@ -37,8 +37,8 @@
         "label": {
           "amount": "Məbləğ",
           "startDate": "Başlama tarixi",
-          "createdAt": "Yaradılma tarixi",
-          "updatedAt": "Yenilənmə tarixi"
+          "createdAt": "Yaradılıb",
+          "updatedAt": "Yenilənib"
         }
       }
     },
@@ -106,7 +106,7 @@
       }
     },
     "paymentItem": {
-      "paidLabel": "Ödənilib: {{date}}"
+      "paidLabel": "Ödənib: {{date}}"
     },
     "statsCard": {
       "totalLabel": "TOPLAM BORC:",
