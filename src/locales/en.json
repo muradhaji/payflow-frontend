@@ -266,6 +266,10 @@
     "cancelPayments": {
       "label": "CANCEL",
       "tooltip": "Select payments to cancel"
+    },
+    "selectAll": {
+      "label": "ALL",
+      "tooltip": "Select all payments"
     }
   },
   "breadcrumbs": {

@@ -81,16 +81,18 @@ const FilteredPaymentsTable = ({
             <Table.Thead>
               <Table.Tr>
                 <Table.Th>
-                  <Tooltip label={t('tooltips.selectAll')}>
-                    <Checkbox
-                      checked={isAllSelected}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onToggleAll();
-                      }}
-                      readOnly
-                    />
-                  </Tooltip>
+                  {payments.length > 1 && (
+                    <Tooltip label={t('tooltips.selectAll')}>
+                      <Checkbox
+                        checked={isAllSelected}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onToggleAll();
+                        }}
+                        readOnly
+                      />
+                    </Tooltip>
+                  )}
                 </Table.Th>
                 <Table.Th>
                   {t('components.filteredPaymentsTable.tableHeader.date')}

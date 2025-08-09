@@ -266,6 +266,10 @@
     "cancelPayments": {
       "label": "LƏĞV ET",
       "tooltip": "Ləğv etmək üçün ödənişi seç"
+    },
+    "selectAll": {
+      "label": "HAMISI",
+      "tooltip": "Bütün ödənişləri seçin"
     }
   },
   "breadcrumbs": {

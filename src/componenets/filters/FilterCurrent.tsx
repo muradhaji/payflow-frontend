@@ -15,7 +15,13 @@ import {
   Tooltip,
 } from '@mantine/core';
 
-import { IconCheck, IconFolderCheck, IconX } from '@tabler/icons-react';
+import {
+  IconCheck,
+  IconFolderCheck,
+  IconSquareCheck,
+  IconSquareCheckFilled,
+  IconX,
+} from '@tabler/icons-react';
 import { showNotification } from '@mantine/notifications';
 
 import { sumByKeyDecimal } from '../../utils/math';
@@ -60,17 +66,19 @@ const FilterCurrent = () => {
   );
 
   const {
+    isSelected,
+    isAllSelected,
     selectedPayments,
     selectedPaymentsAmount,
     togglePayment,
     togglePaymentsByInstallment,
-    resetAll,
-    isSelected,
-  } = useSelectedPayments();
+    toggleAll,
+    clearAll,
+  } = useSelectedPayments({ installments: filteredInstallments });
 
   const handleMonthChange = (newMonth: string) => {
     setCurrentMonth(newMonth);
-    resetAll();
+    clearAll();
   };
 
   const handleSubmit = async () => {
@@ -83,7 +91,7 @@ const FilterCurrent = () => {
           color: 'green',
           icon: <IconCheck />,
         });
-        resetAll();
+        clearAll();
         dispatch(updateInstallments(response.payload.installments));
       } else {
         showNotification({
@@ -123,6 +131,18 @@ const FilterCurrent = () => {
             maxDate={maxDate}
             tooltip={t('tooltips.monthSelector')}
           />,
+          <Tooltip label={t('buttons.selectAll.tooltip')}>
+            <Button
+              variant='light'
+              size='xs'
+              onClick={toggleAll}
+              leftSection={
+                isAllSelected ? <IconSquareCheckFilled /> : <IconSquareCheck />
+              }
+            >
+              {t('buttons.selectAll.label')}
+            </Button>
+          </Tooltip>,
           <Tooltip label={t('buttons.completePayments.tooltip')}>
             <Button
               variant='filled'
@@ -168,9 +188,11 @@ const FilterCurrent = () => {
                 className={utilStyles.radiusSm}
               />
               {filteredInstallments.map((installment) => (
-                <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
+                <Grid.Col
+                  key={installment._id}
+                  span={{ base: 12, sm: 6, md: 4 }}
+                >
                   <FilteredPaymentsCard
-                    key={installment._id}
                     {...installment}
                     togglePayment={togglePayment}
                     toggleAllPayments={togglePaymentsByInstallment}

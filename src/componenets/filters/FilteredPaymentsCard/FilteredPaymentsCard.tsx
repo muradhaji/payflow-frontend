@@ -6,11 +6,7 @@ import { Card, Group, Text, ActionIcon, Tooltip, Badge } from '@mantine/core';
 
 import FilteredPaymentsTable from '../FilteredPaymentsTable/FilteredPaymentsTable';
 
-import type {
-  IInstallment,
-  IMonthlyPayment,
-  IPaymentUpdate,
-} from '../../../types/installment';
+import type { IInstallment, IPaymentUpdate } from '../../../types/installment';
 
 import { sumByKeyDecimal } from '../../../utils/math';
 
@@ -25,10 +21,7 @@ const colorMap: Record<string, string> = {
 interface FilteredPaymentsCardProps extends IInstallment {
   isSelected: (paymentId: string) => boolean;
   togglePayment: (payment: IPaymentUpdate) => void;
-  toggleAllPayments: (
-    installmentId: string,
-    payments: IMonthlyPayment[]
-  ) => void;
+  toggleAllPayments: (installmentId: string) => void;
   type: 'overdue' | 'current' | 'remaining' | 'paid' | 'all';
 }
 
@@ -45,10 +38,8 @@ const FilteredPaymentsCard = ({
   const color = colorMap[type] ?? colorMap.default;
 
   const handleToggleAll = (): void => {
-    toggleAllPayments(installmentId, monthlyPayments);
+    toggleAllPayments(installmentId);
   };
-
-  console.log(color);
 
   return (
     <Card shadow='sm' radius='sm' padding='md' withBorder>
