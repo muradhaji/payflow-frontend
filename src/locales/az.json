@@ -264,6 +264,9 @@
     "payments": {
       "label": "ÖDƏNİŞLƏR"
     },
+    "profile": {
+      "label": "HESAB"
+    },
     "completePayments": {
       "label": "TAMAMLA",
       "tooltip": "Tamamlamaq üçün ödənişi seçin"

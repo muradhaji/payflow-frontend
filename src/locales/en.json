@@ -264,6 +264,9 @@
     "payments": {
       "label": "PAYMENTS"
     },
+    "profile": {
+      "label": "PROFILE"
+    },
     "completePayments": {
       "label": "COMPLETE",
       "tooltip": "Select payments to complete"

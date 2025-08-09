@@ -20,9 +20,10 @@ function LogOutButton() {
     <Button
       onClick={handleLogout}
       variant='subtle'
-      leftSection={<IconLogout size={14} color='red' />}
+      leftSection={<IconLogout size={16} color='red' />}
       color='red'
       size='xs'
+      justify='space-between'
     >
       {t('buttons.logout.label')}
     </Button>

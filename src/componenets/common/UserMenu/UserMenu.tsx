@@ -13,8 +13,13 @@ const UserMenu = () => {
   return (
     <Menu shadow='md' position='bottom-end'>
       <Menu.Target>
-        <Button variant='filled' leftSection={<IconUser size={18} />} size='xs'>
-          {isAuthenticated && user ? user.username.toUpperCase() : 'Profile'}
+        <Button
+          variant='filled'
+          leftSection={<IconUser size={18} />}
+          size='xs'
+          tt='uppercase'
+        >
+          {isAuthenticated && user ? user.username : t('buttons.profile.label')}
         </Button>
       </Menu.Target>
 
@@ -23,9 +28,10 @@ const UserMenu = () => {
           <Button
             component={Link}
             to='/payments'
-            leftSection={<IconWallet size={14} />}
+            leftSection={<IconWallet size={16} />}
             variant='subtle'
             size='xs'
+            justify='space-between'
           >
             {t('buttons.payments.label')}
           </Button>
