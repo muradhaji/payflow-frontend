@@ -113,6 +113,11 @@
       "paid": "ÖDƏNMİŞ",
       "remaining": "QALAN"
     },
+    "monthlyStats": {
+      "empty": {
+        "description": "{{year}} ili üçün borc məlumatı yoxdur."
+      }
+    },
     "notFound": {
       "title": "Burada görünəcək heç nə yoxdur",
       "description": "Açmağa çalışdığınız səhifə mövcud deyil. <1 /> Ünvanı səhv daxil etmiş ola bilərsiniz və ya səhifə başqa ünvana köçürülüb.",
