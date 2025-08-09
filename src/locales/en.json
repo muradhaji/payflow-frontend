@@ -67,7 +67,7 @@
       },
       "overdue": {
         "pageTitle": "Overdue Debts",
-        "totalLabel": "Total Overdue Amount:",
+        "totalLabel": "TOTAL AMOUNT",
         "empty": {
           "title": "No Overdue Payments",
           "description": "You have no overdue payments for previous months."
@@ -75,7 +75,7 @@
       },
       "current": {
         "pageTitle": "This Month's Debts",
-        "totalLabel": "Total for {{month}}:",
+        "totalLabel": "TOTAL AMOUNT ({{month}})",
         "empty": {
           "title": "All caught up!",
           "description": "You have no unpaid payments for the selected month."
@@ -83,7 +83,7 @@
       },
       "remaining": {
         "pageTitle": "Unpaid Debts",
-        "totalLabel": "Total Remaining:",
+        "totalLabel": "TOTAL AMOUNT",
         "empty": {
           "title": "No pending payments",
           "description": "All upcoming payments have been completed."
@@ -91,7 +91,7 @@
       },
       "paid": {
         "pageTitle": "Paid Debts",
-        "totalLabel": "Total Paid:",
+        "totalLabel": "TOTAL AMOUNT",
         "empty": {
           "title": "No payments made yet",
           "description": "You haven't completed any payments so far."
@@ -109,7 +109,7 @@
       "paidLabel": "Paid: {{date}}"
     },
     "statsCard": {
-      "totalLabel": "Total debt",
+      "totalLabel": "TOTAL DEBT:",
       "paid": "PAID",
       "remaining": "REMAINING"
     },

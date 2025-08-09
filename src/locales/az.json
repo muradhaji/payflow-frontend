@@ -67,7 +67,7 @@
       },
       "overdue": {
         "pageTitle": "Gecikmiş Borclar",
-        "totalLabel": "Ümumi gecikmiş məbləğ:",
+        "totalLabel": "ÜMUMİ MƏBLƏĞ",
         "empty": {
           "title": "Gecikmiş ödəniş yoxdur",
           "description": "Əvvəlki aylara aid heç bir ödənilməmiş borc yoxdur."
@@ -75,7 +75,7 @@
       },
       "current": {
         "pageTitle": "Bu Ayın Borcları",
-        "totalLabel": "{{month}} üçün ümumi:",
+        "totalLabel": "ÜMUMİ MƏBLƏĞ ({{month}})",
         "empty": {
           "title": "Hamısı tamamlandı!",
           "description": "Seçilmiş ay üçün ödənilməmiş borc yoxdur."
@@ -83,7 +83,7 @@
       },
       "remaining": {
         "pageTitle": "Qalan Borclar",
-        "totalLabel": "Qalan ümumi:",
+        "totalLabel": "ÜMUMİ MƏBLƏĞ",
         "empty": {
           "title": "Qalıq ödəniş yoxdur",
           "description": "Bütün gələcək ödənişlər artıq tamamlanıb."
@@ -91,7 +91,7 @@
       },
       "paid": {
         "pageTitle": "Ödənmiş Borclar",
-        "totalLabel": "Ümumi ödənilib:",
+        "totalLabel": "ÜMUMİ MƏBLƏĞ",
         "empty": {
           "title": "Hələ ödəniş yoxdur",
           "description": "İndiyədək heç bir ödəniş tamamlanmayıb."
@@ -109,7 +109,7 @@
       "paidLabel": "Ödənilib: {{date}}"
     },
     "statsCard": {
-      "totalLabel": "Toplam borc",
+      "totalLabel": "TOPLAM BORC:",
       "paid": "ÖDƏNMİŞ",
       "remaining": "QALAN"
     },
