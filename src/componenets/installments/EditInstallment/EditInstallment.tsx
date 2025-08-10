@@ -16,7 +16,7 @@ import {
 } from '@mantine/core';
 
 import { DatePickerInput } from '@mantine/dates';
-import { IconCheck, IconX } from '@tabler/icons-react';
+import { IconCalendarClock, IconCheck, IconX } from '@tabler/icons-react';
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { useTranslation } from 'react-i18next';
@@ -37,6 +37,7 @@ import {
 } from '../../../features/installments/installmentsSlice';
 
 import PageHeader from '../../common/PageHeader/PageHeader';
+import EmptyState from '../../common/EmptyState/EmptyState';
 
 const EditInstallment = () => {
   const dispatch = useAppDispatch();
@@ -506,9 +507,12 @@ const EditInstallment = () => {
                 )}
               </div>
             ) : (
-              <p className='text-gray-500 text-sm italic text-center'>
-                {t('forms.installment.fields.monthlyPayments.empty.title')}
-              </p>
+              <EmptyState
+                icon={<IconCalendarClock size={32} color='gray' />}
+                description={t(
+                  'forms.installment.fields.monthlyPayments.empty.title'
+                )}
+              />
             )}
           </div>
         </form>
