@@ -1,6 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { createTheme, MantineProvider } from '@mantine/core';
+import {
+  createTheme,
+  localStorageColorSchemeManager,
+  MantineProvider,
+} from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { Notifications } from '@mantine/notifications';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +34,7 @@ import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import './App.css';
 import { ModalsProvider } from '@mantine/modals';
+import { useEffect } from 'react';
 
 const theme = createTheme({
   breakpoints: {
@@ -42,12 +47,32 @@ const theme = createTheme({
   cursorType: 'pointer',
 });
 
+const colorSchemeManager = localStorageColorSchemeManager({
+  key: 'my-app-color-scheme',
+});
+
 function App() {
   const { i18n } = useTranslation();
 
+  useEffect(() => {
+    const saved = localStorage.getItem('my-app-color-scheme');
+    const scheme = saved === 'dark' ? 'dark' : 'light';
+    const metaTheme = document.querySelector('meta[name=theme-color]');
+    if (metaTheme) {
+      metaTheme.setAttribute(
+        'content',
+        scheme === 'dark' ? '#141414' : '#ffffff'
+      );
+    }
+  }, []);
+
   return (
     <div className='font-sans'>
-      <MantineProvider defaultColorScheme='light' theme={theme}>
+      <MantineProvider
+        theme={theme}
+        colorSchemeManager={colorSchemeManager}
+        defaultColorScheme='light'
+      >
         <Notifications position='top-center' />
         <DatesProvider settings={{ locale: i18n.language }}>
           <ModalsProvider>

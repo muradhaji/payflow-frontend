@@ -28,8 +28,8 @@
       },
       "card": {
         "badge": {
-          "paid": "Paid",
-          "active": "Active"
+          "paid": "PAID",
+          "active": "ACTIVE"
         }
       },
       "details": {
@@ -264,8 +264,8 @@
     "payments": {
       "label": "PAYMENTS"
     },
-    "profile": {
-      "label": "PROFILE"
+    "menu": {
+      "label": "MENU"
     },
     "completePayments": {
       "label": "COMPLETE",

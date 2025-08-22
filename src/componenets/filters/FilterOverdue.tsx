@@ -37,11 +37,13 @@ import {
 
 import { useSelectedPayments } from '../../hooks/useSelectedPayments';
 import { useFilteredInstallments } from '../../hooks/useFilteredInstallments';
+import { useThemeColors } from '../../hooks/useThemeColors';
 
 const FilterOverdue = () => {
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
+  const { themedColor } = useThemeColors();
 
   const {
     installments,
@@ -123,12 +125,13 @@ const FilterOverdue = () => {
           <Tooltip label={t('buttons.completePayments.tooltip')}>
             <Button
               variant='filled'
+              color={themedColor('blue', 'blue.4')}
               size='xs'
               onClick={handleSubmit}
               disabled={!(selectedPaymentsAmount > 0)}
               rightSection={
                 selectedPaymentsAmount > 0 && (
-                  <Badge variant='white' color='blue'>
+                  <Badge variant='white' color={themedColor('blue', 'blue.4')}>
                     {` ${selectedPaymentsAmount} ₼`}
                   </Badge>
                 )
@@ -156,7 +159,7 @@ const FilterOverdue = () => {
               type='overdue'
             />
 
-            <Grid align='flex-start'>
+            <Grid align='flex-start' pos={'relative'}>
               <LoadingOverlay
                 loaderProps={{ children: <></> }}
                 visible={completePaymentsLoading}

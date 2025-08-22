@@ -264,8 +264,8 @@
     "payments": {
       "label": "ÖDƏNİŞLƏR"
     },
-    "profile": {
-      "label": "HESAB"
+    "menu": {
+      "label": "MENYU"
     },
     "completePayments": {
       "label": "TAMAMLA",

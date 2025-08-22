@@ -17,6 +17,7 @@ import {
 import { useMediaQuery } from '@mantine/hooks';
 import EmptyState from '../../common/EmptyState/EmptyState';
 import { useTranslation } from 'react-i18next';
+import { useThemeColors } from '../../../hooks/useThemeColors';
 
 interface MonthlyData {
   label: string;
@@ -34,7 +35,8 @@ interface MonthlyStatsProps {
 
 const MonthlyStats = ({ data }: MonthlyStatsProps) => {
   const { t } = useTranslation();
-  const theme = useMantineTheme();
+  const { themedColor } = useThemeColors();
+  const { colors } = useMantineTheme();
   const isSmallScreen = useMediaQuery('(max-width: 36em)');
 
   const sortedData = useMemo(
@@ -80,7 +82,7 @@ const MonthlyStats = ({ data }: MonthlyStatsProps) => {
         >
           <Button
             variant='subtle'
-            color='blue'
+            color={themedColor('blue', 'blue.4')}
             size='xs'
             disabled={
               !sortedData.length ||
@@ -96,13 +98,13 @@ const MonthlyStats = ({ data }: MonthlyStatsProps) => {
             )}
           </Button>
 
-          <Text size='xl' fw={700} c='blue'>
+          <Text size='xl' fw={700} c={themedColor('blue', 'blue.4')}>
             {year}
           </Text>
 
           <Button
             variant='subtle'
-            color='blue'
+            color={themedColor('blue', 'blue.4')}
             size='xs'
             disabled={
               !sortedData.length ||
@@ -130,7 +132,13 @@ const MonthlyStats = ({ data }: MonthlyStatsProps) => {
                   shadow='md'
                   p='xs'
                   style={{
-                    background: `linear-gradient(-60deg, ${theme.colors.blue[3]} 0%, ${theme.colors.blue[5]} 100%)`,
+                    background: `linear-gradient(-60deg, ${themedColor(
+                      colors.blue[3],
+                      colors.dark[3]
+                    )} 0%, ${themedColor(
+                      colors.blue[5],
+                      colors.dark[5]
+                    )} 100%)`,
                   }}
                 >
                   <Text ta='center' c='white' size='sm' fw={500}>
@@ -146,7 +154,7 @@ const MonthlyStats = ({ data }: MonthlyStatsProps) => {
         ) : (
           <Flex flex={1} align='center' justify='center'>
             <EmptyState
-              icon={<IconFolderX size={32} color={theme.colors.gray[5]} />}
+              icon={<IconFolderX size={32} color={colors.gray[5]} />}
               description={t('components.monthlyStats.empty.description', {
                 year,
               })}

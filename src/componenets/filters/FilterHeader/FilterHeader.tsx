@@ -1,9 +1,9 @@
 import { Card, Group, Text } from '@mantine/core';
+import { useThemeColors } from '../../../hooks/useThemeColors';
 
 const colorMap: Record<string, string> = {
   overdue: 'red.5',
   current: 'orange.5',
-  remaining: 'dark.5',
   paid: 'teal.5',
   default: 'indigo.5',
 };
@@ -15,12 +15,17 @@ interface FilterHeaderProps {
 }
 
 const FilterHeader = ({ title, amount, type }: FilterHeaderProps) => {
-  const color = colorMap[type] ?? colorMap.default;
+  const { themedColor } = useThemeColors();
+
+  const color =
+    type === 'remaining'
+      ? themedColor('dark.5', 'gray.3')
+      : colorMap[type] ?? colorMap.default;
 
   return (
-    <Card shadow='sm' radius='sm' withBorder mb='md' px='md' py='sm' bg='white'>
+    <Card shadow='sm' radius='sm' withBorder mb='md' px='md' py='sm'>
       <Group justify='space-between' gap='md' wrap='wrap'>
-        <Text size='lg' fw={700} c='gray.8' tt='uppercase'>
+        <Text size='lg' fw={700} tt='uppercase'>
           {title}
         </Text>
         <Text size='md' fw={700} c={color}>

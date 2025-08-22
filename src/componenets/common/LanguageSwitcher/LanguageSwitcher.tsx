@@ -1,9 +1,12 @@
-import { Menu, Button } from '@mantine/core';
+import { Menu, Button, useMantineTheme } from '@mantine/core';
 import { IconWorld } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
+import { useThemeColors } from '../../../hooks/useThemeColors';
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
+  const { themedColor } = useThemeColors();
+  const { colors } = useMantineTheme();
 
   const changeLang = (lang: string) => {
     i18n.changeLanguage(lang);
@@ -12,7 +15,18 @@ const LanguageSwitcher = () => {
   return (
     <Menu shadow='md' position='bottom-end'>
       <Menu.Target>
-        <Button variant='light' leftSection={<IconWorld size={18} />} size='xs'>
+        <Button
+          variant='subtle'
+          color={themedColor(colors.blue[6], colors.blue[4])}
+          justify='flex-start'
+          leftSection={
+            <IconWorld
+              size={16}
+              color={themedColor(colors.blue[6], colors.blue[4])}
+            />
+          }
+          size='xs'
+        >
           {i18n.language.toUpperCase()}
         </Button>
       </Menu.Target>

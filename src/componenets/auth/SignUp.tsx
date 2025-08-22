@@ -18,6 +18,7 @@ import {
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { register } from '../../features/auth/authSlice';
+import { useThemeColors } from '../../hooks/useThemeColors';
 
 const RegisterSchema = yup.object().shape({
   username: yup.string().min(6, 'usernameMin').required('usernameRequired'),
@@ -41,6 +42,8 @@ const SignUp = () => {
   const { loading, error: apiError } = useAppSelector((state) => state.auth);
   const { t } = useTranslation();
 
+  const { themedColor } = useThemeColors();
+
   const {
     register: formRegister,
     handleSubmit,
@@ -62,7 +65,7 @@ const SignUp = () => {
     <Flex flex={1} align='center' justify='center' p='md'>
       <Card
         p='lg'
-        bg='white'
+        bg={themedColor('white', 'dark.7')}
         withBorder
         bdrs='sm'
         shadow='md'
@@ -74,8 +77,8 @@ const SignUp = () => {
             <Trans
               i18nKey='forms.signup.title'
               components={{
-                1: <Text span c='blue.6' inherit />,
-                2: <Text span c='gray.9' inherit />,
+                1: <Text span c={themedColor('blue', 'blue.4')} inherit />,
+                2: <Text span c={themedColor('gray.9', 'dark.0')} inherit />,
               }}
             />
           </Title>
@@ -143,7 +146,7 @@ const SignUp = () => {
                 loaderProps={{
                   children: <Loader size='sm' type='dots' color='white' />,
                 }}
-                color='blue'
+                color={themedColor('blue', 'blue.4')}
                 radius='sm'
               >
                 {t(`buttons.signup.label`)}

@@ -6,6 +6,7 @@ import PaymentsCard from './PaymentsCard';
 
 import { completePayments } from '../../../features/installments/installmentsSlice';
 import { IconFolderCheck } from '@tabler/icons-react';
+import { useThemeColors } from '../../../hooks/useThemeColors';
 
 const UnpaidPayments = () => {
   const { loading } = useAppSelector(
@@ -13,6 +14,7 @@ const UnpaidPayments = () => {
   );
 
   const { t } = useTranslation();
+  const { themedColor } = useThemeColors();
 
   const notificationMessages = {
     success: t('notifications.api.completePayments.success'),
@@ -22,7 +24,7 @@ const UnpaidPayments = () => {
   const buttonProps = {
     label: t('buttons.completePayments.label'),
     tooltip: t('buttons.completePayments.tooltip'),
-    color: 'blue',
+    color: themedColor('blue', 'blue.4'),
   };
 
   const emptyProps = {

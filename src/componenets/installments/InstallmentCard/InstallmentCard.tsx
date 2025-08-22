@@ -13,6 +13,7 @@ import {
 
 import styles from './InstallmentCard.module.css';
 import utilStyles from '../../../styles/utils.module.css';
+import { useThemeColors } from '../../../hooks/useThemeColors';
 
 type InstallmentCardProps = {
   installment: IInstallment;
@@ -24,6 +25,7 @@ const InstallmentCard = ({
   withLink = false,
 }: InstallmentCardProps) => {
   const { t } = useTranslation();
+  const { themedColor } = useThemeColors();
 
   const paidAmount = sumByKeyDecimal(
     installment.monthlyPayments.filter((p) => p.paid),
@@ -47,7 +49,7 @@ const InstallmentCard = ({
             {t('components.installments.card.badge.paid')}
           </Badge>
         ) : (
-          <Badge color='blue' variant='light'>
+          <Badge color={themedColor('blue', 'blue.4')} variant='light'>
             {t('components.installments.card.badge.active')}
           </Badge>
         )}
@@ -61,7 +63,7 @@ const InstallmentCard = ({
           <Text c='gray' size='md' fw={700} mb='xs'>
             {installment.monthCount}x
           </Text>
-          <Text c='gray.7' size='lg' fw={700} mb='xs'>
+          <Text c={themedColor('gray.7', 'dark.0')} size='lg' fw={700} mb='xs'>
             {getMostFrequentAmount(
               installment.monthlyPayments.map((p) => p.amount)
             )}

@@ -7,9 +7,12 @@ import { IconExternalLink } from '@tabler/icons-react';
 import ResponsiveContainer from './common/ResponsiveContainer/ResponsiveContainer';
 
 import utilStyles from '../styles/utils.module.css';
+import { useThemeColors } from '../hooks/useThemeColors';
 
 export default function Home() {
   const { t } = useTranslation();
+
+  const { themedColor } = useThemeColors();
 
   return (
     <ResponsiveContainer
@@ -19,13 +22,24 @@ export default function Home() {
       className={utilStyles.flexFill}
     >
       <Flex py='lg' direction='column' gap='lg' justify='center' align='center'>
-        <Title order={1} size='h1' ta='center' c='gray.9' fw={700}>
+        <Title
+          order={1}
+          size='h1'
+          ta='center'
+          c={themedColor('gray.9', 'gray.0')}
+          fw={700}
+        >
           <Trans
             i18nKey='components.home.intro.title'
             components={{ 1: <br /> }}
           />
         </Title>
-        <Text size='md' ta='center' c='gray.7' fw={700}>
+        <Text
+          size='md'
+          ta='center'
+          c={themedColor('gray.7', 'gray.3')}
+          fw={700}
+        >
           <Trans
             i18nKey='components.home.intro.description'
             components={{ 1: <br /> }}
@@ -33,7 +47,11 @@ export default function Home() {
         </Text>
 
         <Flex justify='center' align='center' gap='md'>
-          <Button component={Link} to='/register'>
+          <Button
+            color={themedColor('blue', 'blue.4')}
+            component={Link}
+            to='/register'
+          >
             {t('buttons.getStarted.label')}
           </Button>
           <Button
@@ -41,6 +59,7 @@ export default function Home() {
             target='_blank'
             href='https://muradhajiyev.vercel.app/projects'
             variant='subtle'
+            color={themedColor('blue', 'blue.4')}
             rightSection={<IconExternalLink size={20} />}
           >
             {t('buttons.otherProjects.label')}
