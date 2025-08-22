@@ -2,21 +2,23 @@ import { Link } from 'react-router-dom';
 
 import { Trans, useTranslation } from 'react-i18next';
 
-import { Button, Container, Group, Text, Title } from '@mantine/core';
+import { Button, Container, Group, Stack, Text, Title } from '@mantine/core';
 
 import { Illustration } from './Illustration';
 
 import classes from './NotFound.module.css';
+import { useThemeColors } from '../../../hooks/useThemeColors';
 
 const NotFound = () => {
   const { t } = useTranslation();
+  const { themedColor } = useThemeColors();
 
   return (
     <Container className={classes.root}>
       <div className={classes.inner}>
         <Illustration className={classes.image} />
-        <div className={classes.content}>
-          <Title className={classes.title}>
+        <Stack align='center' gap='xl' className={classes.content}>
+          <Title ta='center' fw={500} className={classes.title}>
             {t('components.notFound.title')}
           </Title>
           <Text
@@ -31,11 +33,16 @@ const NotFound = () => {
             />
           </Text>
           <Group justify='center'>
-            <Button component={Link} to='/' size='md'>
+            <Button
+              color={themedColor('blue', 'blue.4')}
+              component={Link}
+              to='/'
+              size='md'
+            >
               {t('components.notFound.button')}
             </Button>
           </Group>
-        </div>
+        </Stack>
       </div>
     </Container>
   );

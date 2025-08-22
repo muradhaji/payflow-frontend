@@ -28,8 +28,8 @@
       },
       "card": {
         "badge": {
-          "paid": "Paid",
-          "active": "Active"
+          "paid": "PAID",
+          "active": "ACTIVE"
         }
       },
       "details": {
@@ -37,8 +37,8 @@
         "label": {
           "amount": "Amount",
           "startDate": "Start date",
-          "createdAt": "Created at",
-          "updatedAt": "Updated at"
+          "createdAt": "Created",
+          "updatedAt": "Updated"
         }
       }
     },
@@ -59,15 +59,15 @@
     "filters": {
       "pageTitle": "Payments",
       "cards": {
-        "overdue": "OVERDUE DEBTS",
-        "current": "THIS MONTH'S DEBTS",
-        "remaining": "UNPAID DEBTS",
-        "paid": "PAID DEBTS",
-        "all": "ALL DEBTS"
+        "overdue": "OVERDUE",
+        "current": "THIS MONTH",
+        "remaining": "UNPAID",
+        "paid": "PAID",
+        "all": "ALL"
       },
       "overdue": {
         "pageTitle": "Overdue Debts",
-        "totalLabel": "Total Overdue Amount:",
+        "totalLabel": "TOTAL AMOUNT",
         "empty": {
           "title": "No Overdue Payments",
           "description": "You have no overdue payments for previous months."
@@ -75,7 +75,7 @@
       },
       "current": {
         "pageTitle": "This Month's Debts",
-        "totalLabel": "Total for {{month}}:",
+        "totalLabel": "TOTAL AMOUNT ({{month}})",
         "empty": {
           "title": "All caught up!",
           "description": "You have no unpaid payments for the selected month."
@@ -83,7 +83,7 @@
       },
       "remaining": {
         "pageTitle": "Unpaid Debts",
-        "totalLabel": "Total Remaining:",
+        "totalLabel": "TOTAL AMOUNT",
         "empty": {
           "title": "No pending payments",
           "description": "All upcoming payments have been completed."
@@ -91,7 +91,7 @@
       },
       "paid": {
         "pageTitle": "Paid Debts",
-        "totalLabel": "Total Paid:",
+        "totalLabel": "TOTAL AMOUNT",
         "empty": {
           "title": "No payments made yet",
           "description": "You haven't completed any payments so far."
@@ -109,7 +109,7 @@
       "paidLabel": "Paid: {{date}}"
     },
     "statsCard": {
-      "totalLabel": "Total debt",
+      "totalLabel": "TOTAL DEBT:",
       "paid": "PAID",
       "remaining": "REMAINING"
     },
@@ -264,6 +264,9 @@
     "payments": {
       "label": "PAYMENTS"
     },
+    "menu": {
+      "label": "MENU"
+    },
     "completePayments": {
       "label": "COMPLETE",
       "tooltip": "Select payments to complete"
@@ -275,17 +278,24 @@
     "selectAll": {
       "label": "ALL",
       "tooltip": "Select all payments"
+    },
+    "confirm": {
+      "label": "CONFIRM"
+    },
+    "cancel": {
+      "label": "CANCEL"
     }
   },
   "breadcrumbs": {
     "payments": "Payments",
-    "filterOverdue": "Overdue Debts",
-    "filterCurrent": "This Month's Debts",
-    "filterPaid": "Paid Debts",
-    "filterRemaining": "Unpaid Debts",
-    "allPayments": "All Debts",
+    "filterOverdue": "Overdue",
+    "filterCurrent": "This Month",
+    "filterPaid": "Paid",
+    "filterRemaining": "Unpaid",
+    "allPayments": "All",
     "details": "Details",
-    "addPayment": "Edit"
+    "addPayment": "Add",
+    "editPayment": "Edit"
   },
   "tooltips": {
     "details": "Details",
@@ -315,6 +325,14 @@
           "success": "Payment deleted successfully.",
           "error": "Failed to delete the payment."
         }
+      }
+    }
+  },
+  "modals": {
+    "installment": {
+      "delete": {
+        "title": "Delete payment",
+        "message": "Are you sure you want to delete this payment? This action cannot be undone."
       }
     }
   }

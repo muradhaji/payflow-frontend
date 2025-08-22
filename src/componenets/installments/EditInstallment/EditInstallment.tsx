@@ -13,10 +13,15 @@ import {
   Loader,
   LoadingOverlay,
   Button,
+  Paper,
+  Grid,
+  Stack,
+  Text,
+  Box,
 } from '@mantine/core';
 
 import { DatePickerInput } from '@mantine/dates';
-import { IconCheck, IconX } from '@tabler/icons-react';
+import { IconCalendarClock, IconCheck, IconX } from '@tabler/icons-react';
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { useTranslation } from 'react-i18next';
@@ -37,12 +42,15 @@ import {
 } from '../../../features/installments/installmentsSlice';
 
 import PageHeader from '../../common/PageHeader/PageHeader';
+import EmptyState from '../../common/EmptyState/EmptyState';
+import { useThemeColors } from '../../../hooks/useThemeColors';
 
 const EditInstallment = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
+  const { themedColor } = useThemeColors();
 
   const {
     selectedInstallment,
@@ -276,13 +284,13 @@ const EditInstallment = () => {
   };
 
   return (
-    <div className='flex flex-col gap-4'>
+    <Stack gap='md'>
       <PageHeader
         title={t('components.installments.edit.pageTitle')}
         breadcrumbs={[
           { label: t('breadcrumbs.payments'), to: '/payments' },
           {
-            label: t('breadcrumbs.addPayment'),
+            label: t('breadcrumbs.editPayment'),
             to: '/payments/edit',
             active: true,
           },
@@ -292,6 +300,7 @@ const EditInstallment = () => {
             type='submit'
             form='edit-payment-form'
             variant='filled'
+            color={themedColor('blue', 'blue.4')}
             size='xs'
             loading={updateInstallmentLoading}
             loaderProps={{
@@ -303,7 +312,7 @@ const EditInstallment = () => {
         }
       />
 
-      <div className='relative w-full max-w-5xl mx-auto'>
+      <Box pos='relative' maw={900} mx='auto' w='100%'>
         <LoadingOverlay
           visible={getInstallmentByIdLoading || updateInstallmentLoading}
           loaderProps={{
@@ -316,204 +325,207 @@ const EditInstallment = () => {
           className={utilStyles.radiusMd}
         />
 
-        <form
+        <Paper
+          component='form'
           id='edit-payment-form'
           onSubmit={handleSubmit(onSubmit)}
-          className='w-full grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white rounded-md shadow'
+          radius='md'
+          shadow='sm'
+          p='md'
+          withBorder
         >
-          <div className='flex flex-col gap-4'>
-            <div>
-              <label
-                htmlFor='name'
-                className='block text-md font-medium text-gray-700 mb-1'
-              >
-                {t('forms.installment.fields.name.label')}
-              </label>
-              <TextInput
-                id='name'
-                placeholder={t('forms.installment.fields.name.placeholder')}
-                {...register('title')}
-                size='md'
-              />
-              {errors.title && (
-                <p className='text-red-500 text-sm'>{errors.title.message}</p>
+          <Grid>
+            <Grid.Col span={{ base: 12, md: 6 }}>
+              <Stack gap='md'>
+                <Box>
+                  <Text size='sm' fw={500} mb={4}>
+                    {t('forms.installment.fields.name.label')}
+                  </Text>
+                  <TextInput
+                    id='name'
+                    placeholder={t('forms.installment.fields.name.placeholder')}
+                    {...register('title')}
+                    size='md'
+                    error={errors.title?.message}
+                  />
+                </Box>
+
+                <Box>
+                  <Text size='sm' fw={500} mb={4}>
+                    {t('forms.installment.fields.amount.label')}
+                  </Text>
+                  <Controller
+                    control={control}
+                    name='amount'
+                    render={({ field }) => (
+                      <NumberInput
+                        id='totalAmount'
+                        placeholder={t(
+                          'forms.installment.fields.amount.placeholder'
+                        )}
+                        value={field.value}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                        allowDecimal
+                        decimalScale={2}
+                        allowNegative={false}
+                        suffix=' ₼'
+                        error={errors.amount?.message}
+                        hideControls
+                        thousandSeparator=','
+                        size='md'
+                      />
+                    )}
+                  />
+                </Box>
+
+                <Box>
+                  <Text size='sm' fw={500} mb={4}>
+                    {t('forms.installment.fields.startDate.label')}
+                  </Text>
+                  <Controller
+                    control={control}
+                    name='startDate'
+                    render={({ field }) => (
+                      <DatePickerInput
+                        disabled
+                        value={field.value ? dayjs(field.value).toDate() : null}
+                        onChange={(date) =>
+                          field.onChange(
+                            date ? dayjs(date).format('YYYY-MM-DD') : ''
+                          )
+                        }
+                        valueFormat='DD-MM-YYYY'
+                        placeholder={t(
+                          'forms.installment.fields.startDate.placeholder'
+                        )}
+                        id='startDate'
+                        size='md'
+                        error={errors.startDate?.message}
+                      />
+                    )}
+                  />
+                </Box>
+
+                <Box>
+                  <Text size='sm' fw={500} mb={4}>
+                    {t('forms.installment.fields.monthCount.label')}
+                  </Text>
+                  <Controller
+                    control={control}
+                    name='monthCount'
+                    render={({ field }) => (
+                      <NumberInput
+                        id='monthCount'
+                        placeholder={t(
+                          'forms.installment.fields.monthCount.placeholder'
+                        )}
+                        value={field.value}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                        hideControls
+                        error={errors.monthCount?.message}
+                        allowNegative={false}
+                        allowDecimal={false}
+                        size='md'
+                      />
+                    )}
+                  />
+                </Box>
+              </Stack>
+            </Grid.Col>
+
+            <Grid.Col span={{ base: 12, md: 6 }}>
+              {fields.length > 0 ? (
+                <Paper p='md' radius='md' withBorder>
+                  <Text fw={600} mb='sm'>
+                    {t('forms.installment.fields.monthlyPayments.label')}
+                  </Text>
+                  <Stack gap='sm'>
+                    {fields.map((field, index) => (
+                      <Grid key={field.id} gutter='xs' align='center'>
+                        <Grid.Col span={'content'}>
+                          <Controller
+                            control={control}
+                            name={`monthlyPayments.${index}.date`}
+                            render={({ field }) => (
+                              <DatePickerInput
+                                disabled={fields[index].paid}
+                                placeholder={t(
+                                  'forms.installment.fields.monthlyPayments.date.placeholder'
+                                )}
+                                value={
+                                  field.value
+                                    ? dayjs(field.value).toDate()
+                                    : null
+                                }
+                                onChange={(date) =>
+                                  field.onChange(
+                                    date ? dayjs(date).format('YYYY-MM-DD') : ''
+                                  )
+                                }
+                                minDate={dayjs(field.value)
+                                  .startOf('month')
+                                  .toDate()}
+                                maxDate={dayjs(field.value)
+                                  .endOf('month')
+                                  .toDate()}
+                                valueFormat='DD-MM-YYYY'
+                                size='md'
+                              />
+                            )}
+                          />
+                        </Grid.Col>
+                        <Grid.Col span={'auto'}>
+                          <Controller
+                            control={control}
+                            name={`monthlyPayments.${index}.amount`}
+                            render={({ field }) => (
+                              <NumberInput
+                                disabled={fields[index].paid}
+                                value={field.value}
+                                onChange={field.onChange}
+                                onBlur={field.onBlur}
+                                placeholder={t(
+                                  'forms.installment.fields.monthlyPayments.amount.placeholder'
+                                )}
+                                suffix=' ₼'
+                                allowDecimal
+                                decimalScale={2}
+                                thousandSeparator=','
+                                allowNegative={false}
+                                hideControls
+                                size='md'
+                                error={
+                                  errors.monthlyPayments?.[index]?.amount
+                                    ?.message
+                                }
+                              />
+                            )}
+                          />
+                        </Grid.Col>
+                      </Grid>
+                    ))}
+                  </Stack>
+                  {errors?.monthlyPayments?.root?.message && (
+                    <Text c='red' size='sm' mt='xs'>
+                      {errors?.monthlyPayments?.root?.message}
+                    </Text>
+                  )}
+                </Paper>
+              ) : (
+                <EmptyState
+                  icon={<IconCalendarClock size={32} color='gray' />}
+                  description={t(
+                    'forms.installment.fields.monthlyPayments.empty.title'
+                  )}
+                />
               )}
-            </div>
-
-            <div>
-              <label
-                htmlFor='totalAmount'
-                className='block text-md font-medium text-gray-700 mb-1'
-              >
-                {t('forms.installment.fields.amount.label')}
-              </label>
-              <Controller
-                control={control}
-                name='amount'
-                render={({ field }) => (
-                  <NumberInput
-                    id='totalAmount'
-                    placeholder={t(
-                      'forms.installment.fields.amount.placeholder'
-                    )}
-                    value={field.value}
-                    onChange={field.onChange}
-                    onBlur={field.onBlur}
-                    allowDecimal
-                    decimalScale={2}
-                    allowNegative={false}
-                    suffix=' ₼'
-                    error={errors.amount?.message}
-                    hideControls
-                    thousandSeparator=','
-                    size='md'
-                  />
-                )}
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor='startDate'
-                className='block text-md font-medium text-gray-700 mb-1'
-              >
-                {t('forms.installment.fields.startDate.label')}
-              </label>
-              <Controller
-                control={control}
-                name='startDate'
-                render={({ field }) => (
-                  <DatePickerInput
-                    disabled
-                    value={field.value ? dayjs(field.value).toDate() : null}
-                    onChange={(date) =>
-                      field.onChange(
-                        date ? dayjs(date).format('YYYY-MM-DD') : ''
-                      )
-                    }
-                    valueFormat='DD-MM-YYYY'
-                    placeholder={t(
-                      'forms.installment.fields.startDate.placeholder'
-                    )}
-                    id='startDate'
-                    size='md'
-                  />
-                )}
-              />
-              {errors.startDate && (
-                <p className='text-red-500 text-sm'>
-                  {errors.startDate.message}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label
-                htmlFor='monthCount'
-                className='block text-md font-medium text-gray-700 mb-1'
-              >
-                {t('forms.installment.fields.monthCount.label')}
-              </label>
-              <Controller
-                control={control}
-                name='monthCount'
-                render={({ field }) => (
-                  <NumberInput
-                    id='monthCount'
-                    placeholder={t(
-                      'forms.installment.fields.monthCount.placeholder'
-                    )}
-                    value={field.value}
-                    onChange={field.onChange}
-                    onBlur={field.onBlur}
-                    hideControls
-                    error={errors.monthCount?.message}
-                    allowNegative={false}
-                    allowDecimal={false}
-                    size='md'
-                  />
-                )}
-              />
-            </div>
-          </div>
-
-          <div>
-            {fields.length > 0 ? (
-              <div className='bg-gray-100 p-4 rounded-md'>
-                <p className='font-semibold mb-2'>
-                  {t('forms.installment.fields.monthlyPayments.label')}
-                </p>
-                {fields.map((field, index) => (
-                  <div key={field.id} className='flex gap-2 mb-2'>
-                    <Controller
-                      control={control}
-                      name={`monthlyPayments.${index}.date`}
-                      render={({ field }) => (
-                        <DatePickerInput
-                          disabled={fields[index].paid}
-                          placeholder={t(
-                            'forms.installment.fields.monthlyPayments.date.placeholder'
-                          )}
-                          value={
-                            field.value ? dayjs(field.value).toDate() : null
-                          }
-                          onChange={(date) =>
-                            field.onChange(
-                              date ? dayjs(date).format('YYYY-MM-DD') : ''
-                            )
-                          }
-                          minDate={dayjs(field.value).startOf('month').toDate()}
-                          maxDate={dayjs(field.value).endOf('month').toDate()}
-                          valueFormat='DD-MM-YYYY'
-                          error={errors.startDate?.message}
-                          className='whitespace-nowrap'
-                          size='md'
-                        />
-                      )}
-                    />
-                    <Controller
-                      control={control}
-                      name={`monthlyPayments.${index}.amount`}
-                      render={({ field }) => (
-                        <NumberInput
-                          disabled={fields[index].paid}
-                          value={field.value}
-                          onChange={field.onChange}
-                          onBlur={field.onBlur}
-                          placeholder={t(
-                            'forms.installment.fields.monthlyPayments.amount.placeholder'
-                          )}
-                          suffix=' ₼'
-                          allowDecimal
-                          decimalScale={2}
-                          thousandSeparator=','
-                          allowNegative={false}
-                          hideControls
-                          className='grow'
-                          size='md'
-                          error={
-                            errors.monthlyPayments?.[index]?.amount?.message
-                          }
-                        />
-                      )}
-                    />
-                  </div>
-                ))}
-                {errors?.monthlyPayments?.root?.message && (
-                  <p className='text-red-500 text-sm'>
-                    {errors?.monthlyPayments?.root?.message}
-                  </p>
-                )}
-              </div>
-            ) : (
-              <p className='text-gray-500 text-sm italic text-center'>
-                {t('forms.installment.fields.monthlyPayments.empty.title')}
-              </p>
-            )}
-          </div>
-        </form>
-      </div>
-    </div>
+            </Grid.Col>
+          </Grid>
+        </Paper>
+      </Box>
+    </Stack>
   );
 };
 

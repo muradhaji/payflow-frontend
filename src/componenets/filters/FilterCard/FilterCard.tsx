@@ -55,7 +55,7 @@ const FilterCard = ({
         />
 
         <Stack gap={0}>
-          <Text c='black' size='sm' fw={700}>
+          <Text size='sm' fw={700}>
             {label}
           </Text>
           <Text fw={700} size='xl'>

@@ -8,6 +8,7 @@ import { useAppSelector } from '../../../app/hooks';
 import InstallmentCard from '../InstallmentCard/InstallmentCard';
 import PageHeader from '../../common/PageHeader/PageHeader';
 import EmptyState from '../../common/EmptyState/EmptyState';
+import { useThemeColors } from '../../../hooks/useThemeColors';
 
 const AllInstallments = () => {
   const {
@@ -15,6 +16,7 @@ const AllInstallments = () => {
     fetchInstallments: { loading: fetchInstallmentsLoading },
   } = useAppSelector((state) => state.installments);
   const { t } = useTranslation();
+  const { themedColor } = useThemeColors();
 
   return (
     <>
@@ -35,6 +37,7 @@ const AllInstallments = () => {
               component={Link}
               to='/payments/add'
               variant='filled'
+              color={themedColor('blue', 'blue.4')}
               size='xs'
             >
               {t('buttons.installment.add.label')}

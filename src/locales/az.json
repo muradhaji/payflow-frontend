@@ -28,7 +28,7 @@
       },
       "card": {
         "badge": {
-          "paid": "Ödənilib",
+          "paid": "Ödənib",
           "active": "Aktiv"
         }
       },
@@ -37,8 +37,8 @@
         "label": {
           "amount": "Məbləğ",
           "startDate": "Başlama tarixi",
-          "createdAt": "Yaradılma tarixi",
-          "updatedAt": "Yenilənmə tarixi"
+          "createdAt": "Yaradılıb",
+          "updatedAt": "Yenilənib"
         }
       }
     },
@@ -59,15 +59,15 @@
     "filters": {
       "pageTitle": "Ödənişlər",
       "cards": {
-        "overdue": "GECİKMİŞ BORCLAR",
-        "current": "BU AYIN BORCLARI",
-        "remaining": "QALAN BORCLAR",
-        "paid": "ÖDƏNMİŞ BORCLAR",
-        "all": "BÜTÜN BORCLAR"
+        "overdue": "GECİKMİŞ",
+        "current": "BU AY",
+        "remaining": "QALAN",
+        "paid": "ÖDƏNMİŞ",
+        "all": "HAMISI"
       },
       "overdue": {
         "pageTitle": "Gecikmiş Borclar",
-        "totalLabel": "Ümumi gecikmiş məbləğ:",
+        "totalLabel": "ÜMUMİ MƏBLƏĞ",
         "empty": {
           "title": "Gecikmiş ödəniş yoxdur",
           "description": "Əvvəlki aylara aid heç bir ödənilməmiş borc yoxdur."
@@ -75,7 +75,7 @@
       },
       "current": {
         "pageTitle": "Bu Ayın Borcları",
-        "totalLabel": "{{month}} üçün ümumi:",
+        "totalLabel": "ÜMUMİ MƏBLƏĞ ({{month}})",
         "empty": {
           "title": "Hamısı tamamlandı!",
           "description": "Seçilmiş ay üçün ödənilməmiş borc yoxdur."
@@ -83,7 +83,7 @@
       },
       "remaining": {
         "pageTitle": "Qalan Borclar",
-        "totalLabel": "Qalan ümumi:",
+        "totalLabel": "ÜMUMİ MƏBLƏĞ",
         "empty": {
           "title": "Qalıq ödəniş yoxdur",
           "description": "Bütün gələcək ödənişlər artıq tamamlanıb."
@@ -91,7 +91,7 @@
       },
       "paid": {
         "pageTitle": "Ödənmiş Borclar",
-        "totalLabel": "Ümumi ödənilib:",
+        "totalLabel": "ÜMUMİ MƏBLƏĞ",
         "empty": {
           "title": "Hələ ödəniş yoxdur",
           "description": "İndiyədək heç bir ödəniş tamamlanmayıb."
@@ -106,10 +106,10 @@
       }
     },
     "paymentItem": {
-      "paidLabel": "Ödənilib: {{date}}"
+      "paidLabel": "Ödənib: {{date}}"
     },
     "statsCard": {
-      "totalLabel": "Toplam borc",
+      "totalLabel": "TOPLAM BORC:",
       "paid": "ÖDƏNMİŞ",
       "remaining": "QALAN"
     },
@@ -264,6 +264,9 @@
     "payments": {
       "label": "ÖDƏNİŞLƏR"
     },
+    "menu": {
+      "label": "MENYU"
+    },
     "completePayments": {
       "label": "TAMAMLA",
       "tooltip": "Tamamlamaq üçün ödənişi seçin"
@@ -275,17 +278,24 @@
     "selectAll": {
       "label": "HAMISI",
       "tooltip": "Bütün ödənişləri seçin"
+    },
+    "confirm": {
+      "label": "TƏSDİQLƏ"
+    },
+    "cancel": {
+      "label": "LƏĞV ET"
     }
   },
   "breadcrumbs": {
     "payments": "Ödənişlər",
-    "filterOverdue": "Gecikmiş Borclar",
-    "filterCurrent": "Bu Ayın Borcları",
-    "filterPaid": "Ödənmiş Borclar",
-    "filterRemaining": "Qalan Borclar",
-    "allPayments": "Bütün Borclar",
+    "filterOverdue": "Gecikmiş",
+    "filterCurrent": "Bu Ay",
+    "filterPaid": "Ödənmiş",
+    "filterRemaining": "Qalan",
+    "allPayments": "Hamısı",
     "details": "Təfərrüatlar",
-    "addPayment": "Redaktə Et"
+    "addPayment": "Əlavə Et",
+    "editPayment": "Redaktə Et"
   },
   "tooltips": {
     "details": "Təfərrüatlar",
@@ -315,6 +325,14 @@
           "success": "Ödəniş uğurla silindi.",
           "error": "Ödənişi silmək mümkün olmadı."
         }
+      }
+    }
+  },
+  "modals": {
+    "installment": {
+      "delete": {
+        "title": "Ödənişi sil",
+        "message": "Bu ödənişi silmək istədiyinizə əminsiniz? Bu əməliyyatı geri qaytarmaq mümkün deyil."
       }
     }
   }

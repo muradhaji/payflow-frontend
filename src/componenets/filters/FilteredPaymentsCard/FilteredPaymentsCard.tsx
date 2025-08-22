@@ -9,12 +9,12 @@ import FilteredPaymentsTable from '../FilteredPaymentsTable/FilteredPaymentsTabl
 import type { IInstallment, IPaymentUpdate } from '../../../types/installment';
 
 import { sumByKeyDecimal } from '../../../utils/math';
+import { useThemeColors } from '../../../hooks/useThemeColors';
 
 const colorMap: Record<string, string> = {
   overdue: 'red.5',
   current: 'orange.5',
   paid: 'teal.5',
-  remaining: 'dark.5',
   default: 'indigo.5',
 };
 
@@ -35,7 +35,12 @@ const FilteredPaymentsCard = ({
   type,
 }: FilteredPaymentsCardProps) => {
   const { t } = useTranslation();
-  const color = colorMap[type] ?? colorMap.default;
+  const { themedColor } = useThemeColors();
+
+  const color =
+    type === 'remaining'
+      ? themedColor('dark.5', 'gray.3')
+      : colorMap[type] ?? colorMap.default;
 
   const handleToggleAll = (): void => {
     toggleAllPayments(installmentId);
@@ -44,7 +49,7 @@ const FilteredPaymentsCard = ({
   return (
     <Card shadow='sm' radius='sm' padding='md' withBorder>
       <Group justify='space-between' align='center' mb='md'>
-        <Text fw={600} size='lg' c='gray.8'>
+        <Text fw={600} size='lg'>
           {title}
         </Text>
         <Group align='center' gap='xs'>

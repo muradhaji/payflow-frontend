@@ -19,6 +19,7 @@ import {
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { login } from '../../features/auth/authSlice';
+import { useThemeColors } from '../../hooks/useThemeColors';
 
 const LoginSchema = yup.object().shape({
   username: yup.string().min(6, 'usernameMin').required('usernameRequired'),
@@ -33,6 +34,7 @@ type LoginFormInputs = {
 const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { themedColor } = useThemeColors();
 
   const {
     loading,
@@ -68,7 +70,7 @@ const Login = () => {
     <Flex flex={1} align='center' justify='center' p='md'>
       <Card
         p='lg'
-        bg='white'
+        bg={themedColor('white', 'dark.7')}
         withBorder
         bdrs='sm'
         shadow='md'
@@ -80,8 +82,8 @@ const Login = () => {
             <Trans
               i18nKey='forms.login.title'
               components={{
-                1: <Text span c='blue.6' inherit />,
-                2: <Text span c='gray.9' inherit />,
+                1: <Text span c={themedColor('blue', 'blue.4')} inherit />,
+                2: <Text span c={themedColor('gray.9', 'dark.0')} inherit />,
               }}
             />
           </Title>
@@ -130,7 +132,7 @@ const Login = () => {
                 loaderProps={{
                   children: <Loader size='sm' type='dots' color='white' />,
                 }}
-                color='blue'
+                color={themedColor('blue', 'blue.4')}
                 radius='sm'
               >
                 {t(`buttons.login.label`)}

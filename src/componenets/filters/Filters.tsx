@@ -34,6 +34,7 @@ import PageHeader from '../common/PageHeader/PageHeader';
 import StatsCard from './StatsCard/StatsCard';
 import MonthlyStats from './MonthlyStats/MonthlyStats';
 import type { MonthlyData, YearlyData } from '../../types/stats';
+import { useThemeColors } from '../../hooks/useThemeColors';
 
 const Filters = () => {
   const {
@@ -41,6 +42,7 @@ const Filters = () => {
     fetchInstallments: { loading: fetchInstallmentsLoading },
   } = useAppSelector((state) => state.installments);
   const { t, i18n } = useTranslation();
+  const { themedColor } = useThemeColors();
 
   const { total, totalOverdue, totalCurrent, totalPaid, totalRemaining } =
     useMemo(() => {
@@ -120,8 +122,6 @@ const Filters = () => {
       .sort((a, b) => a.year - b.year);
   }, [installments, i18n.language]);
 
-  console.log(monthlyStats);
-
   return (
     <>
       <PageHeader
@@ -133,6 +133,7 @@ const Filters = () => {
               component={Link}
               to='/payments/add'
               variant='filled'
+              color={themedColor('blue', 'blue.4')}
               size='xs'
             >
               <span>{t('buttons.installment.add.label')}</span>

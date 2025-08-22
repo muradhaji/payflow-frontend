@@ -153,7 +153,7 @@ const FilterPaid = () => {
               type='paid'
             />
 
-            <Grid align='flex-start'>
+            <Grid align='flex-start' pos={'relative'}>
               <LoadingOverlay
                 loaderProps={{ children: <></> }}
                 visible={cancelPaymentsLoading}
