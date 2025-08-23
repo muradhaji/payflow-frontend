@@ -18,6 +18,8 @@ i18n
         en: { translation: en },
         az: { translation: az },
       },
+      supportedLngs: ['az', 'en'],
+      load: 'languageOnly',
       fallbackLng: 'az',
       interpolation: {
         escapeValue: false,
