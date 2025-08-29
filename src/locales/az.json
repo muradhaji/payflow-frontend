@@ -127,6 +127,8 @@
   "forms": {
     "login": {
       "title": "<1>Pay</1><2>Flow</2>-a daxil olun",
+      "signupPrompt": "Hesabınız yoxdur?",
+      "signupLink": "Qeydiyyatdan keçin",
       "fields": {
         "username": {
           "label": "İstifadəçi adı",
@@ -153,6 +155,8 @@
     },
     "signup": {
       "title": "<1>Pay</1><2>Flow</2> üçün qeydiyyat",
+      "loginPrompt": "Artıq hesabınız var?",
+      "loginLink": "Daxil olun",
       "fields": {
         "username": {
           "label": "İstifadəçi adı",

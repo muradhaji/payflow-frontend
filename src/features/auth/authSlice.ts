@@ -36,11 +36,11 @@ export const login = createAsyncThunk(
   }
 );
 
-export const register = createAsyncThunk(
-  'auth/register',
+export const signup = createAsyncThunk(
+  'auth/signup',
   async (credentials: { username: string; password: string }, thunkAPI) => {
     try {
-      const response = await api.post('/api/auth/register', credentials);
+      const response = await api.post('/api/auth/signup', credentials);
       return response.data;
     } catch (error: any) {
       if (error.response?.data?.message === 'Username already exists') {
@@ -82,11 +82,11 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(register.pending, (state) => {
+      .addCase(signup.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(register.fulfilled, (state, action) => {
+      .addCase(signup.fulfilled, (state, action) => {
         state.loading = false;
         state.user = {
           _id: action.payload._id,
@@ -95,7 +95,7 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         localStorage.setItem('user', JSON.stringify(action.payload));
       })
-      .addCase(register.rejected, (state, action: any) => {
+      .addCase(signup.rejected, (state, action: any) => {
         state.loading = false;
         state.error = action.payload;
       });

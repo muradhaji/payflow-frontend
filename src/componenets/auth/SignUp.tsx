@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 
 import {
@@ -17,10 +17,10 @@ import {
 } from '@mantine/core';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { register } from '../../features/auth/authSlice';
+import { signup } from '../../features/auth/authSlice';
 import { useThemeColors } from '../../hooks/useThemeColors';
 
-const RegisterSchema = yup.object().shape({
+const SignupSchema = yup.object().shape({
   username: yup.string().min(6, 'usernameMin').required('usernameRequired'),
   password: yup.string().min(8, 'passwordMin').required('passwordRequired'),
   confirmPassword: yup
@@ -29,7 +29,7 @@ const RegisterSchema = yup.object().shape({
     .required('confirmPasswordRequired'),
 });
 
-type RegisterFormInputs = {
+type SignupFormInputs = {
   username: string;
   password: string;
   confirmPassword: string;
@@ -48,13 +48,13 @@ const SignUp = () => {
     register: formRegister,
     handleSubmit,
     formState: { errors: formErrors },
-  } = useForm<RegisterFormInputs>({
-    resolver: yupResolver(RegisterSchema),
+  } = useForm<SignupFormInputs>({
+    resolver: yupResolver(SignupSchema),
   });
 
-  const onSubmit = async (data: RegisterFormInputs) => {
+  const onSubmit = async (data: SignupFormInputs) => {
     try {
-      await dispatch(register(data)).unwrap();
+      await dispatch(signup(data)).unwrap();
       navigate('/payments', { replace: true });
     } catch (err) {
       console.error(err);
@@ -159,6 +159,19 @@ const SignUp = () => {
                   })}
                 </Text>
               )}
+
+              <Flex justify='center' gap='xs'>
+                <Text size='sm'>{t('forms.signup.loginPrompt')}</Text>
+                <Text
+                  size='sm'
+                  component={Link}
+                  to='/login'
+                  c={themedColor('blue', 'blue.4')}
+                  style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                >
+                  {t('forms.signup.loginLink')}
+                </Text>
+              </Flex>
             </Stack>
           </form>
         </Stack>

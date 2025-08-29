@@ -127,6 +127,8 @@
   "forms": {
     "login": {
       "title": "Log in to <1>Pay</1><2>Flow</2>",
+      "signupPrompt": "Don't have an account?",
+      "signupLink": "Sign up",
       "fields": {
         "username": {
           "label": "Username",
@@ -153,6 +155,8 @@
     },
     "signup": {
       "title": "Sign up to <1>Pay</1><2>Flow</2>",
+      "loginPrompt": "Already have an account?",
+      "loginLink": "Log in",
       "fields": {
         "username": {
           "label": "Username",

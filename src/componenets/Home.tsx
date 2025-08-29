@@ -50,7 +50,7 @@ export default function Home() {
           <Button
             color={themedColor('blue', 'blue.4')}
             component={Link}
-            to='/register'
+            to='/signup'
           >
             {t('buttons.getStarted.label')}
           </Button>

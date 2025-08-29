@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 
 import {
@@ -145,6 +145,19 @@ const Login = () => {
                   })}
                 </Text>
               )}
+
+              <Flex justify='center' gap='xs'>
+                <Text size='sm'>{t('forms.login.signupPrompt')}</Text>
+                <Text
+                  size='sm'
+                  component={Link}
+                  to='/signup'
+                  c={themedColor('blue', 'blue.4')}
+                  style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                >
+                  {t('forms.login.signupLink')}
+                </Text>
+              </Flex>
             </Stack>
           </form>
         </Stack>
