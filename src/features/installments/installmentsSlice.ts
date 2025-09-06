@@ -3,8 +3,7 @@ import { AxiosError } from 'axios';
 
 import type {
   IInstallment,
-  InstallmentCreate,
-  InstallmentEdit,
+  InstallmentSchema,
   IPaymentUpdate,
 } from '../../types/installment';
 
@@ -31,7 +30,7 @@ export const fetchInstallments = createAsyncThunk<
 
 export const addInstallment = createAsyncThunk<
   IInstallment,
-  InstallmentCreate,
+  InstallmentSchema,
   { rejectValue: string }
 >(THUNKS.INSTALLMENTS.ADD, async (newInstallment, { rejectWithValue }) => {
   try {
@@ -47,7 +46,7 @@ export const addInstallment = createAsyncThunk<
 
 export const updateInstallment = createAsyncThunk<
   IInstallment,
-  { id: string; newData: InstallmentEdit },
+  { id: string; newData: InstallmentSchema },
   { rejectValue: string }
 >(THUNKS.INSTALLMENTS.UPDATE, async ({ id, newData }, { rejectWithValue }) => {
   try {
