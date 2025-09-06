@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { STORAGE_KEYS } from './constants/common';
 
 const api = axios.create({
   baseURL:
@@ -10,7 +11,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const user = localStorage.getItem('user');
+  const user = localStorage.getItem(STORAGE_KEYS.USER);
   if (user) {
     const parsed = JSON.parse(user);
     if (parsed.token) {
