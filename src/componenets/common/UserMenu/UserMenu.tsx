@@ -1,16 +1,27 @@
-import { Menu, Button, Stack, useMantineTheme } from '@mantine/core';
-import { IconLogin, IconMenu2, IconWallet } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
-
 import { useTranslation } from 'react-i18next';
+
+import { Menu, Button, Stack, useMantineTheme } from '@mantine/core';
+
+import {
+  IconLogin,
+  IconMenu2,
+  IconUserX,
+  IconWallet,
+} from '@tabler/icons-react';
+
 import { useAuth } from '../../../hooks/useAuth';
+import { useThemeColors } from '../../../hooks/useThemeColors';
+import { useAppDispatch } from '../../../app/hooks';
 
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';
-import { useThemeColors } from '../../../hooks/useThemeColors';
+
+import { openDeleteModal } from '../../../features/auth/authSlice';
 
 const UserMenu = () => {
+  const dispatch = useAppDispatch();
   const { isAuthenticated, user } = useAuth();
   const { t } = useTranslation();
   const { themedColor } = useThemeColors();
@@ -59,7 +70,27 @@ const UserMenu = () => {
           <Menu.Divider />
 
           {isAuthenticated ? (
-            <LogOutButton />
+            <>
+              <Button
+                onClick={() => {
+                  dispatch(openDeleteModal());
+                }}
+                variant='subtle'
+                leftSection={
+                  <IconUserX
+                    size={16}
+                    color={themedColor(colors.red[6], colors.red[4])}
+                  />
+                }
+                color={themedColor(colors.red[6], colors.red[4])}
+                size='xs'
+                justify='flex-start'
+              >
+                {t('buttons.deleteUser.label')}
+              </Button>
+
+              <LogOutButton />
+            </>
           ) : (
             <Button
               variant='subtle'

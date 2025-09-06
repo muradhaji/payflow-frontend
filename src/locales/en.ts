@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES } from '../constants/messages';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../constants/messages';
 import { VALIDATION } from '../constants/validation';
 
 export const en = {
@@ -347,6 +347,9 @@ export const en = {
     cancel: {
       label: 'CANCEL',
     },
+    deleteUser: {
+      label: 'DELETE ACCOUNT',
+    },
   },
   breadcrumbs: {
     payments: 'Payments',
@@ -398,6 +401,13 @@ export const en = {
           'Are you sure you want to delete this payment? This action cannot be undone.',
       },
     },
+    auth: {
+      delete: {
+        title: 'Delete account',
+        message:
+          'Deleting your account will remove all your data permanently! <1/> To delete your account, you must confirm your password.',
+      },
+    },
   },
   apiErrorMessages: {
     [ERROR_MESSAGES.AUTH.USERNAME_REQUIRED]: 'Username is required.',
@@ -426,5 +436,10 @@ export const en = {
 
     [ERROR_MESSAGES.UNKNOWN]:
       'An unknown error occurred. Please try again later.',
+  },
+  apiSuccessMessages: {
+    [SUCCESS_MESSAGES.AUTH.USER_DELETED]: 'User has been deleted successfully.',
+
+    [SUCCESS_MESSAGES.COMMON]: 'Operation completed successfully.',
   },
 };

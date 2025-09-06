@@ -6,6 +6,7 @@ export const THUNKS = {
   AUTH: {
     LOGIN: 'auth/login',
     SIGNUP: 'auth/signup',
+    DELETE_ME: 'auth/me',
   },
   INSTALLMENTS: {
     FETCH_ALL: 'installments/fetchAll',
@@ -22,6 +23,7 @@ export const API_ENDPOINTS = {
   AUTH: {
     LOGIN: '/api/auth/login',
     SIGNUP: '/api/auth/signup',
+    DELETE_ME: '/api/auth/me',
   },
   INSTALLMENTS: {
     ROOT: '/api/installments',

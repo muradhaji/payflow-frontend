@@ -5,4 +5,9 @@ export const authInitialState: AuthSliceState = {
   token: null,
   loading: false,
   error: null,
+  delete: {
+    modalOpened: false,
+    loading: false,
+    error: null,
+  },
 };

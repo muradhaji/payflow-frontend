@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES } from '../constants/messages';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../constants/messages';
 import { VALIDATION } from '../constants/validation';
 
 export const az = {
@@ -349,6 +349,9 @@ export const az = {
     cancel: {
       label: 'LƏĞV ET',
     },
+    deleteUser: {
+      label: 'HESABI SİL',
+    },
   },
   breadcrumbs: {
     payments: 'Ödənişlər',
@@ -400,6 +403,13 @@ export const az = {
           'Bu ödənişi silmək istədiyinizə əminsiniz? Bu əməliyyatı geri qaytarmaq mümkün deyil.',
       },
     },
+    auth: {
+      delete: {
+        title: 'Hesabı Sil',
+        message:
+          'Hesabınızı silmək bütün məlumatlarınızı daimi olaraq siləcək! <1/> Hesabınızı silmək üçün şifrənizi təsdiqləməlisiniz.',
+      },
+    },
   },
   apiErrorMessages: {
     [ERROR_MESSAGES.AUTH.USERNAME_REQUIRED]: 'İstifadəçi adı mütləqdir.',
@@ -428,5 +438,11 @@ export const az = {
 
     [ERROR_MESSAGES.UNKNOWN]:
       'Naməlum bir xəta baş verdi. Daha sonra yenidən cəhd edin.',
+  },
+
+  apiSuccessMessages: {
+    [SUCCESS_MESSAGES.AUTH.USER_DELETED]: 'İstifadəçi uğurla silindi.',
+
+    [SUCCESS_MESSAGES.COMMON]: 'Əməliyyat uğurla tamamlandı.',
   },
 };
