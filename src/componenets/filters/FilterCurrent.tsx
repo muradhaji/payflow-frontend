@@ -54,7 +54,7 @@ const FilterCurrent = () => {
     installments,
     fetchInstallments: { loading: fetchInstallmentsLoading },
     completePayments: { loading: completePaymentsLoading },
-  } = useAppSelector((state) => state.installments);
+  } = useAppSelector((state) => state.installment);
 
   const [currentMonth, setCurrentMonth] = useState<string>(
     dayjs().format('YYYY-MM')
@@ -94,7 +94,7 @@ const FilterCurrent = () => {
           icon: <IconCheck />,
         });
         clearAll();
-        dispatch(updateInstallments(response.payload.installments));
+        dispatch(updateInstallments(response.payload));
       } else {
         showNotification({
           message: t('notifications.api.completePayments.error'),

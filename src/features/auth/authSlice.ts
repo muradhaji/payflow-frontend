@@ -1,65 +1,57 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
 import api from '../../api';
+import { AxiosError } from 'axios';
+import { ERROR_MESSAGES } from '../../constants/messages';
+import type { AuthResponse, AuthCredentials } from '../../types/auth';
+import { authInitialState } from '../../constants/auth';
+import { API_ENDPOINTS, STORAGE_KEYS, THUNKS } from '../../constants/common';
 
-interface UserState {
-  user: null | { _id: string; username: string };
-  token: string | null;
-  loading: boolean;
-  error: string | null;
-}
-
-const initialState: UserState = {
-  user: null,
-  token: null,
-  loading: false,
-  error: null,
-};
-
-export const login = createAsyncThunk(
-  'auth/login',
-  async (credentials: { username: string; password: string }, thunkAPI) => {
+export const login = createAsyncThunk<
+  AuthResponse,
+  AuthCredentials,
+  { rejectValue: string }
+>(
+  THUNKS.AUTH.LOGIN,
+  async (credentials: AuthCredentials, { rejectWithValue }) => {
     try {
-      const response = await api.post('/api/auth/login', credentials);
+      const response = await api.post(API_ENDPOINTS.AUTH.LOGIN, credentials);
       return response.data;
-    } catch (error: any) {
-      if (error.response?.data?.message === 'Username not found') {
-        return thunkAPI.rejectWithValue('usernameNotFound');
-      }
-
-      if (error.response?.data?.message === 'Incorrect password') {
-        return thunkAPI.rejectWithValue('incorrectPassword');
-      }
-
-      return thunkAPI.rejectWithValue('Login failed');
+    } catch (error: unknown) {
+      const axiosErr = error as AxiosError<{ message: string }>;
+      return rejectWithValue(
+        axiosErr.response?.data?.message || ERROR_MESSAGES.UNKNOWN
+      );
     }
   }
 );
 
-export const signup = createAsyncThunk(
-  'auth/signup',
-  async (credentials: { username: string; password: string }, thunkAPI) => {
+export const signup = createAsyncThunk<
+  AuthResponse,
+  AuthCredentials,
+  { rejectValue: string }
+>(
+  THUNKS.AUTH.SIGNUP,
+  async (credentials: AuthCredentials, { rejectWithValue }) => {
     try {
-      const response = await api.post('/api/auth/signup', credentials);
+      const response = await api.post(API_ENDPOINTS.AUTH.SIGNUP, credentials);
       return response.data;
-    } catch (error: any) {
-      if (error.response?.data?.message === 'Username already exists') {
-        return thunkAPI.rejectWithValue('usernameAlreadyExists');
-      }
-
-      return thunkAPI.rejectWithValue('Registration failed');
+    } catch (error: unknown) {
+      const axiosErr = error as AxiosError<{ message: string }>;
+      return rejectWithValue(
+        axiosErr.response?.data?.message || ERROR_MESSAGES.UNKNOWN
+      );
     }
   }
 );
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState,
+  initialState: authInitialState,
   reducers: {
     logout(state) {
       state.user = null;
       state.token = null;
-      localStorage.removeItem('user');
+      localStorage.removeItem(STORAGE_KEYS.USER);
     },
   },
   extraReducers: (builder) => {
@@ -75,11 +67,11 @@ const authSlice = createSlice({
           username: action.payload.username,
         };
         state.token = action.payload.token;
-        localStorage.setItem('user', JSON.stringify(action.payload));
+        localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(action.payload));
       })
-      .addCase(login.rejected, (state, action: any) => {
+      .addCase(login.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload as string;
       })
 
       .addCase(signup.pending, (state) => {
@@ -93,11 +85,11 @@ const authSlice = createSlice({
           username: action.payload.username,
         };
         state.token = action.payload.token;
-        localStorage.setItem('user', JSON.stringify(action.payload));
+        localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(action.payload));
       })
-      .addCase(signup.rejected, (state, action: any) => {
+      .addCase(signup.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload as string;
       });
   },
 });

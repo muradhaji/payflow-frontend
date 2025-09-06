@@ -3,7 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import authReducer from '../features/auth/authSlice';
-import installmentsSlice from '../features/installments/installmentsSlice';
+import installmentSlice from '../features/installments/installmentsSlice';
 
 const persistConfig = {
   key: 'auth',
@@ -16,13 +16,15 @@ const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
-    installments: installmentsSlice,
+    installment: installmentSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
     }),
 });
+
+// TODO: auth middleware to handle token expiration and refresh
 
 export const persistor = persistStore(store);
 

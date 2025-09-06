@@ -20,10 +20,35 @@ import {
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { login } from '../../features/auth/authSlice';
 import { useThemeColors } from '../../hooks/useThemeColors';
+import { ERROR_MESSAGES } from '../../constants/messages';
+import { REGEX } from '../../constants/regex';
+import { VALIDATION } from '../../constants/validation';
 
 const LoginSchema = yup.object().shape({
-  username: yup.string().min(6, 'usernameMin').required('usernameRequired'),
-  password: yup.string().min(8, 'passwordMin').required('passwordRequired'),
+  username: yup
+    .string()
+    .required(ERROR_MESSAGES.AUTH.USERNAME_REQUIRED)
+    .min(
+      VALIDATION.AUTH.USERNAME_MIN_LENGTH,
+      ERROR_MESSAGES.AUTH.USERNAME_MIN_LENGTH
+    )
+    .max(
+      VALIDATION.AUTH.USERNAME_MAX_LENGTH,
+      ERROR_MESSAGES.AUTH.USERNAME_MAX_LENGTH
+    )
+    .matches(REGEX.AUTH.USERNAME, ERROR_MESSAGES.AUTH.USERNAME_INVALID),
+  password: yup
+    .string()
+    .required(ERROR_MESSAGES.AUTH.PASSWORD_REQUIRED)
+    .min(
+      VALIDATION.AUTH.PASSWORD_MIN_LENGTH,
+      ERROR_MESSAGES.AUTH.PASSWORD_MIN_LENGTH
+    )
+    .max(
+      VALIDATION.AUTH.PASSWORD_MAX_LENGTH,
+      ERROR_MESSAGES.AUTH.PASSWORD_MAX_LENGTH
+    )
+    .matches(REGEX.AUTH.PASSWORD, ERROR_MESSAGES.AUTH.PASSWORD_INVALID),
 });
 
 type LoginFormInputs = {
@@ -35,13 +60,13 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { themedColor } = useThemeColors();
+  const { t } = useTranslation();
 
   const {
     loading,
     error: apiError,
     token,
   } = useAppSelector((state) => state.auth);
-  const { t } = useTranslation();
 
   const {
     register: formRegister,
@@ -140,8 +165,10 @@ const Login = () => {
 
               {apiError && (
                 <Text c='red' size='sm'>
-                  {t(`forms.login.errors.api.${apiError}`, {
-                    defaultValue: t('forms.login.errors.api.default'),
+                  {t(`apiErrorMessages.${apiError}`, {
+                    defaultValue: t(
+                      `apiErrorMessages.${ERROR_MESSAGES.UNKNOWN}`
+                    ),
                   })}
                 </Text>
               )}

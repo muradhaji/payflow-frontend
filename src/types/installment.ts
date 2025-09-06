@@ -6,13 +6,6 @@ export interface IMonthlyPayment {
   paidDate: string | null;
 }
 
-export type MonthlyPaymentCreate = Omit<
-  IMonthlyPayment,
-  '_id' | 'paid' | 'paidDate'
->;
-
-export type MonthlyPaymentEdit = Omit<IMonthlyPayment, '_id' | 'paidDate'>;
-
 export interface IInstallment {
   _id: string;
   user: string;
@@ -25,22 +18,37 @@ export interface IInstallment {
   updatedAt: string;
 }
 
-export type InstallmentCreate = Omit<
-  IInstallment,
-  '_id' | 'user' | 'createdAt' | 'updatedAt' | 'monthlyPayments'
-> & {
-  monthlyPayments: MonthlyPaymentCreate[];
-};
-
-export type InstallmentEdit = Omit<
-  IInstallment,
-  '_id' | 'user' | 'createdAt' | 'updatedAt' | 'monthlyPayments'
-> & {
-  monthlyPayments: MonthlyPaymentEdit[];
-};
-
 export interface IPaymentUpdate {
   installmentId: string;
   paymentId: string;
   paymentAmount: number;
 }
+
+export interface IDefaultAsyncState {
+  loading: boolean;
+  error: string | null;
+}
+
+export interface IInstallmentSliceState {
+  installments: IInstallment[];
+  selectedInstallment: IInstallment | null;
+
+  fetchInstallments: IDefaultAsyncState;
+  addInstallment: IDefaultAsyncState;
+  getInstallmentById: IDefaultAsyncState;
+  updateInstallment: IDefaultAsyncState;
+  deleteInstallment: IDefaultAsyncState;
+  completePayments: IDefaultAsyncState;
+  cancelPayments: IDefaultAsyncState;
+}
+
+export type MonthlyPaymentSchema = Pick<IMonthlyPayment, 'date' | 'amount'> & {
+  paid?: boolean;
+};
+
+export type InstallmentSchema = Pick<
+  IInstallment,
+  'title' | 'amount' | 'monthCount' | 'startDate'
+> & {
+  monthlyPayments: MonthlyPaymentSchema[];
+};

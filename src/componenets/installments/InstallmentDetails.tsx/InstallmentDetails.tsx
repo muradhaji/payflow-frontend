@@ -47,7 +47,7 @@ const InstallmentDetails = () => {
     selectedInstallment,
     getInstallmentById: { loading: getByIdLoading },
     deleteInstallment: { loading: deleteLoading },
-  } = useAppSelector((state) => state.installments);
+  } = useAppSelector((state) => state.installment);
 
   useEffect(() => {
     if (id) {

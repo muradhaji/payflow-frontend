@@ -6,8 +6,8 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/en';
 import 'dayjs/locale/az';
 
-import en from './locales/en.json';
-import az from './locales/az.json';
+import { az } from './locales/az';
+import { en } from './locales/en';
 
 i18n
   .use(LanguageDetector)

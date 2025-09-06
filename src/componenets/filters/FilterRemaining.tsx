@@ -46,7 +46,7 @@ const FilterRemaining = () => {
     installments,
     fetchInstallments: { loading: fetchInstallmentsLoading },
     completePayments: { loading: completePaymentsLoading },
-  } = useAppSelector((state) => state.installments);
+  } = useAppSelector((state) => state.installment);
 
   const filteredInstallments = useFilteredInstallments(
     installments,
@@ -75,7 +75,7 @@ const FilterRemaining = () => {
           icon: <IconCheck />,
         });
         clearAll();
-        dispatch(updateInstallments(response.payload.installments));
+        dispatch(updateInstallments(response.payload));
       } else {
         showNotification({
           message: t('notifications.api.completePayments.error'),

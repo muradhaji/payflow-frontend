@@ -14,7 +14,7 @@ const AllInstallments = () => {
   const {
     installments,
     fetchInstallments: { loading: fetchInstallmentsLoading },
-  } = useAppSelector((state) => state.installments);
+  } = useAppSelector((state) => state.installment);
   const { t } = useTranslation();
   const { themedColor } = useThemeColors();
 

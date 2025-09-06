@@ -40,7 +40,7 @@ const Filters = () => {
   const {
     installments,
     fetchInstallments: { loading: fetchInstallmentsLoading },
-  } = useAppSelector((state) => state.installments);
+  } = useAppSelector((state) => state.installment);
   const { t, i18n } = useTranslation();
   const { themedColor } = useThemeColors();
 

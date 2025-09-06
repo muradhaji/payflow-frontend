@@ -9,85 +9,22 @@ import type {
 } from '../../types/installment';
 
 import api from '../../api';
-
-interface InstallmentsState {
-  installments: IInstallment[];
-  selectedInstallment: IInstallment | null;
-  fetchInstallments: {
-    loading: boolean;
-    error: string | null;
-  };
-  addInstallment: {
-    loading: boolean;
-    error: string | null;
-  };
-  getInstallmentById: {
-    loading: boolean;
-    error: string | null;
-  };
-  updateInstallment: {
-    loading: boolean;
-    error: string | null;
-  };
-  deleteInstallment: {
-    loading: boolean;
-    error: string | null;
-  };
-  completePayments: {
-    loading: boolean;
-    error: string | null;
-  };
-  cancelPayments: {
-    loading: boolean;
-    error: string | null;
-  };
-}
-
-const initialState: InstallmentsState = {
-  installments: [],
-  selectedInstallment: null,
-  fetchInstallments: {
-    loading: false,
-    error: null,
-  },
-  addInstallment: {
-    loading: false,
-    error: null,
-  },
-  getInstallmentById: {
-    loading: false,
-    error: null,
-  },
-  updateInstallment: {
-    loading: false,
-    error: null,
-  },
-  deleteInstallment: {
-    loading: false,
-    error: null,
-  },
-  completePayments: {
-    loading: false,
-    error: null,
-  },
-  cancelPayments: {
-    loading: false,
-    error: null,
-  },
-};
+import { API_ENDPOINTS, THUNKS } from '../../constants/common';
+import { ERROR_MESSAGES } from '../../constants/messages';
+import { installmentInitialState } from '../../constants/installment';
 
 export const fetchInstallments = createAsyncThunk<
   IInstallment[],
   void,
   { rejectValue: string }
->('installments/fetchAll', async (_, { rejectWithValue }) => {
+>(THUNKS.INSTALLMENTS.FETCH_ALL, async (_, { rejectWithValue }) => {
   try {
-    const res = await api.get('/api/installments');
+    const res = await api.get(API_ENDPOINTS.INSTALLMENTS.ROOT);
     return res.data;
   } catch (err: unknown) {
     const axiosErr = err as AxiosError<{ message: string }>;
     return rejectWithValue(
-      axiosErr.response?.data?.message || 'Failed to fetch installments'
+      axiosErr.response?.data?.message || ERROR_MESSAGES.UNKNOWN
     );
   }
 });
@@ -96,13 +33,15 @@ export const addInstallment = createAsyncThunk<
   IInstallment,
   InstallmentCreate,
   { rejectValue: string }
->('installments/add', async (newInstallment, { rejectWithValue }) => {
+>(THUNKS.INSTALLMENTS.ADD, async (newInstallment, { rejectWithValue }) => {
   try {
-    const res = await api.post('api/installments', newInstallment);
+    const res = await api.post(API_ENDPOINTS.INSTALLMENTS.ROOT, newInstallment);
     return res.data;
   } catch (err: unknown) {
     const axiosErr = err as AxiosError<{ message: string }>;
-    return rejectWithValue(axiosErr.response?.data?.message || 'Server error');
+    return rejectWithValue(
+      axiosErr.response?.data?.message || ERROR_MESSAGES.UNKNOWN
+    );
   }
 });
 
@@ -110,13 +49,18 @@ export const updateInstallment = createAsyncThunk<
   IInstallment,
   { id: string; newData: InstallmentEdit },
   { rejectValue: string }
->('installments/edit', async ({ id, newData }, { rejectWithValue }) => {
+>(THUNKS.INSTALLMENTS.UPDATE, async ({ id, newData }, { rejectWithValue }) => {
   try {
-    const res = await api.put(`api/installments/${id}`, newData);
+    const res = await api.put(
+      `${API_ENDPOINTS.INSTALLMENTS.ROOT}/${id}`,
+      newData
+    );
     return res.data;
   } catch (err: unknown) {
     const axiosErr = err as AxiosError<{ message: string }>;
-    return rejectWithValue(axiosErr.response?.data?.message || 'Server error');
+    return rejectWithValue(
+      axiosErr.response?.data?.message || ERROR_MESSAGES.UNKNOWN
+    );
   }
 });
 
@@ -124,14 +68,16 @@ export const getInstallmentById = createAsyncThunk<
   IInstallment,
   string,
   { rejectValue: string }
->('installments/getById', async (id, { rejectWithValue }) => {
+>(THUNKS.INSTALLMENTS.GET_BY_ID, async (id, { rejectWithValue }) => {
   try {
-    const res = await api.get(`api/installments/${id}`);
+    const res = await api.get(`${API_ENDPOINTS.INSTALLMENTS.ROOT}/${id}`);
 
     return res.data;
   } catch (err: unknown) {
     const axiosErr = err as AxiosError<{ message: string }>;
-    return rejectWithValue(axiosErr.response?.data?.message || 'Server error');
+    return rejectWithValue(
+      axiosErr.response?.data?.message || ERROR_MESSAGES.UNKNOWN
+    );
   }
 });
 
@@ -139,47 +85,59 @@ export const deleteInstallment = createAsyncThunk<
   string,
   string,
   { rejectValue: string }
->('installments/delete', async (id, { rejectWithValue }) => {
+>(THUNKS.INSTALLMENTS.DELETE, async (id, { rejectWithValue }) => {
   try {
-    const res = await api.delete(`/api/installments/${id}`);
+    const res = await api.delete(`${API_ENDPOINTS.INSTALLMENTS.ROOT}/${id}`);
     return res.data.message;
   } catch (err: unknown) {
     const axiosErr = err as AxiosError<{ message: string }>;
-    return rejectWithValue(axiosErr.response?.data?.message || 'Server error');
+    return rejectWithValue(
+      axiosErr.response?.data?.message || ERROR_MESSAGES.UNKNOWN
+    );
   }
 });
 
 export const completePayments = createAsyncThunk<
-  { message: string; installments: IInstallment[] },
+  IInstallment[],
   IPaymentUpdate[],
   { rejectValue: string }
->('installments/completePayments', async (payments, { rejectWithValue }) => {
-  try {
-    const res = await api.post('api/installments/toggle', payments);
-    return res.data;
-  } catch (err: unknown) {
-    const axiosErr = err as AxiosError<{ message: string }>;
-    return rejectWithValue(axiosErr.response?.data?.message || 'Server error');
+>(
+  THUNKS.INSTALLMENTS.COMPLETE_PAYMENTS,
+  async (payments, { rejectWithValue }) => {
+    try {
+      const res = await api.post(API_ENDPOINTS.INSTALLMENTS.TOGGLE, payments);
+      return res.data;
+    } catch (err: unknown) {
+      const axiosErr = err as AxiosError<{ message: string }>;
+      return rejectWithValue(
+        axiosErr.response?.data?.message || ERROR_MESSAGES.UNKNOWN
+      );
+    }
   }
-});
+);
 
 export const cancelPayments = createAsyncThunk<
-  { message: string; installments: IInstallment[] },
+  IInstallment[],
   IPaymentUpdate[],
   { rejectValue: string }
->('installments/cancelPayments', async (payments, { rejectWithValue }) => {
-  try {
-    const res = await api.post('api/installments/toggle', payments);
-    return res.data;
-  } catch (err: unknown) {
-    const axiosErr = err as AxiosError<{ message: string }>;
-    return rejectWithValue(axiosErr.response?.data?.message || 'Server error');
+>(
+  THUNKS.INSTALLMENTS.CANCEL_PAYMENTS,
+  async (payments, { rejectWithValue }) => {
+    try {
+      const res = await api.post(API_ENDPOINTS.INSTALLMENTS.TOGGLE, payments);
+      return res.data;
+    } catch (err: unknown) {
+      const axiosErr = err as AxiosError<{ message: string }>;
+      return rejectWithValue(
+        axiosErr.response?.data?.message || ERROR_MESSAGES.UNKNOWN
+      );
+    }
   }
-});
+);
 
-const installmentsSlice = createSlice({
+const installmentSlice = createSlice({
   name: 'installments',
-  initialState,
+  initialState: installmentInitialState,
   reducers: {
     clearInstallments: (state) => {
       state.installments = [];
@@ -299,6 +257,6 @@ export const {
   updateInstallments,
   clearSelectedInstallment,
   setSelectedInstallment,
-} = installmentsSlice.actions;
+} = installmentSlice.actions;
 
-export default installmentsSlice.reducer;
+export default installmentSlice.reducer;

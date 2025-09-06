@@ -43,7 +43,7 @@ const FilterPaid = () => {
     installments,
     fetchInstallments: { loading: fetchInstallmentsLoading },
     cancelPayments: { loading: cancelPaymentsLoading },
-  } = useAppSelector((state) => state.installments);
+  } = useAppSelector((state) => state.installment);
 
   const filteredInstallments = useFilteredInstallments(
     installments,
@@ -72,7 +72,7 @@ const FilterPaid = () => {
           icon: <IconCheck />,
         });
         clearAll();
-        dispatch(updateInstallments(response.payload.installments));
+        dispatch(updateInstallments(response.payload));
       } else {
         showNotification({
           message: t('notifications.api.cancelPayments.error'),

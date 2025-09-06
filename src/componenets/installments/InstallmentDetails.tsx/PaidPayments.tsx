@@ -9,7 +9,7 @@ import { IconFolderX } from '@tabler/icons-react';
 
 const PaidPayments = () => {
   const { loading } = useAppSelector(
-    (state) => state.installments.cancelPayments
+    (state) => state.installment.cancelPayments
   );
 
   const { t } = useTranslation();

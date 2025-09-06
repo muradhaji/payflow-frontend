@@ -54,7 +54,7 @@ interface PaymentsCardProps {
   };
   filterCondition: (payment: IMonthlyPayment) => boolean;
   onSubmitThunk: AsyncThunk<
-    { message: string; installments: IInstallment[] },
+    IInstallment[],
     IPaymentUpdate[],
     { rejectValue: string }
   >;
@@ -73,7 +73,7 @@ const PaymentsCard = ({
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const { selectedInstallment } = useAppSelector((state) => state.installments);
+  const { selectedInstallment } = useAppSelector((state) => state.installment);
 
   const {
     isSelected,
@@ -100,7 +100,7 @@ const PaymentsCard = ({
           icon: <IconCheck />,
         });
         clearAll();
-        dispatch(setSelectedInstallment(response.payload.installments[0]));
+        dispatch(setSelectedInstallment(response.payload[0]));
       } else {
         showNotification({
           message: notificationMessages.error,

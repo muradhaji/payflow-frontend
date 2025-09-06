@@ -10,7 +10,7 @@ import { useThemeColors } from '../../../hooks/useThemeColors';
 
 const UnpaidPayments = () => {
   const { loading } = useAppSelector(
-    (state) => state.installments.completePayments
+    (state) => state.installment.completePayments
   );
 
   const { t } = useTranslation();

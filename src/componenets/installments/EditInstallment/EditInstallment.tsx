@@ -1,11 +1,16 @@
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
 import dayjs from 'dayjs';
 
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { useForm, Controller, useFieldArray } from 'react-hook-form';
+import {
+  useForm,
+  Controller,
+  useFieldArray,
+  type FieldErrors,
+  type FieldError,
+} from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 
 import {
   TextInput,
@@ -19,8 +24,8 @@ import {
   Text,
   Box,
 } from '@mantine/core';
-
 import { DatePickerInput } from '@mantine/dates';
+
 import { IconCalendarClock, IconCheck, IconX } from '@tabler/icons-react';
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
@@ -31,8 +36,8 @@ import { sumByKeyDecimal } from '../../../utils/math';
 import utilStyles from '../../../styles/utils.module.css';
 
 import type {
-  InstallmentEdit,
-  MonthlyPaymentEdit,
+  InstallmentSchema,
+  MonthlyPaymentSchema,
 } from '../../../types/installment';
 
 import {
@@ -45,6 +50,10 @@ import PageHeader from '../../common/PageHeader/PageHeader';
 import EmptyState from '../../common/EmptyState/EmptyState';
 import { useThemeColors } from '../../../hooks/useThemeColors';
 
+import { installmentSchema } from '../../../constants/schema';
+import { DATE_FORMATS } from '../../../constants/format';
+import { VALIDATION } from '../../../constants/validation';
+
 const EditInstallment = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -56,101 +65,7 @@ const EditInstallment = () => {
     selectedInstallment,
     getInstallmentById: { loading: getInstallmentByIdLoading },
     updateInstallment: { loading: updateInstallmentLoading },
-  } = useAppSelector((state) => state.installments);
-
-  const schema = useMemo(
-    () =>
-      yup.object({
-        title: yup
-          .string()
-          .required(t('forms.installment.errors.form.nameRequired')),
-        amount: yup
-          .number()
-          .positive(t('forms.installment.errors.form.amountPositive'))
-          .required(t('forms.installment.errors.form.amountRequired'))
-          .transform((value, originalValue) => {
-            return originalValue === '' ? undefined : value;
-          }),
-        startDate: yup
-          .string()
-          .required(t('forms.installment.errors.form.startDateRequired'))
-          .matches(
-            /^\d{4}-\d{2}-\d{2}$/,
-            t('forms.installment.errors.form.startDateFormat')
-          ),
-        monthCount: yup
-          .number()
-          .required(t('forms.installment.errors.form.monthCountRequired'))
-          .transform((value, originalValue) => {
-            return originalValue === '' ? undefined : value;
-          })
-          .test('month-count-min', function (value) {
-            const { monthlyPayments } = this.parent;
-            const paidCount =
-              monthlyPayments?.filter((p: MonthlyPaymentEdit) => p.paid)
-                .length || 0;
-
-            const errorMessage = t(
-              'forms.installment.errors.form.monthCountMin',
-              {
-                paidCount,
-              }
-            );
-
-            return (
-              value >= paidCount || this.createError({ message: errorMessage })
-            );
-          }),
-        monthlyPayments: yup
-          .array()
-          .of(
-            yup.object({
-              date: yup
-                .string()
-                .required(
-                  t('forms.installment.errors.form.monthlyPaymentDateRequired')
-                ),
-              amount: yup
-                .number()
-                .positive(
-                  t(
-                    'forms.installment.errors.form.monthlyPaymentAmountPositive'
-                  )
-                )
-                .required(
-                  t(
-                    'forms.installment.errors.form.monthlyPaymentAmountRequired'
-                  )
-                )
-                .transform((value, originalValue) => {
-                  return originalValue === '' ? undefined : value;
-                }),
-              paid: yup.boolean().default(false),
-            })
-          )
-          .default([])
-          .test('sum-missmatch', function (monthlyPayments) {
-            const { amount } = this.parent;
-            if (!monthlyPayments || !amount) return true;
-
-            const sum = sumByKeyDecimal(monthlyPayments, 'amount');
-
-            const errorMessage = t(
-              'forms.installment.errors.form.sumMismatch',
-              {
-                sum: sum.toFixed(2),
-                amount: amount.toFixed(2),
-              }
-            );
-
-            return (
-              sum.toFixed(2) === amount.toFixed(2) ||
-              this.createError({ message: errorMessage })
-            );
-          }),
-      }),
-    [t]
-  );
+  } = useAppSelector((state) => state.installment);
 
   const {
     control,
@@ -160,11 +75,11 @@ const EditInstallment = () => {
     watch,
     trigger,
     formState: { errors },
-  } = useForm<InstallmentEdit>({
-    resolver: yupResolver(schema),
+  } = useForm<InstallmentSchema>({
+    resolver: yupResolver(installmentSchema),
   });
 
-  const { fields, replace } = useFieldArray({
+  const { fields: monthlyPayments, replace } = useFieldArray({
     control,
     name: 'monthlyPayments',
   });
@@ -172,7 +87,7 @@ const EditInstallment = () => {
   const amount = watch('amount');
   const monthCount = watch('monthCount');
   const startDate = watch('startDate');
-  const monthlyPayments = watch('monthlyPayments');
+  const watchedMonthlyPayments = watch('monthlyPayments');
 
   useEffect(() => {
     if (!id) {
@@ -192,65 +107,75 @@ const EditInstallment = () => {
       reset({
         title: selectedInstallment.title,
         amount: selectedInstallment.amount,
-        startDate: dayjs(selectedInstallment.startDate).format('YYYY-MM-DD'),
+        startDate: dayjs(selectedInstallment.startDate).format(
+          DATE_FORMATS.START_DATE
+        ),
         monthCount: selectedInstallment.monthCount,
         monthlyPayments: selectedInstallment.monthlyPayments.map((p) => {
-          return { ...p, date: dayjs(p.date).format('YYYY-MM-DD') };
+          return { ...p, date: dayjs(p.date).format(DATE_FORMATS.START_DATE) };
         }),
       });
-      replace(
-        selectedInstallment.monthlyPayments.map((p) => {
-          return { ...p, date: dayjs(p.date).format('YYYY-MM-DD') };
-        })
-      );
     }
-  }, [selectedInstallment, reset, replace]);
+  }, [selectedInstallment, reset]);
+
+  const generateMonthlyPayments = useCallback((): MonthlyPaymentSchema[] => {
+    const paidPayments = monthlyPayments.filter((p) => p.paid);
+    const newMonthCount = monthCount - paidPayments.length;
+    const remainingAmount = +(
+      amount - sumByKeyDecimal(paidPayments, 'amount')
+    ).toFixed(2);
+
+    if (
+      !amount ||
+      !monthCount ||
+      !startDate ||
+      newMonthCount <= 0 ||
+      remainingAmount <= 0
+    )
+      return paidPayments;
+
+    const monthlyPaymentBaseDate = dayjs(
+      startDate,
+      DATE_FORMATS.START_DATE
+    ).add(paidPayments.length, 'month');
+
+    const payments: MonthlyPaymentSchema[] = [];
+    const baseAmount =
+      Math.floor((remainingAmount * 100) / newMonthCount) / 100;
+    const remaining = +(remainingAmount - baseAmount * newMonthCount).toFixed(
+      2
+    );
+
+    for (let i = 0; i < newMonthCount; i++) {
+      const date = monthlyPaymentBaseDate
+        .add(i, 'month')
+        .format(DATE_FORMATS.START_DATE);
+      let amount = baseAmount;
+
+      if (i === newMonthCount - 1) {
+        amount = +(amount + remaining).toFixed(2);
+      }
+
+      payments.push({ date, amount: +amount.toFixed(2), paid: false });
+    }
+
+    return [...paidPayments, ...payments];
+  }, [amount, monthCount]);
 
   useEffect(() => {
-    if (amount > 0 && monthCount > 0 && startDate) {
-      const paidPayments = monthlyPayments.filter((p) => p.paid);
-      const newMonthCount = monthCount - paidPayments.length;
-      const remainingAmount = +(
-        amount - sumByKeyDecimal(paidPayments, 'amount')
-      ).toFixed(2);
-
-      const base = dayjs(startDate, 'YYYY-MM-DD').add(
-        paidPayments.length,
-        'month'
-      );
-
-      const payments: MonthlyPaymentEdit[] = [];
-      const baseAmount =
-        Math.floor((remainingAmount * 100) / newMonthCount) / 100;
-      const remaining = +(remainingAmount - baseAmount * newMonthCount).toFixed(
-        2
-      );
-
-      for (let i = 0; i < newMonthCount; i++) {
-        const date = base.add(i, 'month').format('YYYY-MM-DD');
-        let amount = baseAmount;
-
-        if (i === newMonthCount - 1) {
-          amount = +(amount + remaining).toFixed(2);
-        }
-
-        payments.push({ date, amount: +amount.toFixed(2), paid: false });
-      }
-
-      if (
-        JSON.stringify([...paidPayments, ...payments]) !==
-        JSON.stringify(monthlyPayments)
-      ) {
-        replace([...paidPayments, ...payments]);
-      }
+    const newPayments = generateMonthlyPayments();
+    const isDifferent =
+      JSON.stringify(newPayments) !== JSON.stringify(watchedMonthlyPayments);
+    if (isDifferent) {
+      replace(newPayments);
     }
-  }, [amount, monthCount, startDate, monthlyPayments, replace]);
+  }, [amount, monthCount, replace, generateMonthlyPayments]);
 
   useEffect(() => {
     trigger('monthlyPayments');
   }, [amount, monthCount, trigger]);
 
-  const onSubmit = async (newData: InstallmentEdit): Promise<void> => {
+  const onFormSubmit = async (newData: InstallmentSchema): Promise<void> => {
     if (!id) {
       return;
     }
@@ -281,6 +206,31 @@ const EditInstallment = () => {
       });
       console.error(error);
     }
+  };
+
+  const onFormError = (errors: FieldErrors<InstallmentSchema>) => {
+    if (errors.monthlyPayments?.root) {
+      showNotification({
+        message: t(
+          `forms.installment.errors.form.${errors.monthlyPayments?.root.message}`,
+          {
+            sum: sumByKeyDecimal(watchedMonthlyPayments, 'amount'),
+            amount: amount,
+          }
+        ),
+        color: 'red',
+        icon: <IconX />,
+      });
+    }
+  };
+
+  const getErrorMessage = (
+    error?: FieldError,
+    translateParams?: Record<string, unknown>
+  ) => {
+    if (!error?.message) return undefined;
+
+    return t(`forms.installment.errors.form.${error.message}`, translateParams);
   };
 
   return (
@@ -328,7 +278,7 @@ const EditInstallment = () => {
         <Paper
           component='form'
           id='edit-payment-form'
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onFormSubmit, onFormError)}
           radius='md'
           shadow='sm'
           p='md'
@@ -339,14 +289,16 @@ const EditInstallment = () => {
               <Stack gap='md'>
                 <Box>
                   <Text size='sm' fw={500} mb={4}>
-                    {t('forms.installment.fields.name.label')}
+                    {t('forms.installment.fields.title.label')}
                   </Text>
                   <TextInput
                     id='name'
-                    placeholder={t('forms.installment.fields.name.placeholder')}
+                    placeholder={t(
+                      'forms.installment.fields.title.placeholder'
+                    )}
                     {...register('title')}
                     size='md'
-                    error={errors.title?.message}
+                    error={getErrorMessage(errors.title)}
                   />
                 </Box>
 
@@ -370,7 +322,7 @@ const EditInstallment = () => {
                         decimalScale={2}
                         allowNegative={false}
                         suffix=' ₼'
-                        error={errors.amount?.message}
+                        error={getErrorMessage(errors.amount)}
                         hideControls
                         thousandSeparator=','
                         size='md'
@@ -392,16 +344,18 @@ const EditInstallment = () => {
                         value={field.value ? dayjs(field.value).toDate() : null}
                         onChange={(date) =>
                           field.onChange(
-                            date ? dayjs(date).format('YYYY-MM-DD') : ''
+                            date
+                              ? dayjs(date).format(DATE_FORMATS.START_DATE)
+                              : ''
                           )
                         }
-                        valueFormat='DD-MM-YYYY'
+                        valueFormat={DATE_FORMATS.START_DATE_SHOW}
                         placeholder={t(
                           'forms.installment.fields.startDate.placeholder'
                         )}
                         id='startDate'
                         size='md'
-                        error={errors.startDate?.message}
+                        error={getErrorMessage(errors.startDate)}
                       />
                     )}
                   />
@@ -424,7 +378,13 @@ const EditInstallment = () => {
                         onChange={field.onChange}
                         onBlur={field.onBlur}
                         hideControls
-                        error={errors.monthCount?.message}
+                        error={getErrorMessage(errors.monthCount, {
+                          count: Math.max(
+                            VALIDATION.INSTALLMENT.MONTH_COUNT_MIN,
+                            monthlyPayments.filter((payment) => payment.paid)
+                              .length
+                          ),
+                        })}
                         allowNegative={false}
                         allowDecimal={false}
                         size='md'
@@ -436,21 +396,21 @@ const EditInstallment = () => {
             </Grid.Col>
 
             <Grid.Col span={{ base: 12, md: 6 }}>
-              {fields.length > 0 ? (
+              {monthlyPayments.length > 0 ? (
                 <Paper p='md' radius='md' withBorder>
-                  <Text fw={600} mb='sm'>
+                  <Text size='sm' fw={600} mb='sm'>
                     {t('forms.installment.fields.monthlyPayments.label')}
                   </Text>
                   <Stack gap='sm'>
-                    {fields.map((field, index) => (
-                      <Grid key={field.id} gutter='xs' align='center'>
+                    {monthlyPayments.map((field, index) => (
+                      <Grid key={field.id} gutter='xs' align='top'>
                         <Grid.Col span={'content'}>
                           <Controller
                             control={control}
                             name={`monthlyPayments.${index}.date`}
                             render={({ field }) => (
                               <DatePickerInput
-                                disabled={fields[index].paid}
+                                disabled={monthlyPayments[index].paid}
                                 placeholder={t(
                                   'forms.installment.fields.monthlyPayments.date.placeholder'
                                 )}
@@ -461,7 +421,11 @@ const EditInstallment = () => {
                                 }
                                 onChange={(date) =>
                                   field.onChange(
-                                    date ? dayjs(date).format('YYYY-MM-DD') : ''
+                                    date
+                                      ? dayjs(date).format(
+                                          DATE_FORMATS.START_DATE
+                                        )
+                                      : ''
                                   )
                                 }
                                 minDate={dayjs(field.value)
@@ -470,7 +434,10 @@ const EditInstallment = () => {
                                 maxDate={dayjs(field.value)
                                   .endOf('month')
                                   .toDate()}
-                                valueFormat='DD-MM-YYYY'
+                                valueFormat={DATE_FORMATS.START_DATE_SHOW}
+                                error={getErrorMessage(
+                                  errors.monthlyPayments?.[index]?.date
+                                )}
                                 size='md'
                               />
                             )}
@@ -482,7 +449,7 @@ const EditInstallment = () => {
                             name={`monthlyPayments.${index}.amount`}
                             render={({ field }) => (
                               <NumberInput
-                                disabled={fields[index].paid}
+                                disabled={monthlyPayments[index].paid}
                                 value={field.value}
                                 onChange={field.onChange}
                                 onBlur={field.onBlur}
@@ -495,11 +462,10 @@ const EditInstallment = () => {
                                 thousandSeparator=','
                                 allowNegative={false}
                                 hideControls
-                                size='md'
-                                error={
+                                error={getErrorMessage(
                                   errors.monthlyPayments?.[index]?.amount
-                                    ?.message
-                                }
+                                )}
+                                size='md'
                               />
                             )}
                           />
@@ -507,11 +473,6 @@ const EditInstallment = () => {
                       </Grid>
                     ))}
                   </Stack>
-                  {errors?.monthlyPayments?.root?.message && (
-                    <Text c='red' size='sm' mt='xs'>
-                      {errors?.monthlyPayments?.root?.message}
-                    </Text>
-                  )}
                 </Paper>
               ) : (
                 <EmptyState

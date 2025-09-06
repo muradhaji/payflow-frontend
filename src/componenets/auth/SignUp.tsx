@@ -19,14 +19,39 @@ import {
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { signup } from '../../features/auth/authSlice';
 import { useThemeColors } from '../../hooks/useThemeColors';
+import { ERROR_MESSAGES } from '../../constants/messages';
+import { REGEX } from '../../constants/regex';
+import { VALIDATION } from '../../constants/validation';
 
 const SignupSchema = yup.object().shape({
-  username: yup.string().min(6, 'usernameMin').required('usernameRequired'),
-  password: yup.string().min(8, 'passwordMin').required('passwordRequired'),
+  username: yup
+    .string()
+    .required(ERROR_MESSAGES.AUTH.USERNAME_REQUIRED)
+    .min(
+      VALIDATION.AUTH.USERNAME_MIN_LENGTH,
+      ERROR_MESSAGES.AUTH.USERNAME_MIN_LENGTH
+    )
+    .max(
+      VALIDATION.AUTH.USERNAME_MAX_LENGTH,
+      ERROR_MESSAGES.AUTH.USERNAME_MAX_LENGTH
+    )
+    .matches(REGEX.AUTH.USERNAME, ERROR_MESSAGES.AUTH.USERNAME_INVALID),
+  password: yup
+    .string()
+    .required(ERROR_MESSAGES.AUTH.PASSWORD_REQUIRED)
+    .min(
+      VALIDATION.AUTH.PASSWORD_MIN_LENGTH,
+      ERROR_MESSAGES.AUTH.PASSWORD_MIN_LENGTH
+    )
+    .max(
+      VALIDATION.AUTH.PASSWORD_MAX_LENGTH,
+      ERROR_MESSAGES.AUTH.PASSWORD_MAX_LENGTH
+    )
+    .matches(REGEX.AUTH.PASSWORD, ERROR_MESSAGES.AUTH.PASSWORD_INVALID),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref('password')], 'confirmPasswordMatch')
-    .required('confirmPasswordRequired'),
+    .required(ERROR_MESSAGES.AUTH.CONFIRM_PASSWORD_REQUIRED)
+    .oneOf([yup.ref('password')], ERROR_MESSAGES.AUTH.CONFIRM_PASSWORD_MATCH),
 });
 
 type SignupFormInputs = {
@@ -40,7 +65,7 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const { loading, error: apiError } = useAppSelector((state) => state.auth);
-  const { t } = useTranslation();
+  const { t: translate } = useTranslation();
 
   const { themedColor } = useThemeColors();
 
@@ -86,13 +111,15 @@ const SignUp = () => {
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <Stack gap='md'>
               <TextInput
-                label={t('forms.signup.fields.username.label')}
+                label={translate('forms.signup.fields.username.label')}
                 labelProps={{ mb: 'xs' }}
-                placeholder={t('forms.signup.fields.username.placeholder')}
+                placeholder={translate(
+                  'forms.signup.fields.username.placeholder'
+                )}
                 {...formRegister('username')}
                 error={
                   formErrors.username
-                    ? t(
+                    ? translate(
                         `forms.signup.errors.form.${formErrors.username.message}`
                       )
                     : null
@@ -103,13 +130,15 @@ const SignUp = () => {
               />
 
               <PasswordInput
-                label={t('forms.signup.fields.password.label')}
+                label={translate('forms.signup.fields.password.label')}
                 labelProps={{ mb: 'xs' }}
-                placeholder={t('forms.signup.fields.password.placeholder')}
+                placeholder={translate(
+                  'forms.signup.fields.password.placeholder'
+                )}
                 {...formRegister('password')}
                 error={
                   formErrors.password
-                    ? t(
+                    ? translate(
                         `forms.signup.errors.form.${formErrors.password.message}`
                       )
                     : null
@@ -120,15 +149,15 @@ const SignUp = () => {
               />
 
               <PasswordInput
-                label={t('forms.signup.fields.confirmPassword.label')}
+                label={translate('forms.signup.fields.confirmPassword.label')}
                 labelProps={{ mb: 'xs' }}
-                placeholder={t(
+                placeholder={translate(
                   'forms.signup.fields.confirmPassword.placeholder'
                 )}
                 {...formRegister('confirmPassword')}
                 error={
                   formErrors.confirmPassword
-                    ? t(
+                    ? translate(
                         `forms.signup.errors.form.${formErrors.confirmPassword.message}`
                       )
                     : null
@@ -149,19 +178,21 @@ const SignUp = () => {
                 color={themedColor('blue', 'blue.4')}
                 radius='sm'
               >
-                {t(`buttons.signup.label`)}
+                {translate(`buttons.signup.label`)}
               </Button>
 
               {apiError && (
                 <Text c='red' size='sm'>
-                  {t(`forms.signup.errors.api.${apiError}`, {
-                    defaultValue: t('forms.signup.errors.api.default'),
+                  {translate(`apiErrorMessages.${apiError}`, {
+                    defaultValue: translate(
+                      `apiErrorMessages.${ERROR_MESSAGES.UNKNOWN}`
+                    ),
                   })}
                 </Text>
               )}
 
               <Flex justify='center' gap='xs'>
-                <Text size='sm'>{t('forms.signup.loginPrompt')}</Text>
+                <Text size='sm'>{translate('forms.signup.loginPrompt')}</Text>
                 <Text
                   size='sm'
                   component={Link}
@@ -169,7 +200,7 @@ const SignUp = () => {
                   c={themedColor('blue', 'blue.4')}
                   style={{ cursor: 'pointer', textDecoration: 'underline' }}
                 >
-                  {t('forms.signup.loginLink')}
+                  {translate('forms.signup.loginLink')}
                 </Text>
               </Flex>
             </Stack>

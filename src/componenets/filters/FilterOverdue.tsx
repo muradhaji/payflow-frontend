@@ -49,7 +49,7 @@ const FilterOverdue = () => {
     installments,
     fetchInstallments: { loading: fetchInstallmentsLoading },
     completePayments: { loading: completePaymentsLoading },
-  } = useAppSelector((state) => state.installments);
+  } = useAppSelector((state) => state.installment);
 
   const filteredInstallments = useFilteredInstallments(installments, (p) => {
     const now = dayjs();
@@ -78,7 +78,7 @@ const FilterOverdue = () => {
           icon: <IconCheck />,
         });
         clearAll();
-        dispatch(updateInstallments(response.payload.installments));
+        dispatch(updateInstallments(response.payload));
       } else {
         showNotification({
           message: t('notifications.api.completePayments.error'),
